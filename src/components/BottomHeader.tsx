@@ -15,6 +15,8 @@ import logo from "../images/logo.png";
 import { createTheme, styled } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+
 
 // const theme = createTheme({
 // 	breakpoints: {
@@ -46,7 +48,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
 	buttonActive: {
 		"&:active": {
-			borderBottom:"5px solid white",
+			borderBottom: "5px solid white",
 		},
 	}
 }));
@@ -151,6 +153,8 @@ const BottomHeader = () => {
 					<Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
 						{pages.map((page) => (
 							<Button
+								component={Link}
+								to={page === "Home" ? "" : page.toLowerCase().replace(/ +/g, "")}
 								className={classes.buttonActive}
 								key={page}
 								onClick={handleCloseNavMenu}
