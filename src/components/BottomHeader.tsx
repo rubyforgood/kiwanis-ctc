@@ -14,9 +14,10 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../images/logo.png";
-import { createTheme, styled, useTheme } from "@mui/material/styles";
+import { createTheme, styled } from "@mui/material/styles";
 import { red, green, blue } from "@mui/material/colors";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 // const theme = createTheme({
 // 	breakpoints: {
@@ -43,14 +44,22 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 // 	},
 // }));
 
-// const theme = useTheme();
 // const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+const useStyles = makeStyles((theme) => ({
+	buttonActive: {
+		borderTop: "5px solid white",
+	}
+}));
 
 const pages = ["Home", "Blueberry Sale", "What We Do", "Become a Member", "About Us", "Fundraising", "Donate", "Contact Us"];
 // const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const BottomHeader = () => {
+	const classes = useStyles();
+	const theme = useTheme();
 	const [isActive, setActive] = useState(false);
+	const [activeOne, setActiveOne] = useState("");
 
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -65,6 +74,7 @@ const BottomHeader = () => {
 	const handleCloseNavMenu = (event: React.MouseEvent<HTMLElement>) => {
 		// TODO: Gold Highlight
 		setActive(!isActive);
+		// setActiveOne(event.currentTarget.value);
 
 		setAnchorElNav(null);
 	};
@@ -146,6 +156,7 @@ const BottomHeader = () => {
 								onClick={handleCloseNavMenu}
 								sx={{ my: 2, color: "white", display: "block" }}
 								style={{ color: "#6A696A", fontSize: "1rem" }}
+								className={isActive ? classes.buttonActive : ""}
 							>
 								{page}
 							</Button>
