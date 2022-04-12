@@ -9,13 +9,10 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../images/logo.png";
 import { createTheme, styled } from "@mui/material/styles";
-import { red, green, blue } from "@mui/material/colors";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
@@ -48,7 +45,9 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
 	buttonActive: {
-		borderTop: "5px solid white",
+		"&:active": {
+			borderBottom:"5px solid white",
+		},
 	}
 }));
 
@@ -152,11 +151,11 @@ const BottomHeader = () => {
 					<Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
 						{pages.map((page) => (
 							<Button
+								className={classes.buttonActive}
 								key={page}
 								onClick={handleCloseNavMenu}
 								sx={{ my: 2, color: "white", display: "block" }}
 								style={{ color: "#6A696A", fontSize: "1rem" }}
-								className={isActive ? classes.buttonActive : ""}
 							>
 								{page}
 							</Button>
