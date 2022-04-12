@@ -1,6 +1,4 @@
 import React from "react";
-
-// import * as React from 'react';
 import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -9,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import FacebookIcon from "@mui/icons-material/Facebook";
-
 
 
 const Search = styled("div")(({ theme }) => ({
@@ -35,8 +32,6 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 	color: "#BCBCBC"
 }));
 
-
-
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	color: "#767575",
 	"& .MuiInputBase-input": {
@@ -54,8 +49,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	},
 	height: "1rem"
 }));
-
-
 
 
 const TopHeader = () => {
