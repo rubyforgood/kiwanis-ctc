@@ -68,7 +68,7 @@ const TopHeader = () => {
 	return (
 		<Box sx={{ flexGrow: 1, m: "1rem" }}>
 			{/* ASK if want static navbar? */}
-			<AppBar position="static" style={{ background: "#F5F5F5" }}>
+			<AppBar position="static" style={{ background: "#F5F5F5" }}  elevation={0}>
 				<Toolbar style={{minHeight: "1rem"}}>
 					{/* <Toolbar variant="dense"> */}
 					<Typography

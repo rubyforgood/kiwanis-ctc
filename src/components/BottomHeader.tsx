@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // import * as React from 'react';
 import AppBar from "@mui/material/AppBar";
@@ -50,6 +50,8 @@ const pages = ["Home", "Blueberry Sale", "What We Do", "Become a Member", "About
 // const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const BottomHeader = () => {
+	const [isActive, setActive] = useState(false);
+
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -60,7 +62,10 @@ const BottomHeader = () => {
 		setAnchorElUser(event.currentTarget);
 	};
 
-	const handleCloseNavMenu = () => {
+	const handleCloseNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+		// TODO: Gold Highlight
+		setActive(!isActive);
+
 		setAnchorElNav(null);
 	};
 
@@ -120,7 +125,7 @@ const BottomHeader = () => {
 							))}
 						</Menu>
 					</Box>
-					<img src={logo} alt="logo" style={{ width: "20%" }} />
+					<img src={logo} alt="logo" style={{ maxWidth: "25rem", width: "80%" }} />
 
 					<Typography
 						variant="h6"
@@ -140,7 +145,7 @@ const BottomHeader = () => {
 								key={page}
 								onClick={handleCloseNavMenu}
 								sx={{ my: 2, color: "white", display: "block" }}
-								style={{ color: "#6A696A" }}
+								style={{ color: "#6A696A", fontSize: "1rem" }}
 							>
 								{page}
 							</Button>
