@@ -12,81 +12,52 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../images/logo.png";
-import { createTheme, styled } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
 
-// const theme = createTheme({
-// 	breakpoints: {
-// 		values: {
-// 			xs: 0,
-// 			sm: 600,
-// 			md: 900,
-// 			lg: 1200,
-// 			xl: 1536,
-// 		},
-// 	},
-// });
 
-// const Root = styled("div")(({ theme }) => ({
-// 	padding: theme.spacing(1),
-// 	[theme.breakpoints.down("lg")]: {
-// 		backgroundColor: red[500],
-// 	},
-// 	[theme.breakpoints.up("lg")]: {
-// 		backgroundColor: blue[500],
-// 	},
-// 	[theme.breakpoints.up("xl")]: {
-// 		backgroundColor: green[500],
-// 	},
-// }));
-
-// const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
 	buttonActive: {
-		"&:active": {
-			borderBottom: "5px solid white",
-		},
+		borderBottom: "5px solid #AF9766",
+	},
+	logo: {
+		"&:hover": {
+			backgroundColor: "#FFF"
+		}
 	}
 }));
 
 const pages = ["Home", "Blueberry Sale", "What We Do", "Become a Member", "About Us", "Fundraising", "Donate", "Contact Us"];
-// const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const BottomHeader = () => {
 	const classes = useStyles();
-	const theme = useTheme();
 	const [isActive, setActive] = useState(false);
 	const [activeOne, setActiveOne] = useState("");
 
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
 	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorElNav(event.currentTarget);
 	};
-	const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorElUser(event.currentTarget);
-	};
 
-	const handleCloseNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+	const handleCloseNavMenu = (page: string) => {
 		// TODO: Gold Highlight
+		// console.log(page);
 		setActive(!isActive);
-		// setActiveOne(event.currentTarget.value);
+		setActiveOne(page);
 
 		setAnchorElNav(null);
 	};
 
-	const handleCloseUserMenu = () => {
-		setAnchorElUser(null);
+	const handleLogoReset = () => {
+		setActiveOne("home");
 	};
+
 
 	return (
 		// <Root>
-		<AppBar position="static" elevation={0} style={{ background: "#00FFFF" }}>
+		<AppBar position="static" elevation={0} style={{ background: "#FFFFFF" }}>
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
 
@@ -130,14 +101,22 @@ const BottomHeader = () => {
 							}}
 						>
 							{pages.map((page) => (
-								<MenuItem key={page} onClick={handleCloseNavMenu}>
+								<MenuItem
+									component={Link}
+									to={page === "Home" ? "" : page.toLowerCase().replace(/ +/g, "")}
+									key={page} onClick={() => { handleCloseNavMenu(page); }}>
 									<Typography textAlign="center">{page}</Typography>
 								</MenuItem>
 							))}
 						</Menu>
 					</Box>
-					<img src={logo} alt="logo" style={{ maxWidth: "25rem", width: "80%" }} />
-
+					<Button
+						component={Link}
+						to={""}
+						onClick={handleLogoReset}
+						className={classes.logo}>
+						<img src={logo} alt="logo" style={{ maxWidth: "25rem", width: "80%" }} />
+					</Button>
 					<Typography
 						variant="h6"
 						noWrap
@@ -155,9 +134,9 @@ const BottomHeader = () => {
 							<Button
 								component={Link}
 								to={page === "Home" ? "" : page.toLowerCase().replace(/ +/g, "")}
-								className={classes.buttonActive}
+								className={activeOne === page ? classes.buttonActive : ""}
 								key={page}
-								onClick={handleCloseNavMenu}
+								onClick={() => { handleCloseNavMenu(page); }}
 								sx={{ my: 2, color: "white", display: "block" }}
 								style={{ color: "#6A696A", fontSize: "1rem" }}
 							>
@@ -167,9 +146,7 @@ const BottomHeader = () => {
 					</Box>
 				</Toolbar>
 			</Container>
-		</AppBar>
-		// </Root>
-		// <div>BottomHeader</div>
+		</AppBar >
 	);
 };
 

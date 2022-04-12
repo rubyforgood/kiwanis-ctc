@@ -8,7 +8,6 @@ const Navbar = () => {
 		<div>
 			<TopHeader />
 			<BottomHeader />
-
 		</div>
 	);
 };
