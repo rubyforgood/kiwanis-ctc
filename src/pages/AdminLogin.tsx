@@ -1,6 +1,6 @@
 import React from "react";
 
-const AdminLogin = () => {
+const AdminLogin = ({}) => {
 	return (
 		<>
 			AdminLogin

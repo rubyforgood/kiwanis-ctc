@@ -18,6 +18,8 @@ import Footer from "./components/Footer";
 // !Pages
 import HomePage from "./pages/HomePage";
 import AdminLogin from "./pages/AdminLogin";
+import { createTheme } from "@mui/system";
+import { ThemeProvider } from "@mui/private-theming";
 
 
 function Copyright() {
@@ -32,18 +34,29 @@ function Copyright() {
 	);
 }
 
+const theme = createTheme({
+	typography: {
+		title: {
+			fontFamily: "Helvetica Neue",
+			fontWeight: "Bold",
+			fontSize: "48px",
+			letterSpacing: "-1%", 
+		} 
+	},
+});
+
+
 export default function App() {
 	return (
-		<Router>
-			<Navbar />
-			<Container maxWidth="xl">
-				<Routes>
-					<Route path="/" element={<HomePage />} />
-					<Route path="/admin" element={<AdminLogin />} />
-				</Routes>
-				<Footer />
-			</Container>
-		</Router>
+		<ThemeProvider theme={theme}>
+			<Router>
+				{/* <Navbar />
+				<Container maxWidth="xl"> */}
+				<AdminLogin />
+				{/* <Footer />
+				</Container> */}
+			</Router>
+		</ThemeProvider>
 
 	// <Container maxWidth="xl">
 	// 	<Navbar/>
