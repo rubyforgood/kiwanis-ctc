@@ -17,7 +17,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 // !Pages
 import HomePage from "./pages/HomePage";
-import AdminPage from "./pages/AdminPage";
+import AdminLogin from "./pages/AdminLogin";
 
 
 function Copyright() {
@@ -39,7 +39,7 @@ export default function App() {
 			<Container maxWidth="xl">
 				<Routes>
 					<Route path="/" element={<HomePage />} />
-					<Route path="/admin" element={<AdminPage />} />
+					<Route path="/admin" element={<AdminLogin />} />
 				</Routes>
 				<Footer />
 			</Container>
