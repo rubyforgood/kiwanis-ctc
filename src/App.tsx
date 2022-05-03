@@ -1,8 +1,8 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
+import { createTheme, ThemeProvider, Typography } from "@material-ui/core";
+import Box from "@material-ui/core";
+import Link from "@material-ui/core";
 import ProTip from "./ProTip";
 import { render } from "react-dom";
 import {
@@ -18,11 +18,25 @@ import Footer from "./components/Footer";
 // !Pages
 import HomePage from "./pages/HomePage";
 import AdminLogin from "./pages/AdminLogin";
-import { createTheme } from "@mui/system";
-import { ThemeProvider } from "@mui/private-theming";
 
+declare module "@mui/material/styles" {
+	interface TypographyVariants {
+		h1: React.CSSProperties;
+	}
 
-function Copyright() {
+	// allow configuration using 'CreateTheme'
+	interface TypographyVariantOptions {
+		h1?: React.CSSProperties;
+	}
+}
+
+declare module "@mui/material/Typography" {
+	interface TypographyPropsVariantOverrides {
+		h1: true;
+	}
+}
+
+/* function Copyright() {
 	return (
 		<Typography variant="body2" color="text.secondary" align="center">
 			{"Copyright © "}
@@ -32,16 +46,20 @@ function Copyright() {
 			{new Date().getFullYear()}.
 		</Typography>
 	);
-}
+} */
 
 const theme = createTheme({
 	typography: {
-		title: {
-			fontFamily: "Helvetica Neue",
-			fontWeight: "Bold",
-			fontSize: "48px",
-			letterSpacing: "-1%", 
-		} 
+		h1: {
+			// fontFamily: "Helvetica Neue",
+			// fontWeight: 600,
+			fontSize: 200,
+			// letterSpacing: "-1%",
+			fontStyle: "italic"
+		},
+		button: {
+			fontStyle: "italic",
+		}
 	},
 });
 

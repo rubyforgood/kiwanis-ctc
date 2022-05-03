@@ -1,9 +1,12 @@
+import { Typography } from "@material-ui/core";
 import React from "react";
 
-const AdminLogin = ({}) => {
+const AdminLogin = () => {
 	return (
 		<>
-			AdminLogin
+			<Typography variant="h1">
+				Admin Login
+			</Typography>
 		</>
 	);
 };
