@@ -3,13 +3,13 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider, Typography } from "@material-ui/core";
 import Box from "@material-ui/core";
 import Link from "@material-ui/core";
-import ProTip from "./ProTip";
 import { render } from "react-dom";
 import {
 	BrowserRouter as Router,
 	Routes,
 	Route,
 } from "react-router-dom";
+import theme from "./theme";
 // import your route components too
 
 // !Components
@@ -18,51 +18,7 @@ import Footer from "./components/Footer";
 // !Pages
 import HomePage from "./pages/HomePage";
 import AdminLogin from "./pages/AdminLogin";
-
-declare module "@mui/material/styles" {
-	interface TypographyVariants {
-		h1: React.CSSProperties;
-	}
-
-	// allow configuration using 'CreateTheme'
-	interface TypographyVariantOptions {
-		h1?: React.CSSProperties;
-	}
-}
-
-declare module "@mui/material/Typography" {
-	interface TypographyPropsVariantOverrides {
-		h1: true;
-	}
-}
-
-/* function Copyright() {
-	return (
-		<Typography variant="body2" color="text.secondary" align="center">
-			{"Copyright © "}
-			<Link color="inherit" href="https://mui.com/">
-				Your Website
-			</Link>{" "}
-			{new Date().getFullYear()}.
-		</Typography>
-	);
-} */
-
-const theme = createTheme({
-	typography: {
-		h1: {
-			// fontFamily: "Helvetica Neue",
-			// fontWeight: 600,
-			fontSize: 200,
-			// letterSpacing: "-1%",
-			fontStyle: "italic"
-		},
-		button: {
-			fontStyle: "italic",
-		}
-	},
-});
-
+import OrdersPage from "./pages/OrdersPage";
 
 export default function App() {
 	return (
@@ -71,6 +27,7 @@ export default function App() {
 				{/* <Navbar />
 				<Container maxWidth="xl"> */}
 				<AdminLogin />
+				{/* <OrdersPage /> */}
 				{/* <Footer />
 				</Container> */}
 			</Router>
