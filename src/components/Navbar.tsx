@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
 
 const settings = ["Logout"];
 
-const ResponsiveAppBar = () => {
+const Navbar = () => {
 	const classes = useStyles();
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -45,11 +45,11 @@ const ResponsiveAppBar = () => {
 	};
 
 	return (
-		<AppBar position="static" elevation={0} style={{ background: "#00FFFF" }}>
-			<Container maxWidth="xl">
-				<Toolbar disableGutters>
+		<AppBar position="static" elevation={0} style={{ background: "#FFFFFF" }}>
+			<Container maxWidth={false}>
+				<Toolbar disableGutters >
 
-					<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+					<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" }}}>
 						<Typography
 							variant="h6"
 							noWrap
@@ -69,13 +69,16 @@ const ResponsiveAppBar = () => {
 						</Typography>
 					</Box>
 
-					<Button
+					<Paper
 						component={Link}
 						to={""}
 						onClick={handleLogoReset}
-						className={classes.logo}>
-						<img src={logo} alt="logo" style={{ maxWidth: "25rem", width: "80%" }} />
-					</Button>
+						className={classes.logo}
+						elevation={0}
+						sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next", minHeight: "0", minWidth: "0", padding: "0" }} 
+					>
+						<img src={logo} alt="logo" style={{ maxWidth: "30rem", width: "85%" }} />
+					</Paper>
 					<Typography
 						variant="h6"
 						noWrap
@@ -105,7 +108,7 @@ const ResponsiveAppBar = () => {
 						</Typography>
 					</Box>
 
-					<Box sx={{ flexGrow: 0, display: "inline" }}>
+					<Box sx={{ flexGrow: 0, display: "inline", }}>
 						<Box
 							display="flex"
 							justifyContent="center"
@@ -113,8 +116,9 @@ const ResponsiveAppBar = () => {
 						>
 							<img src={account} alt="account" style={{ width: "50%", maxWidth: "2rem" }} />
 
-							<Button
-								sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next", minHeight: "0", minWidth: "0", padding: "0" }} >Remy</Button>
+							<Paper
+								elevation={0}
+								sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next", minHeight: "0", minWidth: "0", padding: "0" }} >Remy</Paper>
 
 							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0}}>
 
@@ -149,4 +153,4 @@ const ResponsiveAppBar = () => {
 		</AppBar >
 	);
 };
-export default ResponsiveAppBar;
+export default Navbar;
