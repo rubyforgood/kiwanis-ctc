@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
 	}
 }));
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Logout"];
 
 const ResponsiveAppBar = () => {
 	const classes = useStyles();
@@ -70,7 +70,7 @@ const ResponsiveAppBar = () => {
 							sx={{
 								mr: 2,
 								display: { xs: "none", md: "flex" },
-								fontFamily: "monospace",
+								fontFamily: "Avenir Next",
 								fontWeight: 700,
 								letterSpacing: ".3rem",
 								color: "inherit",
@@ -107,7 +107,7 @@ const ResponsiveAppBar = () => {
 							sx={{
 								mr: 2,
 								display: { xs: "none", md: "flex" },
-								fontFamily: "monospace",
+								fontFamily: "Avenir Next",
 								fontWeight: 700,
 								color: "black",
 								textDecoration: "none",
@@ -131,9 +131,9 @@ const ResponsiveAppBar = () => {
 								<img src={account} alt="account" style={{ width: "50%", maxWidth: "2rem" }} />
 
 								<Button
-									sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important" }}>Remy</Button>
+									sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next"}} >Remy</Button>
 
-								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0}}>
 
 									<ArrowDropDownIcon sx={{ display: { xs: "none", md: "flex" } }} />
 								</IconButton>
