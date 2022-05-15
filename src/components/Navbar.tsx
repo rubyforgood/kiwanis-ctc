@@ -118,27 +118,21 @@ const ResponsiveAppBar = () => {
 					</Box>
 
 					<Box sx={{ flexGrow: 0, display: "inline" }}>
+						<Box
+							display="flex"
+							justifyContent="center"
+							alignItems="center"
+						>
+							<img src={account} alt="account" style={{ width: "50%", maxWidth: "2rem" }} />
 
-						<Tooltip title="Open settings">
-							<Box
-								display="flex"
-								justifyContent="center"
-								alignItems="center"
-								m={0}
-								p={0}
-							>
-								{/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
-								<img src={account} alt="account" style={{ width: "50%", maxWidth: "2rem" }} />
+							<Button
+								sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next", minHeight: "0", minWidth: "0", padding: "0" }} >Remy</Button>
 
-								<Button
-									sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next"}} >Remy</Button>
+							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0}}>
 
-								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0}}>
-
-									<ArrowDropDownIcon sx={{ display: { xs: "none", md: "flex" } }} />
-								</IconButton>
-							</Box>
-						</Tooltip>
+								<ArrowDropDownIcon sx={{ display: { xs: "none", md: "flex" } }} />
+							</IconButton>
+						</Box>
 						<Menu
 							sx={{ mt: "45px" }}
 							id="menu-appbar"
