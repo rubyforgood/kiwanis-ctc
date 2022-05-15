@@ -31,6 +31,7 @@ const Navbar = () => {
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 	const [activeOne, setActiveOne] = useState("");
+	const [isAdmin, setAdmin] = useState("True"); //If wanting to test add True to this state to become an Admin
 
 	const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorElUser(event.currentTarget);
@@ -79,18 +80,8 @@ const Navbar = () => {
 					>
 						<img src={logo} alt="logo" style={{ maxWidth: "30rem", width: "85%" }} />
 					</Paper>
-					<Typography
-						variant="h6"
-						noWrap
-						component="div"
-						sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-						style={{ color: "#000000" }}
-					>
-						{/* LOGO */}
-					</Typography>
-
 					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-						<Typography
+						{isAdmin ? (<Typography
 							variant="h6"
 							noWrap
 							component="a"
@@ -105,49 +96,71 @@ const Navbar = () => {
 							}}
 						>
 							2022 Blueberry Fundraiser
-						</Typography>
+						</Typography>): (
+							<Typography
+								variant="h6"
+								noWrap
+								component="a"
+								href="/"
+								sx={{
+									mr: 2,
+									display: { xs: "none", md: "flex" },
+									fontFamily: "Avenir Next",
+									fontWeight: 700,
+									color: "black",
+									textDecoration: "none",
+								}}
+							>
+								{/* Nothing is Displayed Here */}
+							</Typography>
+						)}
+						
 					</Box>
+					{isAdmin ? (
+						<Box sx={{ flexGrow: 0, display: "inline", }}>
+							<Box
+								display="flex"
+								justifyContent="center"
+								alignItems="center"
+							>
+								<img src={account} alt="account" style={{ width: "50%", maxWidth: "2rem" }} />
 
-					<Box sx={{ flexGrow: 0, display: "inline", }}>
-						<Box
-							display="flex"
-							justifyContent="center"
-							alignItems="center"
-						>
-							<img src={account} alt="account" style={{ width: "50%", maxWidth: "2rem" }} />
+								<Paper
+									elevation={0}
+									sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next", minHeight: "0", minWidth: "0", padding: "0" }} >Remy</Paper>
 
-							<Paper
-								elevation={0}
-								sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next", minHeight: "0", minWidth: "0", padding: "0" }} >Remy</Paper>
+								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0}}>
 
-							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0}}>
-
-								<ArrowDropDownIcon sx={{ display: { xs: "none", md: "flex" } }} />
-							</IconButton>
+									<ArrowDropDownIcon sx={{ display: { xs: "none", md: "flex" } }} />
+								</IconButton>
+							</Box>
+							<Menu
+								sx={{ mt: "45px" }}
+								id="menu-appbar"
+								anchorEl={anchorElUser}
+								anchorOrigin={{
+									vertical: "top",
+									horizontal: "right",
+								}}
+								keepMounted
+								transformOrigin={{
+									vertical: "top",
+									horizontal: "right",
+								}}
+								open={Boolean(anchorElUser)}
+								onClose={handleCloseUserMenu}
+							>
+								{settings.map((setting) => (
+									<MenuItem key={setting} onClick={handleCloseUserMenu}>
+										<Typography textAlign="center">{setting}</Typography>
+									</MenuItem>
+								))}
+							</Menu>
+						</Box> ) : (
+						<Box>
+							{/* Empty Box since not Admin */}
 						</Box>
-						<Menu
-							sx={{ mt: "45px" }}
-							id="menu-appbar"
-							anchorEl={anchorElUser}
-							anchorOrigin={{
-								vertical: "top",
-								horizontal: "right",
-							}}
-							keepMounted
-							transformOrigin={{
-								vertical: "top",
-								horizontal: "right",
-							}}
-							open={Boolean(anchorElUser)}
-							onClose={handleCloseUserMenu}
-						>
-							{settings.map((setting) => (
-								<MenuItem key={setting} onClick={handleCloseUserMenu}>
-									<Typography textAlign="center">{setting}</Typography>
-								</MenuItem>
-							))}
-						</Menu>
-					</Box>
+					)}
 				</Toolbar >
 			</Container >
 		</AppBar >
