@@ -1,8 +1,12 @@
 import React from "react";
+import AdminTaskbar from "../components/AdminTaskbar";
 
 const AdminPage = () => {
 	return (
-		<div>AdminPage</div>
+		<div>
+			<AdminTaskbar />
+		</div>
+		
 	);
 };
 

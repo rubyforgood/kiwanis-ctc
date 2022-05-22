@@ -13,7 +13,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import logo from "../images/logo.png";
 import account from "../images/account.png";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 
 const useStyles = makeStyles(() => ({
@@ -28,6 +28,7 @@ const settings = ["Logout"];
 
 const Navbar = () => {
 	const classes = useStyles();
+	const theme = useTheme();
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 	const [activeOne, setActiveOne] = useState("");
@@ -46,7 +47,7 @@ const Navbar = () => {
 	};
 
 	return (
-		<AppBar position="static" elevation={0} style={{ background: "#FFFFFF" }}>
+		<AppBar position="fixed" elevation={0} style={{ background: "#FFFFFF", zIndex: theme.zIndex.drawer + 1}}>
 			<Container maxWidth={false}>
 				<Toolbar disableGutters >
 
