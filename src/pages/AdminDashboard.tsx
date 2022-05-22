@@ -8,7 +8,7 @@ const AdminDashboard = () => {
 			<AdminTaskbar />
 			<Box component="main" sx={{ flexGrow: 1, p: 15 }}>
 				<Toolbar />
-				<Typography paragraph>
+				<Typography paragraph align="center">
 				2022 Blueberry Fundraiser - Dashboard
 				</Typography>
 			</Box>

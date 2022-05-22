@@ -8,7 +8,7 @@ const AdminDonors = () => {
 			<AdminTaskbar />
 			<Box component="main" sx={{ flexGrow: 1, p: 15 }}>
 				<Toolbar />
-				<Typography paragraph>
+				<Typography paragraph align="center">
 				2022 Donors
 				</Typography>
 			</Box>

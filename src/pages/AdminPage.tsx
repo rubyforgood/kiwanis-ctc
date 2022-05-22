@@ -8,7 +8,7 @@ const AdminPage = () => {
 			<AdminTaskbar />
 			<Box component="main" sx={{ flexGrow: 1, p: 15 }}>
 				<Toolbar />
-				<Typography paragraph>
+				<Typography paragraph align="center">
           Admin Page
 				</Typography>
 			</Box>

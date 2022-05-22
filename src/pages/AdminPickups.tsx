@@ -8,7 +8,7 @@ const AdminPickups = () => {
 			<AdminTaskbar />
 			<Box component="main" sx={{ flexGrow: 1, p: 15 }}>
 				<Toolbar />
-				<Typography paragraph>
+				<Typography paragraph align="center">
 				Order Pick-ups
 				</Typography>
 			</Box>
