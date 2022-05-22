@@ -9,6 +9,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import { NavLink } from "react-router-dom";
 
 import homeTaskbar from "../images/homeTaskbarIcon.png";
 import orderTaskbar from "../images/orderTaskbarIcon.png";
@@ -35,11 +36,19 @@ const AdminTaskbar = () => {
 				<Box sx={{ overflow: "auto" }}>
 					<List>
 						<ListItem key={"Dashboard"} disablePadding sx={{color: "#FFFFFF"}}>
-							<ListItemButton disableRipple>
-								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px"}}>
+							<ListItemButton disableRipple sx={{"&.active": {
+								FontWeight: "bold",
+							},}}>
+								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px", }}>
 									<img src={homeTaskbar} alt="homeTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
 								</ListItemIcon>
-								<ListItemText primary={"Dashboard"} />
+								<NavLink to={"/dashboard"} style={({ isActive }) => ({
+									fontWeight: isActive ? "bolder" : "lighter",
+									textDecoration: "none",
+									color: "#FFFFFF",
+								})}>
+									Dashboard
+								</NavLink>
 							</ListItemButton>
 						</ListItem>
 						<ListItem key={"Orders"} disablePadding sx={{color: "#FFFFFF"}}>
@@ -47,7 +56,13 @@ const AdminTaskbar = () => {
 								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px"}}>
 									<img src={orderTaskbar} alt="orderTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
 								</ListItemIcon>
-								<ListItemText primary={"Orders"} />
+								<NavLink to={"/orders"} style={({ isActive }) => ({
+									fontWeight: isActive ? "bolder" : "lighter",
+									textDecoration: "none",
+									color: "#FFFFFF",
+								})}>
+									Orders
+								</NavLink>
 							</ListItemButton>
 						</ListItem>
 						<ListItem key={"Pickups"} disablePadding sx={{color: "#FFFFFF"}}>
@@ -55,7 +70,13 @@ const AdminTaskbar = () => {
 								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px"}}>
 									<img src={pickupTaskbar} alt="pickupTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
 								</ListItemIcon>
-								<ListItemText primary={"Pickups"} />
+								<NavLink to={"/pickups"} style={({ isActive }) => ({
+									fontWeight: isActive ? "bolder" : "lighter",
+									textDecoration: "none",
+									color: "#FFFFFF",
+								})}>
+									Pickups
+								</NavLink>
 							</ListItemButton>
 						</ListItem>
 						<ListItem key={"Donors"} disablePadding sx={{color: "#FFFFFF"}}>
@@ -63,7 +84,13 @@ const AdminTaskbar = () => {
 								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px"}}>
 									<img src={donorTaskbar} alt="donorTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
 								</ListItemIcon>
-								<ListItemText primary={"Donors"} />
+								<NavLink to={"/donors"} style={({ isActive }) => ({
+									fontWeight: isActive ? "bolder" : "lighter",
+									textDecoration: "none",
+									color: "#FFFFFF",
+								})}>
+									Donors
+								</NavLink>
 							</ListItemButton>
 						</ListItem>
 						<ListItem key={"Communications"} disablePadding sx={{color: "#FFFFFF"}}>
@@ -71,18 +98,18 @@ const AdminTaskbar = () => {
 								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px"}}>
 									<img src={communicationTaskbar} alt="communicationTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
 								</ListItemIcon>
-								<ListItemText primary={"Communications"} />
+								<NavLink to={"/communications"} style={({ isActive }) => ({
+									fontWeight: isActive ? "bolder" : "lighter",
+									textDecoration: "none",
+									color: "#FFFFFF",
+								})}>
+									Communications
+								</NavLink>
 							</ListItemButton>
 						</ListItem>
 					</List>
 				</Box>
 			</Drawer>
-			<Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-				<Toolbar />
-				<Typography paragraph>
-          Admin Page
-				</Typography>
-			</Box>
 		</Box>
 	);
 };

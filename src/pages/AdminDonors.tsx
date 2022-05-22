@@ -2,14 +2,14 @@ import { Box, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import AdminTaskbar from "../components/AdminTaskbar";
 
-const AdminPage = () => {
+const AdminDonors = () => {
 	return (
 		<div>
 			<AdminTaskbar />
 			<Box component="main" sx={{ flexGrow: 1, p: 15 }}>
 				<Toolbar />
 				<Typography paragraph>
-          Admin Page
+				2022 Donors
 				</Typography>
 			</Box>
 		</div>
@@ -17,4 +17,4 @@ const AdminPage = () => {
 	);
 };
 
-export default AdminPage;
+export default AdminDonors;

@@ -18,7 +18,11 @@ import Footer from "./components/Footer";
 // !Pages
 import HomePage from "./pages/HomePage";
 import AdminPage from "./pages/AdminPage";
-
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminOrders from "./pages/AdminOrders";
+import AdminPickups from "./pages/AdminPickups";
+import AdminDonors from "./pages/AdminDonors";
+import AdminCommunications from "./pages/AdminCommunication";
 
 function Copyright() {
 	return (
@@ -40,6 +44,11 @@ export default function App() {
 				<Routes>
 					<Route path="/" element={<HomePage />} />
 					<Route path="/admin" element={<AdminPage />} />
+					<Route path="/dashboard" element={<AdminDashboard />} />
+					<Route path="/orders" element={<AdminOrders />} />
+					<Route path="/pickups" element={<AdminPickups />} />
+					<Route path="/donors" element={<AdminDonors />} />
+					<Route path="/communications" element={<AdminCommunications />} />
 				</Routes>
 				<Footer />
 			</Container>

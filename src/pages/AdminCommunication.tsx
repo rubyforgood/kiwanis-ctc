@@ -2,14 +2,14 @@ import { Box, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import AdminTaskbar from "../components/AdminTaskbar";
 
-const AdminPage = () => {
+const AdminCommunication = () => {
 	return (
 		<div>
 			<AdminTaskbar />
 			<Box component="main" sx={{ flexGrow: 1, p: 15 }}>
 				<Toolbar />
 				<Typography paragraph>
-          Admin Page
+				Message Center
 				</Typography>
 			</Box>
 		</div>
@@ -17,4 +17,4 @@ const AdminPage = () => {
 	);
 };
 
-export default AdminPage;
+export default AdminCommunication;
