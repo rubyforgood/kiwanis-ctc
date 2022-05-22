@@ -9,12 +9,18 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import homeTaskbar from "../images/homeTaskbarIcon.png";
+
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 const drawerWidth = 250;
 
-export default function AdminTaskbar() {
+const useStyles = makeStyles((theme) => ({
+}));
+
+const AdminTaskbar = () => {
+	const classes = useStyles();
+	const theme = useTheme();
 	return (
 		<Box sx={{ display: "flex" }}>
 			<Drawer
@@ -28,16 +34,42 @@ export default function AdminTaskbar() {
 				<Toolbar/>
 				<Box sx={{ overflow: "auto" }}>
 					<List>
-						{["Inbox", "Starred", "Send email", "Drafts", "Drafts"].map((text, index) => (
-							<ListItem key={text} disablePadding sx={{color: "#FFFFFF"}}>
-								<ListItemButton>
-									<ListItemIcon sx={{color: "#FFFFFF"}}>
-										{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-									</ListItemIcon>
-									<ListItemText primary={text} />
-								</ListItemButton>
-							</ListItem>
-						))}
+						<ListItem key={"Dashboard"} disablePadding sx={{color: "#FFFFFF"}}>
+							<ListItemButton disableRipple>
+								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px"}}>
+									<img src={homeTaskbar} alt="homeTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
+								</ListItemIcon>
+								<ListItemText primary={"Dashboard"} />
+							</ListItemButton>
+						</ListItem>
+						<ListItem key={"Orders"} disablePadding sx={{color: "#FFFFFF"}}>
+							<ListItemButton>
+								<ListItemIcon sx={{color: "#FAFAFB"}}>
+								</ListItemIcon>
+								<ListItemText primary={"Orders"} />
+							</ListItemButton>
+						</ListItem>
+						<ListItem key={"Pickups"} disablePadding sx={{color: "#FFFFFF"}}>
+							<ListItemButton>
+								<ListItemIcon sx={{color: "#FAFAFB"}}>
+								</ListItemIcon>
+								<ListItemText primary={"Pickups"} />
+							</ListItemButton>
+						</ListItem>
+						<ListItem key={"Donors"} disablePadding sx={{color: "#FFFFFF"}}>
+							<ListItemButton>
+								<ListItemIcon sx={{color: "#FAFAFB"}}>
+								</ListItemIcon>
+								<ListItemText primary={"Donors"} />
+							</ListItemButton>
+						</ListItem>
+						<ListItem key={"Communications"} disablePadding sx={{color: "#FFFFFF"}}>
+							<ListItemButton>
+								<ListItemIcon sx={{color: "#FAFAFB"}}>
+								</ListItemIcon>
+								<ListItemText primary={"Communications"} />
+							</ListItemButton>
+						</ListItem>
 					</List>
 				</Box>
 			</Drawer>
@@ -49,4 +81,6 @@ export default function AdminTaskbar() {
 			</Box>
 		</Box>
 	);
-}
+};
+
+export default AdminTaskbar;
