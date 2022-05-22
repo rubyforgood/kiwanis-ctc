@@ -9,18 +9,18 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+
 import homeTaskbar from "../images/homeTaskbarIcon.png";
+import orderTaskbar from "../images/orderTaskbarIcon.png";
+import pickupTaskbar from "../images/pickupsTaskbarIcon.png";
+import donorTaskbar from "../images/donorsTaskbarIcon.png";
+import communicationTaskbar from "../images/communicationsTaskbarIcon.png";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 const drawerWidth = 250;
 
-const useStyles = makeStyles((theme) => ({
-}));
-
 const AdminTaskbar = () => {
-	const classes = useStyles();
-	const theme = useTheme();
 	return (
 		<Box sx={{ display: "flex" }}>
 			<Drawer
@@ -43,29 +43,33 @@ const AdminTaskbar = () => {
 							</ListItemButton>
 						</ListItem>
 						<ListItem key={"Orders"} disablePadding sx={{color: "#FFFFFF"}}>
-							<ListItemButton>
-								<ListItemIcon sx={{color: "#FAFAFB"}}>
+							<ListItemButton disableRipple>
+								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px"}}>
+									<img src={orderTaskbar} alt="orderTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
 								</ListItemIcon>
 								<ListItemText primary={"Orders"} />
 							</ListItemButton>
 						</ListItem>
 						<ListItem key={"Pickups"} disablePadding sx={{color: "#FFFFFF"}}>
-							<ListItemButton>
-								<ListItemIcon sx={{color: "#FAFAFB"}}>
+							<ListItemButton disableRipple>
+								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px"}}>
+									<img src={pickupTaskbar} alt="pickupTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
 								</ListItemIcon>
 								<ListItemText primary={"Pickups"} />
 							</ListItemButton>
 						</ListItem>
 						<ListItem key={"Donors"} disablePadding sx={{color: "#FFFFFF"}}>
-							<ListItemButton>
-								<ListItemIcon sx={{color: "#FAFAFB"}}>
+							<ListItemButton disableRipple>
+								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px"}}>
+									<img src={donorTaskbar} alt="donorTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
 								</ListItemIcon>
 								<ListItemText primary={"Donors"} />
 							</ListItemButton>
 						</ListItem>
 						<ListItem key={"Communications"} disablePadding sx={{color: "#FFFFFF"}}>
-							<ListItemButton>
-								<ListItemIcon sx={{color: "#FAFAFB"}}>
+							<ListItemButton disableRipple>
+								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px"}}>
+									<img src={communicationTaskbar} alt="communicationTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
 								</ListItemIcon>
 								<ListItemText primary={"Communications"} />
 							</ListItemButton>
