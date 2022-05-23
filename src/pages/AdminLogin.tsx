@@ -30,8 +30,8 @@ function AdminLogin() {
 
 	const formik = useFormik({
 		initialValues: {
-			email: "test@gmail.com",
-			password: "kiwanis2022"
+			email: "",
+			password: ""
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
