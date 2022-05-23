@@ -5,7 +5,7 @@ const OrdersPage = () => {
 	return (
 		<>
 			<Typography variant="h1">
-				order cock
+				order 
 			</Typography>
 		</>
 	);
