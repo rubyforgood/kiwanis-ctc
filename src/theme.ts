@@ -50,22 +50,23 @@ const theme = createTheme({
 		primary: {
 			main: "#003874",
 			light: "#4361A3",
-			dark: "#001348"
+			dark: "#21315C"
 		},
 		secondary: {
 			main: "#B49759",
-			light: "E8C887",
-			dark: "82692E"
+			light: "#E8C887",
+			dark: "#82692E"
 		},
 		shades: {
 			black: "#01050F",
 			grayMedium: "#CFD1D4",
 			grayLight: "#F0F0F0",
 			white: "#FAFAFB"
+
 		},
 	},
 	status: {
-		red: "#FFD0CA"
+		red: "#FFD0CA",
 	},
 	typography: {
 		h1: {
@@ -101,10 +102,12 @@ const theme = createTheme({
 		button: {
 			fontFamily: "AvenirNext",
 			fontWeight: 600,
-			fontSize: 12,
+			fontSize: 15,
 			letterSpacing: "-3%",
+			textTransform: "none"
 		}
 	},
+	
 });
 
 /*

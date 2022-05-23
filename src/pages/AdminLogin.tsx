@@ -1,15 +1,21 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Navigate, useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { Typography, Button, TextField } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Navbar from "../components/Navbar";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 
 function AdminLogin() {
 	const auth = getAuth();
 	const navigate = useNavigate();
 	const [authing, setAuthing] = useState(false);
+	const [user, setUser] = useState({});
 
 	const validationSchema = yup.object({
 		email: yup
@@ -24,8 +30,8 @@ function AdminLogin() {
 
 	const formik = useFormik({
 		initialValues: {
-			email: "",
-			password: ""
+			email: "test@gmail.com",
+			password: "kiwanis2022"
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
@@ -34,7 +40,7 @@ function AdminLogin() {
 				values.email,
 				values.password
 			).then((userCredentials) => {
-				const user = userCredentials.user;
+				setUser(userCredentials.user);
 				setAuthing(true);
 				navigate("/");
 			}).catch((error) => {
@@ -44,35 +50,79 @@ function AdminLogin() {
 	});
 
 	return (
-		<div>
-			{authing && <h2>signed in</h2>}
-			<form onSubmit={formik.handleSubmit}>
-				<TextField
-					fullWidth
-					id="email"
-					name="email"
-					label="Email"
-					value={formik.values.email}
-					onChange={formik.handleChange}
-					error={formik.touched.email && Boolean(formik.errors.email)}
-					helperText={formik.touched.email && formik.errors.email}
-				/>
-				<TextField
-					fullWidth
-					id="password"
-					name="password"
-					label="Password"
-					type="password"
-					value={formik.values.password}
-					onChange={formik.handleChange}
-					error={formik.touched.password && Boolean(formik.errors.password)}
-					helperText={formik.touched.password && formik.errors.password}
-				/>
-				<Button color="primary" variant="contained" fullWidth type="submit">
-					Submit
-				</Button>
-			</form>
-		</div>
+		<>
+			<Box
+				sx={{
+					backgroundColor: "primary.dark",
+					height: "100vh",
+				}}
+			>
+				<Navbar authing={authing} />
+				<Container
+					sx={{
+						backgroundColor: "shades.white",
+						opacity: 0.75,
+						height: 450,
+						width: 400,
+						marginTop: 10,
+						borderRadius: 5,
+						paddingTop: 10,
+					}}>
+					<Box>
+						<Box sx={{ marginBottom: 2, marginLeft: 1 }}>
+							<Typography variant="h3"> Login </Typography>
+						</Box>
+						<form onSubmit={formik.handleSubmit}>
+							<TextField
+								fullWidth
+								id="email"
+								name="email"
+								label="Email"
+								margin="normal"
+								variant="outlined"
+								value={formik.values.email}
+								onChange={formik.handleChange}
+								error={formik.touched.email && Boolean(formik.errors.email)}
+								helperText={formik.touched.email && formik.errors.email}
+							/>
+							<TextField
+								fullWidth
+								id="password"
+								name="password"
+								label="Password"
+								type="password"
+								margin="normal"
+								variant="outlined"
+								value={formik.values.password}
+								onChange={formik.handleChange}
+								error={formik.touched.password && Boolean(formik.errors.password)}
+								helperText={formik.touched.password && formik.errors.password}
+							/>
+
+							<Box sx={{
+								display: "flex",
+								justifyContent: "center",
+								marginTop: 3,
+							}}>
+								<Button
+									sx={{
+										color: "#000",
+										backgroundColor: "secondary.light",
+										borderRadius: 1,
+										width: 175,
+										"&:hover": {
+											background: "#B49759",
+										},
+									}}
+									variant="contained" fullWidth type="submit">
+									Sign In
+								</Button>
+							</Box>
+						</form>
+					</Box>
+				</Container>
+			</Box>
+		</>
 	);
 }
 export default AdminLogin;
