@@ -110,25 +110,4 @@ const theme = createTheme({
 	
 });
 
-/*
-	Body Overrides:
-
-		Body Medium
-			fontWeight: 300,
-			fontSize: 18,
-			letterSpacing: "-1%",
-
-		Body Medium Bold
-			fontWeight: 600,
-			fontSize: 18,
-			letterSpacing: "-1%",
-
-		Body Bold
-			fontWeight: 600,
-			fontSize: 16,
-			letterSpacing: "-1%",
-
-		Body Small
-*/
-
 export default theme;

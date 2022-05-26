@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 
-function AdminLogin() {
+const AdminLogin = () => {
 	const auth = getAuth();
 	const navigate = useNavigate();
 	const [authing, setAuthing] = useState(false);
@@ -124,5 +124,5 @@ function AdminLogin() {
 			</Box>
 		</>
 	);
-}
+};
 export default AdminLogin;
