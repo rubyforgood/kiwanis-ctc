@@ -1,10 +1,7 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
-import ProTip from "./ProTip";
-import { render } from "react-dom";
 import {
 	BrowserRouter as Router,
 	Routes,
@@ -15,14 +12,14 @@ import {
 // !Components
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-// !Pages
+// !Admin Pages
 import HomePage from "./pages/HomePage";
-import AdminPage from "./pages/AdminPage";
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminOrders from "./pages/AdminOrders";
-import AdminPickups from "./pages/AdminPickups";
-import AdminDonors from "./pages/AdminDonors";
-import AdminCommunications from "./pages/AdminCommunication";
+import AdminPage from "./pages/admin/Page";
+import AdminDashboard from "./pages/admin/Dashboard";
+import AdminOrders from "./pages/admin/Orders";
+import AdminPickups from "./pages/admin/Pickups";
+import AdminDonors from "./pages/admin/Donors";
+import AdminCommunications from "./pages/admin/Communication";
 
 function Copyright() {
 	return (
@@ -53,20 +50,6 @@ export default function App() {
 				<Footer />
 			</Container>
 		</Router>
-
-	// <Container maxWidth="xl">
-	// 	<Navbar/>
-	// 	{/* <Box sx={{ my: 4 }}>
-	// 		<Typography variant="h4" component="h1" gutterBottom>
-	// 			Create React App example with TypeScript
-	// 		</Typography>
-	// 		<ProTip />
-	// 		<Copyright />
-	// 	</Box> */}
-	// 	{/* <HomePage /> */}
-	// 	<AdminPage />
-	// 	<Footer/>
-	// </Container>
 
 	);
 }

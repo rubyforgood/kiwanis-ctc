@@ -2,13 +2,10 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
-import Container from "@mui/material/Container";
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import { NavLink } from "react-router-dom";
 
 import homeTaskbar from "../images/homeTaskbarIcon.svg";
@@ -16,8 +13,6 @@ import orderTaskbar from "../images/orderTaskbarIcon.svg";
 import pickupTaskbar from "../images/pickupsTaskbarIcon.svg";
 import donorTaskbar from "../images/donorsTaskbarIcon.svg";
 import communicationTaskbar from "../images/communicationsTaskbarIcon.svg";
-
-import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 const drawerWidth = 250;
 

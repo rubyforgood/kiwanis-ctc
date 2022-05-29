@@ -1,8 +1,8 @@
 import { Box, Toolbar, Typography } from "@mui/material";
 import React from "react";
-import AdminTaskbar from "../components/AdminTaskbar";
+import AdminTaskbar from "../../components/AdminTaskbar";
 
-const AdminDonors = () => {
+const Donors = () => {
 	return (
 		<div>
 			<AdminTaskbar />
@@ -17,4 +17,4 @@ const AdminDonors = () => {
 	);
 };
 
-export default AdminDonors;
+export default Donors;

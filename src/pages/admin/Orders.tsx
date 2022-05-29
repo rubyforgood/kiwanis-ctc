@@ -1,15 +1,15 @@
 import { Box, Toolbar, Typography } from "@mui/material";
 import React from "react";
-import AdminTaskbar from "../components/AdminTaskbar";
+import AdminTaskbar from "../../components/AdminTaskbar";
 
-const AdminPickups = () => {
+const Orders = () => {
 	return (
 		<div>
 			<AdminTaskbar />
 			<Box component="main" sx={{ flexGrow: 1, p: 15 }}>
 				<Toolbar />
 				<Typography paragraph align="center">
-				Order Pick-ups
+				Orders
 				</Typography>
 			</Box>
 		</div>
@@ -17,4 +17,4 @@ const AdminPickups = () => {
 	);
 };
 
-export default AdminPickups;
+export default Orders;
