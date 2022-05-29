@@ -27,7 +27,7 @@ export default function App() {
 		<ThemeProvider theme={theme}>
 			<Router>
 				<Routes>
-					<Route path="/" element={<AuthRoute><HomePage /></AuthRoute>} />
+					<Route path="/" element={<AuthRoute><OrdersPage /></AuthRoute>} />
 					<Route path="/login" element={<AdminLogin />} />
 				</Routes>
 			</Router>
