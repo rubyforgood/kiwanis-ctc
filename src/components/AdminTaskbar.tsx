@@ -1,6 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
+import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -46,12 +47,14 @@ const navList = [
 const AdminTaskbar = () => {
 	return (
 		<Box sx={{ display: "flex" }}>
+			<CssBaseline />
 			<Drawer
 				variant="permanent"
+				anchor="left"
 				sx={{
 					width: drawerWidth,
 					flexShrink: 0,
-					["& .MuiDrawer-paper"]: { width: drawerWidth, boxSizing: "content-box", border: "solid #FFFFFF 10px", background: "#21315C", },
+					["& .MuiDrawer-paper"]: { width: drawerWidth, boxSizing: "border-box", border: "solid #FFFFFF 10px", background: "#21315C", },
 				}}
 			>
 				<Toolbar/>
