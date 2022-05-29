@@ -11,11 +11,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { NavLink } from "react-router-dom";
 
-import homeTaskbar from "../images/homeTaskbarIcon.png";
-import orderTaskbar from "../images/orderTaskbarIcon.png";
-import pickupTaskbar from "../images/pickupsTaskbarIcon.png";
-import donorTaskbar from "../images/donorsTaskbarIcon.png";
-import communicationTaskbar from "../images/communicationsTaskbarIcon.png";
+import homeTaskbar from "../images/homeTaskbarIcon.svg";
+import orderTaskbar from "../images/orderTaskbarIcon.svg";
+import pickupTaskbar from "../images/pickupsTaskbarIcon.svg";
+import donorTaskbar from "../images/donorsTaskbarIcon.svg";
+import communicationTaskbar from "../images/communicationsTaskbarIcon.svg";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 

@@ -11,8 +11,8 @@ import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-import logo from "../images/logo.png";
-import account from "../images/account.png";
+import logo from "../images/logo.svg";
+import account from "../images/account.svg";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 
