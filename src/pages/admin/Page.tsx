@@ -13,7 +13,7 @@ const AdminPage = () => {
 				</Typography>
 			</Box>
 		</div>
-		
+
 	);
 };
 

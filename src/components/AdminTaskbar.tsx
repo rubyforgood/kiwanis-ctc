@@ -15,7 +15,34 @@ import donorTaskbar from "../images/donorsTaskbarIcon.svg";
 import communicationTaskbar from "../images/communicationsTaskbarIcon.svg";
 
 const drawerWidth = 250;
+const navList = [
+	{
+		name: "Dashboard",
+		href: "/dashboard",
+		icon: homeTaskbar,
+	},
+	{
+		name: "Orders",
+		href: "/orders",
+		icon: orderTaskbar,
+	},
+	{
+		name: "Pickups",
+		href: "/pickups",
+		icon: pickupTaskbar
+	},
+	{
+		name: "Donors",
+		href: "/donors",
+		icon: donorTaskbar
+	},
+	{
+		name: "Communications",
+		href: "/communications",
+		icon: communicationTaskbar,
+	}
 
+];
 const AdminTaskbar = () => {
 	return (
 		<Box sx={{ display: "flex" }}>
@@ -30,78 +57,24 @@ const AdminTaskbar = () => {
 				<Toolbar/>
 				<Box sx={{ overflow: "auto" }}>
 					<List>
-						<ListItem key={"Dashboard"} disablePadding sx={{color: "#FFFFFF"}}>
-							<ListItemButton disableRipple sx={{"&.active": {
-								FontWeight: "bold",
-							},}}>
-								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px", }}>
-									<img src={homeTaskbar} alt="homeTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
-								</ListItemIcon>
-								<NavLink to={"/dashboard"} style={({ isActive }) => ({
-									fontWeight: isActive ? "bolder" : "lighter",
-									textDecoration: "none",
-									color: "#FFFFFF",
-								})}>
-									Dashboard
-								</NavLink>
-							</ListItemButton>
-						</ListItem>
-						<ListItem key={"Orders"} disablePadding sx={{color: "#FFFFFF"}}>
-							<ListItemButton disableRipple>
-								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px"}}>
-									<img src={orderTaskbar} alt="orderTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
-								</ListItemIcon>
-								<NavLink to={"/orders"} style={({ isActive }) => ({
-									fontWeight: isActive ? "bolder" : "lighter",
-									textDecoration: "none",
-									color: "#FFFFFF",
-								})}>
-									Orders
-								</NavLink>
-							</ListItemButton>
-						</ListItem>
-						<ListItem key={"Pickups"} disablePadding sx={{color: "#FFFFFF"}}>
-							<ListItemButton disableRipple>
-								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px"}}>
-									<img src={pickupTaskbar} alt="pickupTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
-								</ListItemIcon>
-								<NavLink to={"/pickups"} style={({ isActive }) => ({
-									fontWeight: isActive ? "bolder" : "lighter",
-									textDecoration: "none",
-									color: "#FFFFFF",
-								})}>
-									Pickups
-								</NavLink>
-							</ListItemButton>
-						</ListItem>
-						<ListItem key={"Donors"} disablePadding sx={{color: "#FFFFFF"}}>
-							<ListItemButton disableRipple>
-								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px"}}>
-									<img src={donorTaskbar} alt="donorTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
-								</ListItemIcon>
-								<NavLink to={"/donors"} style={({ isActive }) => ({
-									fontWeight: isActive ? "bolder" : "lighter",
-									textDecoration: "none",
-									color: "#FFFFFF",
-								})}>
-									Donors
-								</NavLink>
-							</ListItemButton>
-						</ListItem>
-						<ListItem key={"Communications"} disablePadding sx={{color: "#FFFFFF"}}>
-							<ListItemButton disableRipple>
-								<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px"}}>
-									<img src={communicationTaskbar} alt="communicationTaskbar" style={{ maxWidth: "30px", width: "85%" }} />
-								</ListItemIcon>
-								<NavLink to={"/communications"} style={({ isActive }) => ({
-									fontWeight: isActive ? "bolder" : "lighter",
-									textDecoration: "none",
-									color: "#FFFFFF",
-								})}>
-									Communications
-								</NavLink>
-							</ListItemButton>
-						</ListItem>
+						{navList.map((el) => (
+							<ListItem key={el.name} disablePadding sx={{color: "#FFFFFF"}}>
+								<ListItemButton disableRipple sx={{"&.active": {
+									FontWeight: "bold",
+								},}}>
+									<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px", }}>
+										<img src={el.icon} style={{ maxWidth: "30px", width: "85%" }} />
+									</ListItemIcon>
+									<NavLink to={el.href} style={({ isActive }) => ({
+										fontWeight: isActive ? "bolder" : "lighter",
+										textDecoration: "none",
+										color: "#FFFFFF",
+									})}>
+										{el.name}
+									</NavLink>
+								</ListItemButton>
+							</ListItem>
+						))}
 					</List>
 				</Box>
 			</Drawer>
