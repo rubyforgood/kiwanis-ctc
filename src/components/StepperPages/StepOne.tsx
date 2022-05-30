@@ -1,0 +1,112 @@
+import React from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+
+const StepOne = () => {
+	const validationSchema = yup.object({
+		firstName: yup
+			.string()
+			.required("First name is required"),
+		lastName: yup
+			.string()
+			.required("Last name is required"),
+		email: yup
+			.string()
+			.email("Enter a valid email")
+			.required("Email is required"),
+	});
+
+	const formik = useFormik({
+		initialValues: {
+			firstName: "",
+			lastName: "",
+			cellPhone: "",
+			homePhone: "",
+			email: ""
+		},
+		validationSchema: validationSchema,
+		onSubmit: (values) => {
+			alert(JSON.stringify(values, null, 2));
+		}
+	});
+
+	return (
+		<Box sx={{ ml: 30 }}>
+			<form onSubmit={formik.handleSubmit}>
+				<TextField
+					fullWidth
+					id="firstName"
+					name="firstName"
+					label="First Name"
+					margin="normal"
+					variant="outlined"
+					value={formik.values.firstName}
+					onChange={formik.handleChange}
+					error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+					helperText={formik.touched.firstName && formik.errors.firstName}
+				/>
+				<TextField
+					fullWidth
+					id="lastName"
+					name="lastName"
+					label="Last Name"
+					margin="normal"
+					variant="outlined"
+					value={formik.values.lastName}
+					onChange={formik.handleChange}
+					error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+					helperText={formik.touched.lastName && formik.errors.lastName}
+				/>
+				<TextField
+					fullWidth
+					id="cellPhone"
+					name="cellPhone"
+					label="Cell Phone"
+					margin="normal"
+					variant="outlined"
+					value={formik.values.cellPhone}
+					onChange={formik.handleChange}
+					error={formik.touched.cellPhone && Boolean(formik.errors.cellPhone)}
+					helperText={formik.touched.cellPhone && formik.errors.cellPhone}
+				/>
+				<TextField
+					fullWidth
+					id="homePhone"
+					name="homePhone"
+					label="Home Phone"
+					margin="normal"
+					variant="outlined"
+					value={formik.values.homePhone}
+					onChange={formik.handleChange}
+					error={formik.touched.homePhone && Boolean(formik.errors.homePhone)}
+					helperText={formik.touched.homePhone && formik.errors.homePhone}
+				/>
+				<TextField
+					fullWidth
+					id="email"
+					name="email"
+					label="Email"
+					margin="normal"
+					variant="outlined"
+					value={formik.values.email}
+					onChange={formik.handleChange}
+					error={formik.touched.email && Boolean(formik.errors.email)}
+					helperText={formik.touched.email && formik.errors.email}
+				/>
+				<Button
+					variant="contained"
+					sx={{ mt: 1, mr: 1 }}
+					type="submit"
+				>
+					Validate
+				</Button>
+			</form>
+		</Box>
+	);
+
+};
+
+export default StepOne;

@@ -8,6 +8,12 @@ import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
+// Stepper Pages
+import StepOne from "./StepperPages/StepOne";
+import StepTwo from "./StepperPages/StepTwo";
+import StepThree from "./StepperPages/StepThree";
+import StepFour from "./StepperPages/StepFour";
+
 const steps = [
 	{
 		label: "Add Donor Details",
@@ -38,8 +44,10 @@ const NewOrderStepper = () => {
 		setActiveStep(0);
 	};
 
+
+
 	return (
-		<Box sx={{ maxWidth: 400 }}>
+		<Box sx={{ maxWidth: 900, display: "flex", justifyContent: "space-around" }}>
 			<Stepper activeStep={activeStep} orientation="vertical">
 				{steps.map((step, index) => (
 					<Step key={step.label}>
@@ -53,6 +61,7 @@ const NewOrderStepper = () => {
 										variant="contained"
 										onClick={handleNext}
 										sx={{ mt: 1, mr: 1 }}
+										type="button"
 									>
 										{index === steps.length - 1 ? "Finish" : "Continue"}
 									</Button>
@@ -60,6 +69,7 @@ const NewOrderStepper = () => {
 										disabled={index === 0}
 										onClick={handleBack}
 										sx={{ mt: 1, mr: 1 }}
+										type="button"
 									>
 										Back
 									</Button>
@@ -69,11 +79,14 @@ const NewOrderStepper = () => {
 					</Step>
 				))}
 			</Stepper>
-			{activeStep === 0 && <h2>test</h2>}
+			{activeStep === 0 && <StepOne/>}
+			{activeStep === 1 && <StepTwo/>}
+			{activeStep === 2 && <StepThree/>}
+			{activeStep === 3 && <StepFour/>}
 			{activeStep === steps.length && (
 				<Paper square elevation={0} sx={{ p: 3 }}>
 					<Typography>All steps completed - you&apos;re finished</Typography>
-					<Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+					<Button onClick={handleReset} sx={{ mt: 1, mr: 1 }} type="button">
 						Reset
 					</Button>
 				</Paper>
