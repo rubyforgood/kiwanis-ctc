@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
 
 const settings = ["Logout"];
 
-const Navbar = () => {
+const Navbar = (props: { authing: any; }) => {
 	const classes = useStyles();
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -50,7 +50,7 @@ const Navbar = () => {
 			<Container maxWidth={false}>
 				<Toolbar disableGutters >
 
-					<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" }}}>
+					<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
 						<Typography
 							variant="h6"
 							noWrap
@@ -76,11 +76,11 @@ const Navbar = () => {
 						onClick={handleLogoReset}
 						className={classes.logo}
 						elevation={0}
-						sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next", minHeight: "0", minWidth: "0", padding: "0" }} 
+						sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next", minHeight: "0", minWidth: "0", padding: "0" }}
 					>
 						<img src={logo} alt="logo" style={{ maxWidth: "30rem", width: "85%" }} />
 					</Paper>
-					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+					{props.authing && <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
 						{isAdmin ? (<Typography
 							variant="h6"
 							noWrap
@@ -96,7 +96,7 @@ const Navbar = () => {
 							}}
 						>
 							2022 Blueberry Fundraiser
-						</Typography>): (
+						</Typography>) : (
 							<Typography
 								variant="h6"
 								noWrap
@@ -114,11 +114,11 @@ const Navbar = () => {
 								{/* Nothing is Displayed Here */}
 							</Typography>
 						)}
-						
-					</Box>
+
+					</Box>}
 					{isAdmin ? (
 						<Box sx={{ flexGrow: 0, display: "inline", }}>
-							<Box
+							{props.authing && <Box
 								display="flex"
 								justifyContent="center"
 								alignItems="center"
@@ -129,11 +129,11 @@ const Navbar = () => {
 									elevation={0}
 									sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next", minHeight: "0", minWidth: "0", padding: "0" }} >Remy</Paper>
 
-								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0}}>
+								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 
 									<ArrowDropDownIcon sx={{ display: { xs: "none", md: "flex" } }} />
 								</IconButton>
-							</Box>
+							</Box>}
 							<Menu
 								sx={{ mt: "45px" }}
 								id="menu-appbar"
@@ -156,7 +156,7 @@ const Navbar = () => {
 									</MenuItem>
 								))}
 							</Menu>
-						</Box> ) : (
+						</Box>) : (
 						<Box>
 							{/* Empty Box since not Admin */}
 						</Box>
