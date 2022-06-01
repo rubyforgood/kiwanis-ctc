@@ -4,7 +4,6 @@ import { getDocs, getFirestore, collection } from "firebase/firestore";
 import { config } from "../Firebase";
 import { initializeApp } from "firebase/app";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import Button from "@material-ui/core/Button";
 import NewOrder from "../components/NewOrder";
 
 const OrdersPage = () => {
