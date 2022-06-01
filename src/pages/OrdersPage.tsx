@@ -4,7 +4,6 @@ import { getDocs, getFirestore, collection } from "firebase/firestore";
 import { config } from "../Firebase";
 import { initializeApp } from "firebase/app";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import Button from "@material-ui/core/Button";
 import NewOrder from "../components/NewOrder";
 
 const OrdersPage = () => {
@@ -67,10 +66,6 @@ const OrdersPage = () => {
 		},
 	];
 
-	// const click = () => {
-	// 	console.log(clients);
-	// };
-
 	return (
 		<>
 			<Typography variant="subtitle1">
@@ -88,7 +83,6 @@ const OrdersPage = () => {
 					rowsPerPageOptions={[9]}
 				/>
 			</div>
-			{/* <button onClick={click}>test</button> */}
 		</>
 	);
 };

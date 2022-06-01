@@ -1,9 +1,7 @@
-import * as React from "react";
 
-import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-import { ThemeProvider } from "@material-ui/core";
+import { ThemeProvider } from "@mui/material";
 
 import {
 	BrowserRouter as Router,
@@ -18,11 +16,9 @@ import { config } from "./Firebase";
 
 // !Components
 import AuthRoute from "./components/AuthRoute";
-import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 // !Admin Pages
-import HomePage from "./pages/HomePage";
 import AdminPage from "./pages/admin/Page";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminOrders from "./pages/admin/Orders";
