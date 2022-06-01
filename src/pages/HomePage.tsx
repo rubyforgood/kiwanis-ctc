@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button } from "@material-ui/core";
 import { signOut, getAuth, reload } from "firebase/auth";
 import Navbar from "../components/Navbar";
 import React from "react";
