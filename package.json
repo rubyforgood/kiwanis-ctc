@@ -19,7 +19,7 @@
     "react-hook-form": "^7.29.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "latest",
-    "typescript": "latest",
+    "typescript": "^4.7.2",
     "yup": "^0.32.11"
   },
   "scripts": {
