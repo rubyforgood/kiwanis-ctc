@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Typography } from "@mui/material";
 import { getDocs, getFirestore, collection } from "firebase/firestore";
 import { config } from "../Firebase";
@@ -13,20 +13,24 @@ const OrdersPage = () => {
 	const [clients, setClients] = useState([]);
 
 	const colRef = collection(db, "clients");
-	getDocs(colRef)
-		.then((snapshot) => {
-			const tmpClients: any = [];
-			let id = 1;
-			snapshot.docs.forEach((doc) => {
-				tmpClients.push({
-					...doc.data(),
-					id: id++,
-					status: "Ready",
-					action: "details!!"
+
+	useEffect(() => {
+		getDocs(colRef)
+			.then((snapshot) => {
+				const tmpClients: any = [];
+				let id = 1;
+				snapshot.docs.forEach((doc) => {
+					tmpClients.push({
+						...doc.data(),
+						id: id++,
+						status: "Ready",
+						action: "details!!"
+					});
 				});
+				setClients(tmpClients);
 			});
-			setClients(tmpClients);
-		});
+	}, [clients]);
+
 
 
 	const columns: GridColDef[] = [

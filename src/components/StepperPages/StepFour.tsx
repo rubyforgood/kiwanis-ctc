@@ -1,41 +1,25 @@
-import React from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
+import { Typography } from "@mui/material";
 
 const StepOne = () => {
-	const validationSchema = yup.object({
-		firstName: yup
-			.string()
-			.required("First name is required"),
-		lastName: yup
-			.string()
-			.required("Last name is required"),
-		email: yup
-			.string()
-			.email("Enter a valid email")
-			.required("Email is required"),
-	});
-
-	const formik = useFormik({
-		initialValues: {
-			firstName: "",
-			lastName: "",
-			cellPhone: "",
-			homePhone: "",
-			email: ""
-		},
-		validationSchema: validationSchema,
-		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2));
-		}
-	});
+	const [collected, setCollected] = useState(false);
 
 	return (
-		<Box sx={{ ml: 30 }}>
-			<h1> STeP FOUR </h1>
+		<Box sx={{}}>
+			<Typography>
+				Pending balance collected?
+			</Typography>
+
+			<ButtonGroup>
+				{collected ? <Button disabled>Yes</Button> :
+					<Button onClick={() => setCollected(true)}>Yes</Button>}
+				{!collected ? <Button disabled>No</Button> :
+					<Button onClick={() => setCollected(false)}>No</Button>}
+			</ButtonGroup>
 		</Box>
 	);
 

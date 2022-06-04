@@ -8,16 +8,6 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 
-/* const optionsList = [
-	{ label: "Marketing Email", value: "ME", key: 1 },
-	{ label: "Returning Customer", value: "RC", key: 2 },
-	{ label: "Sun Gazette", value: "SG", key: 3 },
-	{ label: "Next Door", value: "ND", key: 4 },
-	{ label: "Facebook", value: "FB", key: 5 },
-	{ label: "Friends/Neighbour", value: "FN", key: 6 },
-	{ label: "Kiwanis Member", value: "KM", key: 7 }
-]; */
-
 enum Options {
 	Option1,
 	Option2,
@@ -67,44 +57,5 @@ const StepTwo: React.FC = () => {
 		</Formik>
 	);
 };
-
-/* const StepTwo = () => {
-	const name = "selectedOption";
-
-	const formik = useFormik({
-		initialValues: {
-			picked: "",
-		},
-		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2));
-		}
-	});
-
-	return (
-		<Box sx={{ ml: 20 }}>
-			<h1>STEP TWO</h1>
-			<Formik
-				initialValues={{ selectedOption: optionsList[0].value }}
-				onSubmit={values => console.log(values)}
-			>
-				{({ values, setFieldValue }) => {
-					<Form>
-						<FormControl component="fieldset">
-							<FormLabel component="legend">Selected Option:</FormLabel>
-							<RadioGroup
-								name={name}
-								value={values.selectedOption} onChange={(event) => {
-									setFieldValue(name, event.currentTarget.value);
-								}}
-							>
-								<FormControlLabel value={optionsList[0].value} control={<Radio />} label={optionsList[0].label} />
-							</RadioGroup>
-						</FormControl>
-					</Form>;
-				}}
-			</Formik>
-		</Box>
-	);
-}; */
 
 export default StepTwo;

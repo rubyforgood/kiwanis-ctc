@@ -4,23 +4,21 @@ import * as yup from "yup";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
 
 const StepThree = () => {
 	const [self, setSelf] = useState(0);
-	const [afac, setAfac] = useState(0);
+	const [AFAC, setAFAC] = useState(0);
 	const [cash, setCash] = useState(0);
 
-	// const handleIncrement = () => {
-	// 	setSelf(state => ({ counter: state.counter + 1 }));
-	// };
-
-	// const handleDecrement = () => {
-	// 	setSelf(state => ({ counter: state.counter - 1 }));
-	// };
-
-	const handleClick = (e: any) => {
-		console.log(e);
+	const handleSubmit = () => {
+		const orderDetails = {
+			"self": self,
+			"AFAC": AFAC,
+			"cash": cash || 0
+		};
+		alert(JSON.stringify(orderDetails, null, 2));
 	};
 
 	return (
@@ -29,15 +27,50 @@ const StepThree = () => {
 				Add blueberry boxes
 			</Typography>
 
-			<ButtonGroup>
-				<Button>-</Button>
-				<Button disabled>{self}</Button>
-				<Button onClick={handleClick}>+</Button>
-			</ButtonGroup>
+			<Box sx={{ display: "flex" }}>
+				<Typography>
+					Self
+				</Typography>
+				<ButtonGroup>
+					{self === 0 ? <Button disabled>-</Button> : <Button onClick={() => setSelf(self - 1)}>
+						-
+					</Button>}
+					<Button disabled>{self}</Button>
+					<Button onClick={() => setSelf(self + 1)}>+</Button>
+				</ButtonGroup>
+				{"$" + self * 40}
+			</Box>
+
+			<Box sx={{ display: "flex" }}>
+				<Typography>
+					AFAC
+				</Typography>
+				<ButtonGroup>
+					{AFAC === 0 ? <Button disabled>-</Button> : <Button onClick={() => setAFAC(AFAC - 1)}>
+						-
+					</Button>}
+					<Button disabled>{AFAC}</Button>
+					<Button onClick={() => setAFAC(AFAC + 1)}>+</Button>
+				</ButtonGroup>
+				{"$" + AFAC * 40}
+			</Box>
 
 			<Typography>
 				Add cash donation
 			</Typography>
+			<Box sx={{ display: "flex" }}>
+				<Typography>
+					Cash
+				</Typography>
+				<TextField onChange={(event) => {
+					const formattedCash = Math.abs(parseFloat(parseFloat(event.target.value).toFixed(2)));
+					setCash(formattedCash);
+				}} placeholder="$0" type="number" />
+				{Number.isNaN(cash) ? "$0" : "$" + cash}
+			</Box>
+
+			<Button onClick={handleSubmit}>Confirm</Button>
+
 		</Box>
 	);
 
