@@ -55,10 +55,10 @@ const StepTwo: React.FC = () => {
 						</RadioGroup>
 						<Button
 							variant="contained"
-							sx={{ mt: 1, mr: 1 }}
+							sx={{ mt: 1, mr: 1, backgroundColor:"secondary.light"}}
 							type="submit"
 						>
-							Validate
+							Confirm
 						</Button>
 					</FormControl>
 

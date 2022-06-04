@@ -60,7 +60,7 @@ const NewOrderStepper = () => {
 									<Button
 										variant="contained"
 										onClick={handleNext}
-										sx={{ mt: 1, mr: 1 }}
+										sx={{ mt: 1, mr: 1}}
 										type="button"
 									>
 										{index === steps.length - 1 ? "Finish" : "Continue"}
