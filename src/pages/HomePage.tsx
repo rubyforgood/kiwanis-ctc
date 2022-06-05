@@ -7,7 +7,7 @@ const HomePage = () => {
 	const auth = getAuth();
 	return (
 		<>
-			<Navbar authing/>
+			{/* <Navbar authing/> */}
 			<h1>HomePage</h1>
 			<Button onClick={() => { signOut(auth); window.location.reload(); }}>Sign Out</Button>
 		</>

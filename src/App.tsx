@@ -13,6 +13,7 @@ import {
 import theme from "./theme";
 import { initializeApp } from "firebase/app";
 import { config } from "./Firebase";
+import { signOut, getAuth, reload } from "firebase/auth";
 
 // import your route components too
 
@@ -45,15 +46,18 @@ function Copyright() {
 }
 
 initializeApp(config.firebaseConfig);
-  
-  
+
+
 export default function App() {
+	const auth = getAuth();
+
 	return (
 		<ThemeProvider theme={theme}>
 			<Router>
+				<Navbar authing />
 				<Routes>
 					<Route path="/" element={<AuthRoute><HomePage /></AuthRoute>} />
-        	<Route path="/login" element={<AdminLogin />} />
+					<Route path="/login" element={<AdminLogin />} />
 					<Route path="/admin" element={<AdminPage />} />
 					<Route path="/dashboard" element={<AdminDashboard />} />
 					<Route path="/orders" element={<AdminOrders />} />
@@ -62,8 +66,8 @@ export default function App() {
 					<Route path="/communications" element={<AdminCommunications />} />
 				</Routes>
 				<Footer />
-			</Container>
-		</Router>
+				{/* </Container> */}
+			</Router>
 		</ThemeProvider>
 	);
 }
