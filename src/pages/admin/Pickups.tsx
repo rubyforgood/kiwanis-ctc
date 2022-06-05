@@ -1,6 +1,5 @@
 import React from "react";
 import AdminTaskbar from "../../components/AdminTaskbar";
-import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,26 +9,11 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { Chip, Divider } from "@mui/material";
 
-// interface Data {
-// 	calories: number;
-// 	carbs: number;
-// 	fat: number;
-// 	name: string;
-// 	protein: number;
-// }
 interface Data {
 	no: string,
 	firstName: string,
@@ -41,22 +25,6 @@ interface Data {
 	paid: string,
 	pickUp: string;
 }
-
-// function createData(
-// 	name: string,
-// 	calories: number,
-// 	fat: number,
-// 	carbs: number,
-// 	protein: number,
-// ): Data {
-// 	return {
-// 		name,
-// 		calories,
-// 		fat,
-// 		carbs,
-// 		protein,
-// 	};
-// }
 
 function createData(
 	no: string,
@@ -81,22 +49,6 @@ function createData(
 		pickUp
 	};
 }
-
-// const rows = [
-// 	createData("Cupcake", 305, 3.7, 67, 4.3),
-// 	createData("Donut", 452, 25.0, 51, 4.9),
-// 	createData("Eclair", 262, 16.0, 24, 6.0),
-// 	createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-// 	createData("Gingerbread", 356, 16.0, 49, 3.9),
-// 	createData("Honeycomb", 408, 3.2, 87, 6.5),
-// 	createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-// 	createData("Jelly Bean", 375, 0.0, 94, 0.0),
-// 	createData("KitKat", 518, 26.0, 65, 7.0),
-// 	createData("Lollipop", 392, 0.2, 98, 0.0),
-// 	createData("Marshmallow", 318, 0, 81, 2.0),
-// 	createData("Nougat", 360, 19.0, 9, 37.0),
-// 	createData("Oreo", 437, 18.0, 63, 4.0),
-// ];
 
 const rows = [
 	createData("01", "Ava", "Miller", 1, 4, 5, "Credit Card", "Yes", "Ready"),
@@ -156,40 +108,6 @@ interface HeadCell {
 	label: string;
 	numeric: boolean;
 }
-
-// const headCells: readonly HeadCell[] = [
-// 	{
-// 		id: "name",
-// 		numeric: false,
-// 		disablePadding: true,
-// 		label: "Dessert (100g serving)",
-// 	},
-// 	{
-// 		id: "calories",
-// 		numeric: true,
-// 		disablePadding: false,
-// 		label: "Calories",
-// 	},
-// 	{
-// 		id: "fat",
-// 		numeric: true,
-// 		disablePadding: false,
-// 		label: "Fat (g)",
-// 	},
-// 	{
-// 		id: "carbs",
-// 		numeric: true,
-// 		disablePadding: false,
-// 		label: "Carbs (g)",
-// 	},
-// 	{
-// 		id: "protein",
-// 		numeric: true,
-// 		disablePadding: false,
-// 		label: "Protein (g)",
-// 	},
-// ];
-
 
 
 const headCells: readonly HeadCell[] = [
@@ -297,10 +215,6 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 	);
 }
 
-interface EnhancedTableToolbarProps {
-	numSelected: number;
-}
-
 export default function Pickups() {
 	const [order, setOrder] = React.useState<Order>("asc");
 	const [orderBy, setOrderBy] = React.useState<keyof Data>("lastName");
@@ -356,10 +270,6 @@ export default function Pickups() {
 		setPage(0);
 	};
 
-	const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setDense(event.target.checked);
-	};
-
 	const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
 	// Avoid a layout jump when reaching the last page with empty rows.
@@ -393,10 +303,20 @@ export default function Pickups() {
 	return (
 		<div style={{ marginTop: "7rem", marginRight: "2rem" }}>
 			<AdminTaskbar />
+			<Box component="main" sx={{ width: "90%", float: "right", minWidth: "1000px", pr:170, pt: 0, pb: 0}}>
+				<Typography paragraph align="center" fontSize="16px" fontWeight="400" color="#54575E" sx={{pr: 2}}>
+				Dashboard/Pickups
+				</Typography>
+				<Typography paragraph align="center" fontSize="24px" fontWeight="700" color="#000000">
+				Order Pick-ups
+				</Typography>
+				<Typography paragraph align="center" fontSize="20px" fontWeight="400" color="#82692E" sx={{pl: 4}}>
+				Available for Sale: <Typography paragraph display="inline" align="center" fontSize="20px" fontWeight="bold" color="#82692E">{rows.length}</Typography>
+				</Typography>
+			</Box>
 			<Box sx={{ width: "85%", float: "right", minWidth: "1000px" }}>
 				<Divider variant="middle" style={{ marginBottom: "4rem" }} />
 				<Paper sx={{ width: "100%", mb: 2 }}>
-					{/* <EnhancedTableToolbar numSelected={selected.length} /> */}
 					<TableContainer
 						style={{ borderRadius: "1rem" }}>
 						<Table
@@ -498,63 +418,3 @@ export default function Pickups() {
 		</div>
 	);
 }
-
-// const Pickups = () => {
-// 	return (
-// 		<div>
-// 			<AdminTaskbar />
-// 			<Box component="main" sx={{ flexGrow: 1, p: 3, pr: 110 }}>
-// 				<Toolbar />
-// 				<Typography paragraph align="center" fontSize="16px" fontWeight="400" color="#54575E" sx={{ pr: 2 }}>
-// 					Dashboard/Pickups
-// 				</Typography>
-// 				<Typography paragraph align="center" fontSize="24px" fontWeight="700" color="#000000">
-// 					Order Pick-ups
-// 				</Typography>
-// 				<Typography paragraph align="center" fontSize="20px" fontWeight="400" color="#82692E">
-// 					Available for Sale:
-// 				</Typography>
-// 			</Box>
-// 			<TableContainer component={Paper}>
-// 				<Table sx={{ maxWidth: 3000, }} aria-label="simple table">
-// 					<TableHead>
-// 						<TableRow>
-// 							<TableCell align="left">No.</TableCell>
-// 							<TableCell align="left">First Name</TableCell>
-// 							<TableCell align="left">Last Name</TableCell>
-// 							<TableCell align="left">Self</TableCell>
-// 							<TableCell align="left">AFAC</TableCell>
-// 							<TableCell align="left">Total</TableCell>
-// 							<TableCell align="left">Method</TableCell>
-// 							<TableCell align="left">Paid</TableCell>
-// 							<TableCell align="left">Pick Up</TableCell>
-// 						</TableRow>
-// 					</TableHead>
-// 					<TableBody>
-// 						{rows.map((row) => (
-// 							<TableRow
-// 								key={row.no}
-// 								sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-// 							>
-// 								<TableCell component="th" scope="row">
-// 									{row.no}
-// 								</TableCell>
-// 								<TableCell align="right">{row.calories}</TableCell>
-// 								<TableCell align="right">{row.fat}</TableCell>
-// 								<TableCell align="right">{row.carbs}</TableCell>
-// 								<TableCell align="right">{row.protein}</TableCell>
-// 								<TableCell align="right">{row.protein}</TableCell>
-// 								<TableCell align="right">{row.protein}</TableCell>
-// 								<TableCell align="right">{row.protein}</TableCell>
-// 								<TableCell align="right">{row.protein}</TableCell>
-// 							</TableRow>
-// 						))}
-// 					</TableBody>
-// 				</Table>
-// 			</TableContainer>
-// 		</div>
-
-// 	);
-// };
-
-// export default Pickups;
