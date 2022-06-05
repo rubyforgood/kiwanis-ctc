@@ -71,9 +71,6 @@ const OrdersPage = () => {
 		},
 	];
 
-	// const click = () => {
-	// 	console.log(clients);
-	// };
 
 	return (
 		<>
@@ -92,7 +89,6 @@ const OrdersPage = () => {
 					rowsPerPageOptions={[9]}
 				/>
 			</div>
-			{/* <button onClick={click}>test</button> */}
 		</>
 	);
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Form, useFormik } from "formik";
+import { Formik, Form } from "formik";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Radio from "@mui/material/Radio";
@@ -7,6 +7,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
+import { StepProps } from "../StepProps";
 
 enum Options {
 	Option1,
@@ -18,7 +19,7 @@ enum Options {
 	Option7
 }
 
-const StepTwo: React.FC = () => {
+const StepTwo: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrderDetails] }) => {
 	const name = "selectedOption";
 
 	return (
@@ -26,7 +27,12 @@ const StepTwo: React.FC = () => {
 			initialValues={{
 				selectedOption: Options.Option1.toString()
 			}}
-			onSubmit={(values) => { console.log(values); }}
+			onSubmit={(values) => {
+				setOrderDetails(prevDetails => ({
+					...prevDetails,
+					"selectedOption": values.selectedOption
+				}));
+			}}
 		>
 			{({ values, setFieldValue }) => (
 				<Form>
@@ -45,7 +51,7 @@ const StepTwo: React.FC = () => {
 						</RadioGroup>
 						<Button
 							variant="contained"
-							sx={{ mt: 1, mr: 1, backgroundColor:"secondary.light"}}
+							sx={{ mt: 1, mr: 1, backgroundColor: "secondary.light" }}
 							type="submit"
 						>
 							Confirm

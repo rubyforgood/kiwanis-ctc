@@ -4,8 +4,9 @@ import * as yup from "yup";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { StepProps } from "../StepProps";
 
-const StepOne = () => {
+const StepOne: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrderDetails] }) => {
 	const validationSchema = yup.object({
 		firstName: yup
 			.string()
@@ -29,7 +30,14 @@ const StepOne = () => {
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2));
+			setOrderDetails(prevDetails => ({
+				...prevDetails,
+				"firstName": values.firstName,
+				"lastName": values.lastName,
+				"cellPhone": values.cellPhone,
+				"homePhone": values.homePhone,
+				"email": values.email,
+			}));
 		}
 	});
 
@@ -98,7 +106,7 @@ const StepOne = () => {
 				/>
 				<Button
 					variant="contained"
-					sx={{ mt: 1, mr: 1, backgroundColor:"secondary.light"}}
+					sx={{ mt: 1, mr: 1, backgroundColor: "secondary.light" }}
 					type="submit"
 				>
 					Confirm

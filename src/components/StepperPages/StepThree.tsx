@@ -1,24 +1,23 @@
 import React, { useState } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
+import { StepProps } from "../StepProps";
 
-const StepThree = () => {
+const StepThree: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrderDetails] }) => {
 	const [self, setSelf] = useState(0);
 	const [AFAC, setAFAC] = useState(0);
 	const [cash, setCash] = useState(0);
 
 	const handleSubmit = () => {
-		const orderDetails = {
+		setOrderDetails(prevDetails => ({
+			...prevDetails,
 			"self": self,
 			"AFAC": AFAC,
 			"cash": cash || 0
-		};
-		alert(JSON.stringify(orderDetails, null, 2));
+		}));
 	};
 
 	return (
@@ -68,9 +67,7 @@ const StepThree = () => {
 				}} placeholder="$0" type="number" />
 				{Number.isNaN(cash) ? "$0" : "$" + cash}
 			</Box>
-
-			<Button onClick={handleSubmit}>Confirm</Button>
-
+			<Button variant="outlined" onClick={handleSubmit}>Confirm</Button>
 		</Box>
 	);
 

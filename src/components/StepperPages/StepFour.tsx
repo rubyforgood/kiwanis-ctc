@@ -4,25 +4,29 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
+import { StepProps } from "../StepProps";
 
-const StepOne = () => {
-	const [collected, setCollected] = useState(false);
+const StepFour: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrderDetails] }) => {
+
+	const setDetails = (boolean: boolean) => {
+		setOrderDetails(prevDetails => ({
+			...prevDetails,
+			"paid": boolean
+		}));
+	};
 
 	return (
 		<Box sx={{}}>
 			<Typography>
 				Pending balance collected?
 			</Typography>
-
-			<ButtonGroup>
-				{collected ? <Button disabled>Yes</Button> :
-					<Button onClick={() => setCollected(true)}>Yes</Button>}
-				{!collected ? <Button disabled>No</Button> :
-					<Button onClick={() => setCollected(false)}>No</Button>}
-			</ButtonGroup>
+			{orderDetails.paid ? <Button disabled>Yes</Button> :
+				<Button variant="outlined" onClick={() => setDetails(true)}>Yes</Button>}
+			{!orderDetails.paid ? <Button disabled>No</Button> :
+				<Button variant="outlined" onClick={() => setDetails(false)}>No</Button>}
 		</Box>
 	);
 
 };
 
-export default StepOne;
+export default StepFour;
