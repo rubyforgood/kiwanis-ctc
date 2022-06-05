@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
 import { Chip, Tabs, Tab } from "@mui/material";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
 	indicator: {
@@ -93,8 +93,7 @@ function getComparator<Key extends keyof any>(
 		: (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
+
 function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) {
 	const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
 	stabilizedThis.sort((a, b) => {
@@ -259,7 +258,6 @@ export default function Pickups() {
 	const [orderBy, setOrderBy] = React.useState<keyof Data>("lastName");
 	const [selected, setSelected] = React.useState<readonly string[]>([]);
 	const [page, setPage] = React.useState(0);
-	const [dense, setDense] = React.useState(false);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
 	const handleRequestSort = (
@@ -346,6 +344,13 @@ export default function Pickups() {
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
+	const pickedUpRows = originalRows.filter((obj) => {
+		return obj.pickUp === "Picked Up";
+	});
+	const nonPickedUpRows = originalRows.filter((obj) => {
+		return obj.pickUp === "Not Ready" || obj.pickUp === "Ready";
+	});
+	
 	const [rows, setRows] = useState<Data[]>(originalRows);
 	const [searched, setSearched] = useState<string>("");
 	const fullNameArray = [];
@@ -362,6 +367,8 @@ export default function Pickups() {
 		setSearched("");
 		requestSearch(searched);
 	};
+	
+	
 	return (
 		<div style={{ marginTop: "7rem", marginRight: "2rem" }}>
 			<AdminTaskbar />
@@ -401,7 +408,6 @@ export default function Pickups() {
 							<Table
 								sx={{ minWidth: 750 }}
 								aria-labelledby="tableTitle"
-								size={dense ? "small" : "medium"}
 							>
 								<EnhancedTableHead
 									numSelected={selected.length}
@@ -471,11 +477,7 @@ export default function Pickups() {
 											);
 										})}
 									{emptyRows > 0 && (
-										<TableRow
-											style={{
-												height: (dense ? 33 : 53) * emptyRows,
-											}}
-										>
+										<TableRow>
 											<TableCell colSpan={6} />
 										</TableRow>
 									)}
@@ -500,7 +502,6 @@ export default function Pickups() {
 							<Table
 								sx={{ minWidth: 750 }}
 								aria-labelledby="tableTitle"
-								size={dense ? "small" : "medium"}
 							>
 								<EnhancedTableHead
 									numSelected={selected.length}
@@ -508,12 +509,10 @@ export default function Pickups() {
 									orderBy={orderBy}
 									onSelectAllClick={handleSelectAllClick}
 									onRequestSort={handleRequestSort}
-									rowCount={originalRows.length}
+									rowCount={pickedUpRows.length}
 								/>
 								<TableBody>
-									{/* if you don't need to support IE11, you can replace the `stableSort` call with:
-				rows.slice().sort(getComparator(order, orderBy)) */}
-									{stableSort(originalRows, getComparator(order, orderBy))
+									{stableSort(pickedUpRows, getComparator(order, orderBy))
 										.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 										.map((originalRow, index) => {
 											const isItemSelected = isSelected(originalRow.no);
@@ -571,11 +570,7 @@ export default function Pickups() {
 											);
 										})}
 									{emptyRows > 0 && (
-										<TableRow
-											style={{
-												height: (dense ? 33 : 53) * emptyRows,
-											}}
-										>
+										<TableRow>
 											<TableCell colSpan={6} />
 										</TableRow>
 									)}
@@ -585,7 +580,7 @@ export default function Pickups() {
 						<TablePagination
 							rowsPerPageOptions={[5, 10, 25]}
 							component="div"
-							count={rows.length}
+							count={pickedUpRows.length}
 							rowsPerPage={rowsPerPage}
 							page={page}
 							onPageChange={handleChangePage}
