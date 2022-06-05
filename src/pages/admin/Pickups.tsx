@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import AdminTaskbar from "../../components/AdminTaskbar";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
+import SearchBar from "material-ui-search-bar";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -12,7 +13,38 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
-import { Chip, Divider } from "@mui/material";
+import { Chip, Tabs, Tab } from "@mui/material";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+	indicator: {
+		background: "none"
+	},
+	tabs: {
+		"& button[aria-selected='true']": {
+			borderRadius: "12px 12px 0px 0px",
+			textDecoration: "none",
+			backgroundColor: "#E8C887",
+			color: "#01050F",
+		},
+		"& button[aria-selected='false']": {
+			borderRadius: "12px 12px 0px 0px",
+			textDecoration: "none",
+			backgroundColor: "#CFD1D4",
+			color: "#01050F",
+		},
+	},
+	activeTab: {
+		fontSize:"18px",
+		fontWeight:700,
+		color:"#01050F"
+	},
+	customStyleOnTab: {
+		fontSize:"18px",
+		fontWeight:400,
+		color:"#01050F"
+	}
+});
 
 interface Data {
 	no: string,
@@ -26,42 +58,15 @@ interface Data {
 	pickUp: string;
 }
 
-function createData(
-	no: string,
-	firstName: string,
-	lastName: string,
-	self: number,
-	afac: number,
-	total: number,
-	method: string,
-	paid: string,
-	pickUp: string
-): Data {
-	return {
-		no,
-		firstName,
-		lastName,
-		self,
-		afac,
-		total,
-		method,
-		paid,
-		pickUp
-	};
-}
-
-const rows = [
-	createData("01", "Ava", "Miller", 1, 4, 5, "Credit Card", "Yes", "Ready"),
-	createData("02", "James", "Cole", 2, 0, 2, "Credit Card", "No", "Ready"),
-	createData("03", "Vivian", "Eggers", 5, 5, 10, "Credit Card", "Partial", "Not Ready"),
-	createData("04", "Ava", "Miller", 1, 4, 5, "Credit Card", "Yes", "Ready"),
-	createData("05", "James", "Cole", 2, 0, 2, "Credit Card", "Yes", "Ready"),
-	createData("06", "Vivian", "Eggers", 5, 5, 10, "Credit Card", "Partial", "Ready"),
-	createData("07", "Vivian", "Eggers", 5, 5, 10, "Credit Card", "Partial", "Not Ready"),
-	createData("08", "Ava", "Miller", 1, 4, 5, "Credit Card", "Yes", "Ready"),
-	createData("09", "James", "Cole", 2, 0, 2, "Credit Card", "No", "Ready"),
-	createData("10", "Vivian", "Eggers", 5, 5, 10, "Credit Card", "Partial", "Ready"),
-	createData("11", "Vivian", "Eggers", 5, 5, 10, "Credit Card", "Partial", "Ready"),
+const originalRows: Data[] = [
+	{no: "01", firstName: "Ava", lastName: "Miller", self: 1, afac: 4, total: 5, method:"Credit Card", paid: "Yes", pickUp: "Ready"},
+	{no: "02", firstName: "James", lastName: "Cole", self: 2, afac: 0, total: 2, method:"Credit Card", paid: "Yes", pickUp: "Ready"}, 
+	{no: "03", firstName: "Vivian", lastName: "Eggers", self: 5, afac: 5, total: 10, method:"Credit Card", paid: "Partial", pickUp: "Not Ready"}, 
+	{no: "04", firstName: "Ellijah", lastName: "Sandis", self: 0, afac: 4, total: 4, method:"Credit Card", paid: "Yes", pickUp: "Ready"}, 
+	{no: "05", firstName: "Anjali", lastName: "Sharma", self: 1, afac: 1, total: 2, method:"Credit Card", paid: "No", pickUp: "Not Ready"}, 
+	{no: "06", firstName: "Sarah", lastName: "Smith", self: 1, afac: 4, total: 5, method:"Credit Card", paid: "Yes", pickUp: "Picked Up"}, 
+	{no: "07", firstName: "Noah", lastName: "Davis", self: 0, afac: 3, total: 3, method:"Credit Card", paid: "Yes", pickUp: "Picked Up"}, 
+	{no: "08", firstName: "Mary", lastName: "Brown", self: 1, afac: 1, total: 2, method:"Credit Card", paid: "Partial", pickUp: "Ready"}, 
 ];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -215,7 +220,41 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 	);
 }
 
+interface TabPanelProps {
+	children?: React.ReactNode;
+	index: number;
+	value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+	const { children, value, index, ...other } = props;
+
+	return (
+		<div
+			role="tabpanel"
+			hidden={value !== index}
+			id={`simple-tabpanel-${index}`}
+			aria-labelledby={`simple-tab-${index}`}
+			{...other}
+		>
+			{value === index && (
+				<Box sx={{ p: 3 }}>
+					<Typography>{children}</Typography>
+				</Box>
+			)}
+		</div>
+	);
+}
+
+function a11yProps(index: number) {
+	return {
+		id: `simple-tab-${index}`,
+		"aria-controls": `simple-tabpanel-${index}`,
+	};
+}
+
 export default function Pickups() {
+	const classes = useStyles();
 	const [order, setOrder] = React.useState<Order>("asc");
 	const [orderBy, setOrderBy] = React.useState<keyof Data>("lastName");
 	const [selected, setSelected] = React.useState<readonly string[]>([]);
@@ -234,7 +273,7 @@ export default function Pickups() {
 
 	const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.checked) {
-			const newSelecteds = rows.map((n) => n.firstName);
+			const newSelecteds = originalRows.map((n) => n.firstName);
 			setSelected(newSelecteds);
 			return;
 		}
@@ -274,7 +313,7 @@ export default function Pickups() {
 
 	// Avoid a layout jump when reaching the last page with empty rows.
 	const emptyRows =
-		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - originalRows.length) : 0;
 
 	const getChipColorPaid = (paidStatus: string) => {
 		switch (paidStatus) {
@@ -295,11 +334,34 @@ export default function Pickups() {
 			return "#FFF0CB";
 		case "Not Ready":
 			return "#FFD0CA";
+		case "Picked Up":
+			return "#E3EECB";
 		default:
 			return "#CFD1D4";
 		}
 	};
 
+	const [value, setValue] = React.useState(0);
+
+	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+		setValue(newValue);
+	};
+	const [rows, setRows] = useState<Data[]>(originalRows);
+	const [searched, setSearched] = useState<string>("");
+	const fullNameArray = [];
+	const requestSearch = (searchedVal: string) => {
+		const filteredRows = originalRows.filter((row) => {
+			const fullName = row.firstName + " " + row.lastName;
+			fullNameArray.push(fullName);
+			return fullName.toLowerCase().includes(searchedVal.toLowerCase());
+		});
+		setRows(filteredRows);
+	};
+	
+	const cancelSearch = () => {
+		setSearched("");
+		requestSearch(searched);
+	};
 	return (
 		<div style={{ marginTop: "7rem", marginRight: "2rem" }}>
 			<AdminTaskbar />
@@ -315,105 +377,222 @@ export default function Pickups() {
 				</Typography>
 			</Box>
 			<Box sx={{ width: "85%", float: "right", minWidth: "1000px" }}>
-				<Divider variant="middle" style={{ marginBottom: "4rem" }} />
-				<Paper sx={{ width: "100%", mb: 2 }}>
-					<TableContainer
-						style={{ borderRadius: "1rem" }}>
-						<Table
-							sx={{ minWidth: 750 }}
-							aria-labelledby="tableTitle"
-							size={dense ? "small" : "medium"}
-						>
-							<EnhancedTableHead
-								numSelected={selected.length}
-								order={order}
-								orderBy={orderBy}
-								onSelectAllClick={handleSelectAllClick}
-								onRequestSort={handleRequestSort}
-								rowCount={rows.length}
-							/>
-							<TableBody>
-								{/* if you don't need to support IE11, you can replace the `stableSort` call with:
+				<Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+					<Tabs value={value} onChange={handleChange} className={classes.tabs}
+						classes={{ indicator: classes.indicator }} TabIndicatorProps={{
+							style: {display: "none"}
+						}}>
+						<Tab disableRipple label={<span className={ value === 0 ? classes.activeTab : classes.customStyleOnTab}>Ready for pick up</span>}{...a11yProps(0)}/>
+						<Tab disableRipple label={<span className={ value === 1 ? classes.activeTab : classes.customStyleOnTab}>Picked Up</span>} {...a11yProps(1)} />
+					</Tabs>
+				</Box>
+				<SearchBar
+					value={searched}
+					onChange={(searchVal) => requestSearch(searchVal)}
+					onCancelSearch={() => cancelSearch()}
+					style={{
+						maxWidth: "600 px",
+					}}
+				/>
+				<TabPanel value={value} index={0}>
+					<Paper sx={{ width: "100%", mb: 2 }}>
+						<TableContainer
+							style={{ borderRadius: "1rem" }}>
+							<Table
+								sx={{ minWidth: 750 }}
+								aria-labelledby="tableTitle"
+								size={dense ? "small" : "medium"}
+							>
+								<EnhancedTableHead
+									numSelected={selected.length}
+									order={order}
+									orderBy={orderBy}
+									onSelectAllClick={handleSelectAllClick}
+									onRequestSort={handleRequestSort}
+									rowCount={rows.length}
+								/>
+								<TableBody>
+									{/* if you don't need to support IE11, you can replace the `stableSort` call with:
 				rows.slice().sort(getComparator(order, orderBy)) */}
-								{stableSort(rows, getComparator(order, orderBy))
-									.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-									.map((row, index) => {
-										const isItemSelected = isSelected(row.no);
-										const labelId = `enhanced-table-checkbox-${index}`;
+									{stableSort(rows, getComparator(order, orderBy))
+										.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+										.map((originalRow, index) => {
+											const isItemSelected = isSelected(originalRow.no);
+											const labelId = `enhanced-table-checkbox-${index}`;
 
-										return (
-											<TableRow
-												hover
-												onClick={(event) => handleClick(event, row.no)}
-												role="checkbox"
-												aria-checked={isItemSelected}
-												tabIndex={-1}
-												key={row.no}
-												selected={isItemSelected}
-											>
-												<TableCell
-													component="th"
-													id={labelId}
-													scope="row"
-													padding="none"
-													align="center"
+											return (
+												<TableRow
+													hover
+													onClick={(event) => handleClick(event, originalRow.no)}
+													role="checkbox"
+													aria-checked={isItemSelected}
+													tabIndex={-1}
+													key={originalRow.no}
+													selected={isItemSelected}
 												>
-													{row.no}
-												</TableCell>
-												{/* <TableCell align="right">{row.no}</TableCell> */}
-												<TableCell align="center">{row.firstName}</TableCell>
-												<TableCell align="center">{row.lastName}</TableCell>
-												<TableCell align="center">{row.self}</TableCell>
-												<TableCell align="center">{row.afac}</TableCell>
-												<TableCell align="center">{row.total}</TableCell>
-												<TableCell align="center">{row.method}</TableCell>
-												<TableCell align="center">
-													<Chip
+													<TableCell
+														component="th"
+														id={labelId}
+														scope="row"
+														padding="none"
+														align="center"
+													>
+														{originalRow.no}
+													</TableCell>
+													<TableCell align="center">{originalRow.firstName}</TableCell>
+													<TableCell align="center">{originalRow.lastName}</TableCell>
+													<TableCell align="center">{originalRow.self}</TableCell>
+													<TableCell align="center">{originalRow.afac}</TableCell>
+													<TableCell align="center">{originalRow.total}</TableCell>
+													<TableCell align="center">{originalRow.method}</TableCell>
+													<TableCell align="center">
+														<Chip
+															label={
+																<Typography color="black" variant="body2">
+																	{originalRow.paid}
+																</Typography>
+															}
+															// color={getChipColor(row.paid)}
+
+															style={{ backgroundColor: getChipColorPaid(originalRow.paid), borderRadius: "0" }}
+														/>
+													</TableCell>
+													<TableCell align="center"><Chip
 														label={
 															<Typography color="black" variant="body2">
-																{row.paid}
+																{originalRow.pickUp}
 															</Typography>
 														}
-														// color={getChipColor(row.paid)}
+														// color={getChipColor(row.pickUp)}
 
-														style={{ backgroundColor: getChipColorPaid(row.paid), borderRadius: "0" }}
-													/>
-												</TableCell>
-												<TableCell align="center"><Chip
-													label={
-														<Typography color="black" variant="body2">
-															{row.pickUp}
-														</Typography>
-													}
-													// color={getChipColor(row.pickUp)}
+														style={{ backgroundColor: getChipColorPickUp(originalRow.pickUp), borderRadius: "0" }}
+													/></TableCell>
+												</TableRow>
+											);
+										})}
+									{emptyRows > 0 && (
+										<TableRow
+											style={{
+												height: (dense ? 33 : 53) * emptyRows,
+											}}
+										>
+											<TableCell colSpan={6} />
+										</TableRow>
+									)}
+								</TableBody>
+							</Table>
+						</TableContainer>
+						<TablePagination
+							rowsPerPageOptions={[5, 10, 25]}
+							component="div"
+							count={rows.length}
+							rowsPerPage={rowsPerPage}
+							page={page}
+							onPageChange={handleChangePage}
+							onRowsPerPageChange={handleChangeRowsPerPage}
+						/>
+					</Paper>
+				</TabPanel>
+				<TabPanel value={value} index={1}>
+					<Paper sx={{ width: "100%", mb: 2 }}>
+						<TableContainer
+							style={{ borderRadius: "1rem" }}>
+							<Table
+								sx={{ minWidth: 750 }}
+								aria-labelledby="tableTitle"
+								size={dense ? "small" : "medium"}
+							>
+								<EnhancedTableHead
+									numSelected={selected.length}
+									order={order}
+									orderBy={orderBy}
+									onSelectAllClick={handleSelectAllClick}
+									onRequestSort={handleRequestSort}
+									rowCount={originalRows.length}
+								/>
+								<TableBody>
+									{/* if you don't need to support IE11, you can replace the `stableSort` call with:
+				rows.slice().sort(getComparator(order, orderBy)) */}
+									{stableSort(originalRows, getComparator(order, orderBy))
+										.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+										.map((originalRow, index) => {
+											const isItemSelected = isSelected(originalRow.no);
+											const labelId = `enhanced-table-checkbox-${index}`;
 
-													style={{ backgroundColor: getChipColorPickUp(row.pickUp), borderRadius: "0" }}
-												/></TableCell>
-											</TableRow>
-										);
-									})}
-								{emptyRows > 0 && (
-									<TableRow
-										style={{
-											height: (dense ? 33 : 53) * emptyRows,
-										}}
-									>
-										<TableCell colSpan={6} />
-									</TableRow>
-								)}
-							</TableBody>
-						</Table>
-					</TableContainer>
-					<TablePagination
-						rowsPerPageOptions={[5, 10, 25]}
-						component="div"
-						count={rows.length}
-						rowsPerPage={rowsPerPage}
-						page={page}
-						onPageChange={handleChangePage}
-						onRowsPerPageChange={handleChangeRowsPerPage}
-					/>
-				</Paper>
+											return (
+												<TableRow
+													hover
+													onClick={(event) => handleClick(event, originalRow.no)}
+													role="checkbox"
+													aria-checked={isItemSelected}
+													tabIndex={-1}
+													key={originalRow.no}
+													selected={isItemSelected}
+												>
+													
+													<TableCell
+														component="th"
+														id={labelId}
+														scope="row"
+														padding="none"
+														align="center"
+													>
+														{originalRow.no}
+													</TableCell>
+													<TableCell align="center">{originalRow.firstName}</TableCell>
+													<TableCell align="center">{originalRow.lastName}</TableCell>
+													<TableCell align="center">{originalRow.self}</TableCell>
+													<TableCell align="center">{originalRow.afac}</TableCell>
+													<TableCell align="center">{originalRow.total}</TableCell>
+													<TableCell align="center">{originalRow.method}</TableCell>
+													<TableCell align="center">
+														<Chip
+															label={
+																<Typography color="black" variant="body2">
+																	{originalRow.paid}
+																</Typography>
+															}
+															// color={getChipColor(row.paid)}
+
+															style={{ backgroundColor: getChipColorPaid(originalRow.paid), borderRadius: "0" }}
+														/>
+													</TableCell>
+													<TableCell align="center"><Chip
+														label={
+															<Typography color="black" variant="body2">
+																{originalRow.pickUp}
+															</Typography>
+														}
+														// color={getChipColor(row.pickUp)}
+
+														style={{ backgroundColor: getChipColorPickUp(originalRow.pickUp), borderRadius: "0" }}
+													/></TableCell>
+												</TableRow>
+											);
+										})}
+									{emptyRows > 0 && (
+										<TableRow
+											style={{
+												height: (dense ? 33 : 53) * emptyRows,
+											}}
+										>
+											<TableCell colSpan={6} />
+										</TableRow>
+									)}
+								</TableBody>
+							</Table>
+						</TableContainer>
+						<TablePagination
+							rowsPerPageOptions={[5, 10, 25]}
+							component="div"
+							count={rows.length}
+							rowsPerPage={rowsPerPage}
+							page={page}
+							onPageChange={handleChangePage}
+							onRowsPerPageChange={handleChangeRowsPerPage}
+						/>
+					</Paper>
+				</TabPanel>
 			</Box>
 		</div>
 	);

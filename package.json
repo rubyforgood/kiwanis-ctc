@@ -13,6 +13,7 @@
     "firebase": "^9.8.1",
     "firebaseui": "^6.0.1",
     "formik": "^2.2.9",
+    "material-ui-search-bar": "^1.0.0",
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "^7.29.0",
