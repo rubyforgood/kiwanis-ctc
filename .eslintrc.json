@@ -26,8 +26,7 @@
             "tab"
         ],
         "linebreak-style": [
-            "error",
-            "unix"
+            "error"
         ],
         "quotes": [
             "error",
@@ -36,6 +35,9 @@
         "semi": [
             "error",
             "always"
+        ],
+        "@typescript-eslint/no-empty-interface": [
+            0
         ]
     }
 }
