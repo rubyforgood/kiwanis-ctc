@@ -7,7 +7,9 @@ import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { OrderDetails } from "./OrderDetails";
+import { OrderDetails } from "./Interfaces/OrderDetails";
+import { UpdateProps } from "./Interfaces/UpdateProps";
+import { addDoc } from "firebase/firestore"; 
 
 // Stepper Pages
 import StepOne from "./StepperPages/StepOne";
@@ -30,7 +32,7 @@ const steps = [
 	},
 ];
 
-const NewOrderStepper = () => {
+const NewOrderStepper: React.FC<UpdateProps> = ({ colRef, updatedState: [updated, setUpdated] }) => {
 	const [orderDetails, setOrderDetails] = useState<OrderDetails>({
 		"firstName": "",
 		"lastName": "",
@@ -54,8 +56,21 @@ const NewOrderStepper = () => {
 	};
 
 	const handleSubmit = () => {
+		const date = new Date();
+		addDoc(colRef, {
+			"Boxes for AFAC": orderDetails.AFAC,
+			"Boxes for Customer": orderDetails.self,
+			"Cell Phone Number": orderDetails.cellPhone,
+			"Home Phone Number": orderDetails.homePhone,
+			"E-mail": orderDetails.email,
+			"First Name": orderDetails.firstName,
+			"Last Name": orderDetails.lastName,
+			"How did you hear about us?": orderDetails.selectedOption,
+			"Total": orderDetails.cash + (orderDetails.AFAC + orderDetails.self) * 40,
+			"Submission Date": date,
+		});
 		setActiveStep(0);
-		console.log(orderDetails);
+		setUpdated(!updated);
 	};
 
 	return (
@@ -98,9 +113,9 @@ const NewOrderStepper = () => {
 				{activeStep === 3 && <StepFour orderDetailState={[orderDetails, setOrderDetails]}/>}
 				{activeStep === steps.length && (
 					<Paper square elevation={0} sx={{ p: 3 }}>
-						<Typography>All steps completed - you&apos;re finished</Typography>
+						<Typography>All information has been saved!</Typography>
 						<Button onClick={handleSubmit} sx={{ mt: 1, mr: 1 }} type="submit">
-							Reset
+							Submit Order
 						</Button>
 					</Paper>
 				)}

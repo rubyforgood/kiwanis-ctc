@@ -7,16 +7,16 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-import { StepProps } from "../StepProps";
+import { StepProps } from "../Interfaces/StepProps";
 
 enum Options {
-	Option1,
-	Option2,
-	Option3,
-	Option4,
-	Option5,
-	Option6,
-	Option7
+	Option1 = "Marketing Email",
+	Option2 = "Returning Customer",
+	Option3 = "Sun Gazette",
+	Option4 = "Next Door",
+	Option5 = "Facebook",
+	Option6 = "Friends/Neighbour",
+	Option7 = "Kiwanis Member"
 }
 
 const StepTwo: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrderDetails] }) => {

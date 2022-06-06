@@ -4,7 +4,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
-import { StepProps } from "../StepProps";
+import { StepProps } from "../Interfaces/StepProps";
 
 const StepThree: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrderDetails] }) => {
 	const [self, setSelf] = useState(0);

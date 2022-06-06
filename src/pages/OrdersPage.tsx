@@ -8,31 +8,28 @@ import Button from "@material-ui/core/Button";
 import NewOrder from "../components/NewOrder";
 
 const OrdersPage = () => {
+	const [clients, setClients] = useState([]);
+	const [updated, setUpdated] = useState(false);
 	const app = initializeApp(config.firebaseConfig);
 	const db = getFirestore(app);
-	const [clients, setClients] = useState([]);
-
 	const colRef = collection(db, "clients");
+	const tmpClients: any = [];
 
-	// useEffect(() => {
-	// 	getDocs(colRef)
-	// 		.then((snapshot) => {
-	// 			const tmpClients: any = [];
-	// 			let id = 1;
-	// 			snapshot.docs.forEach((doc) => {
-	// 				tmpClients.push({
-	// 					...doc.data(),
-	// 					id: id++,
-	// 					status: "Ready",
-	// 					action: "details!!"
-	// 				});
-					
-	// 			});
-	// 			setClients(tmpClients);
-	// 		});
-	// }, [clients]);
-
-
+	useEffect(() => {
+		getDocs(colRef)
+			.then((snapshot) => {
+				let id = 1;
+				snapshot.docs.forEach((doc) => {
+					tmpClients.push({
+						...doc.data(),
+						id: id++,
+						status: "Ready",
+						action: "details!!"
+					});
+				});
+				setClients(tmpClients);
+			});
+	}, [updated]);
 
 	const columns: GridColDef[] = [
 		{ field: "id", headerName: "No.", width: 90 },
@@ -56,11 +53,6 @@ const OrdersPage = () => {
 			width: 150,
 		},
 		{
-			field: "",
-			headerName: "Paid",
-			width: 150,
-		},
-		{
 			field: "status",
 			headerName: "Status",
 			width: 150,
@@ -81,8 +73,8 @@ const OrdersPage = () => {
 			<Typography variant="h1">
 				Orders
 			</Typography>
-			<NewOrder />
-			<div style={{ height: 600, width: "80%" }}>
+			<NewOrder colRef={colRef} updatedState={[updated, setUpdated]}/>
+			<div style={{ height: 600, width: "50%" }}>
 				<DataGrid
 					rows={clients}
 					columns={columns}

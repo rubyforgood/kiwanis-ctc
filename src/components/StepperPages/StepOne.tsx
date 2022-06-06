@@ -4,7 +4,7 @@ import * as yup from "yup";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { StepProps } from "../StepProps";
+import { StepProps } from "../Interfaces/StepProps";
 
 const StepOne: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrderDetails] }) => {
 	const validationSchema = yup.object({

@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import NewOrderStepper from "./NewOrderStepper";
+import { UpdateProps } from "../components/Interfaces/UpdateProps";
 
 
 const style = {
@@ -19,7 +20,7 @@ const style = {
 	p: 4,
 };
 
-const NewOrder = () => {
+const NewOrder: React.FC<UpdateProps> = ({ colRef, updatedState: [updated, setUpdated] }) => {
 	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
@@ -40,7 +41,7 @@ const NewOrder = () => {
 					<Typography id="modal-modal-description" variant="h4">
 						Add New Order
 					</Typography>
-					<NewOrderStepper />
+					<NewOrderStepper colRef={colRef} updatedState={[updated, setUpdated]} />
 				</Box>
 			</Modal>
 		</div>
