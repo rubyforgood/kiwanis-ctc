@@ -74,7 +74,7 @@ const OrdersPage = () => {
 				Orders
 			</Typography>
 			<NewOrder colRef={colRef} updatedState={[updated, setUpdated]}/>
-			<div style={{ height: 600, width: "50%" }}>
+			<div style={{ height: 600, width: "70%" }}>
 				<DataGrid
 					rows={clients}
 					columns={columns}
