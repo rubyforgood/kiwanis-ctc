@@ -14,22 +14,23 @@ const OrdersPage = () => {
 
 	const colRef = collection(db, "clients");
 
-	useEffect(() => {
-		getDocs(colRef)
-			.then((snapshot) => {
-				const tmpClients: any = [];
-				let id = 1;
-				snapshot.docs.forEach((doc) => {
-					tmpClients.push({
-						...doc.data(),
-						id: id++,
-						status: "Ready",
-						action: "details!!"
-					});
-				});
-				setClients(tmpClients);
-			});
-	}, [clients]);
+	// useEffect(() => {
+	// 	getDocs(colRef)
+	// 		.then((snapshot) => {
+	// 			const tmpClients: any = [];
+	// 			let id = 1;
+	// 			snapshot.docs.forEach((doc) => {
+	// 				tmpClients.push({
+	// 					...doc.data(),
+	// 					id: id++,
+	// 					status: "Ready",
+	// 					action: "details!!"
+	// 				});
+					
+	// 			});
+	// 			setClients(tmpClients);
+	// 		});
+	// }, [clients]);
 
 
 
