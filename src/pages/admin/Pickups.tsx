@@ -35,14 +35,14 @@ const useStyles = makeStyles({
 		},
 	},
 	activeTab: {
-		fontSize:"18px",
-		fontWeight:700,
-		color:"#01050F"
+		fontSize: "18px",
+		fontWeight: 700,
+		color: "#01050F"
 	},
 	customStyleOnTab: {
-		fontSize:"18px",
-		fontWeight:400,
-		color:"#01050F"
+		fontSize: "18px",
+		fontWeight: 400,
+		color: "#01050F"
 	}
 });
 
@@ -59,14 +59,14 @@ interface Data {
 }
 
 const originalRows: Data[] = [
-	{no: "01", firstName: "Ava", lastName: "Miller", self: 1, afac: 4, total: 5, method:"Credit Card", paid: "Yes", pickUp: "Ready"},
-	{no: "02", firstName: "James", lastName: "Cole", self: 2, afac: 0, total: 2, method:"Credit Card", paid: "Yes", pickUp: "Ready"}, 
-	{no: "03", firstName: "Vivian", lastName: "Eggers", self: 5, afac: 5, total: 10, method:"Credit Card", paid: "Partial", pickUp: "Not Ready"}, 
-	{no: "04", firstName: "Ellijah", lastName: "Sandis", self: 0, afac: 4, total: 4, method:"Credit Card", paid: "Yes", pickUp: "Ready"}, 
-	{no: "05", firstName: "Anjali", lastName: "Sharma", self: 1, afac: 1, total: 2, method:"Credit Card", paid: "No", pickUp: "Not Ready"}, 
-	{no: "06", firstName: "Sarah", lastName: "Smith", self: 1, afac: 4, total: 5, method:"Credit Card", paid: "Yes", pickUp: "Picked Up"}, 
-	{no: "07", firstName: "Noah", lastName: "Davis", self: 0, afac: 3, total: 3, method:"Credit Card", paid: "Yes", pickUp: "Picked Up"}, 
-	{no: "08", firstName: "Mary", lastName: "Brown", self: 1, afac: 1, total: 2, method:"Credit Card", paid: "Partial", pickUp: "Ready"}, 
+	{ no: "01", firstName: "Ava", lastName: "Miller", self: 1, afac: 4, total: 5, method: "Credit Card", paid: "Yes", pickUp: "Ready" },
+	{ no: "02", firstName: "James", lastName: "Cole", self: 2, afac: 0, total: 2, method: "Credit Card", paid: "Yes", pickUp: "Ready" },
+	{ no: "03", firstName: "Vivian", lastName: "Eggers", self: 5, afac: 5, total: 10, method: "Credit Card", paid: "Partial", pickUp: "Not Ready" },
+	{ no: "04", firstName: "Ellijah", lastName: "Sandis", self: 0, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickUp: "Ready" },
+	{ no: "05", firstName: "Anjali", lastName: "Sharma", self: 1, afac: 1, total: 2, method: "Credit Card", paid: "No", pickUp: "Not Ready" },
+	{ no: "06", firstName: "Sarah", lastName: "Smith", self: 1, afac: 4, total: 5, method: "Credit Card", paid: "Yes", pickUp: "Picked Up" },
+	{ no: "07", firstName: "Noah", lastName: "Davis", self: 0, afac: 3, total: 3, method: "Credit Card", paid: "Yes", pickUp: "Picked Up" },
+	{ no: "08", firstName: "Mary", lastName: "Brown", self: 1, afac: 1, total: 2, method: "Credit Card", paid: "Partial", pickUp: "Ready" },
 ];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -195,7 +195,6 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 				{headCells.map((headCell) => (
 					<TableCell
 						key={headCell.id}
-						// align={headCell.numeric ? "right" : "left"}
 						align={"center"}
 						padding={headCell.disablePadding ? "none" : "normal"}
 						sortDirection={orderBy === headCell.id ? order : false}
@@ -350,7 +349,7 @@ export default function Pickups() {
 	const nonPickedUpRows = originalRows.filter((obj) => {
 		return obj.pickUp === "Not Ready" || obj.pickUp === "Ready";
 	});
-	
+
 	const [rows, setRows] = useState<Data[]>(originalRows);
 	const [searched, setSearched] = useState<string>("");
 	const fullNameArray = [];
@@ -362,45 +361,45 @@ export default function Pickups() {
 		});
 		setRows(filteredRows);
 	};
-	
+
 	const cancelSearch = () => {
 		setSearched("");
 		requestSearch(searched);
 	};
-	
-	
+
+
 	return (
-		<div style={{ marginTop: "7rem", marginRight: "2rem" }}>
+		<div style={{ marginTop: "7rem", marginRight: "1rem" }}>
 			<AdminTaskbar />
-			<Box component="main" sx={{ width: "90%", float: "right", minWidth: "1000px", pr:170, pt: 0, pb: 0}}>
-				<Typography paragraph align="center" fontSize="16px" fontWeight="400" color="#54575E" sx={{pr: 2}}>
-				Dashboard/Pickups
-				</Typography>
-				<Typography paragraph align="center" fontSize="24px" fontWeight="700" color="#000000">
-				Order Pick-ups
-				</Typography>
-				<Typography paragraph align="center" fontSize="20px" fontWeight="400" color="#82692E" sx={{pl: 4}}>
-				Available for Sale: <Typography paragraph display="inline" align="center" fontSize="20px" fontWeight="bold" color="#82692E">{rows.length}</Typography>
-				</Typography>
-			</Box>
-			<Box sx={{ width: "85%", float: "right", minWidth: "1000px" }}>
-				<Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-					<Tabs value={value} onChange={handleChange} className={classes.tabs}
-						classes={{ indicator: classes.indicator }} TabIndicatorProps={{
-							style: {display: "none"}
-						}}>
-						<Tab disableRipple label={<span className={ value === 0 ? classes.activeTab : classes.customStyleOnTab}>Ready for pick up</span>}{...a11yProps(0)}/>
-						<Tab disableRipple label={<span className={ value === 1 ? classes.activeTab : classes.customStyleOnTab}>Picked Up</span>} {...a11yProps(1)} />
-					</Tabs>
+			<Box sx={{ width: "85%", float: "right" }}>
+				<Box sx={{ pl: 5 }}>
+					<Typography paragraph align="left" fontSize="16px" fontWeight="400" color="#54575E">
+						Dashboard/Pickups
+					</Typography>
+					<Typography paragraph align="left" fontSize="24px" fontWeight="700" color="#000000">
+						Order Pick-ups
+					</Typography>
+					<Typography paragraph align="left" fontSize="20px" fontWeight="400" color="#82692E">
+						Available for Sale: <Typography paragraph display="inline" align="center" fontSize="20px" fontWeight="bold" color="#82692E">{rows.length}</Typography>
+					</Typography>
+
+					<Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+						<Tabs value={value} onChange={handleChange} className={classes.tabs}
+							classes={{ indicator: classes.indicator }} TabIndicatorProps={{
+								style: { display: "none" }
+							}}>
+							<Tab disableRipple sx={{ mr: 5 }} label={<span className={value === 0 ? classes.activeTab : classes.customStyleOnTab}>Ready for pick up</span>}{...a11yProps(0)} />
+							<Tab disableRipple label={<span className={value === 1 ? classes.activeTab : classes.customStyleOnTab}>Picked Up</span>} {...a11yProps(1)} />
+						</Tabs>
+					</Box>
 				</Box>
-				<SearchBar
+				{/* <SearchBar
 					value={searched}
 					onChange={(searchVal) => requestSearch(searchVal)}
 					onCancelSearch={() => cancelSearch()}
-					style={{
-						maxWidth: "600 px",
-					}}
-				/>
+
+				/> */}
+				<SearchBar style={{ width: "20%", margin: "1rem 2rem" }} />
 				<TabPanel value={value} index={0}>
 					<Paper sx={{ width: "100%", mb: 2 }}>
 						<TableContainer
@@ -415,12 +414,12 @@ export default function Pickups() {
 									orderBy={orderBy}
 									onSelectAllClick={handleSelectAllClick}
 									onRequestSort={handleRequestSort}
-									rowCount={rows.length}
+									rowCount={nonPickedUpRows.length}
 								/>
 								<TableBody>
 									{/* if you don't need to support IE11, you can replace the `stableSort` call with:
 				rows.slice().sort(getComparator(order, orderBy)) */}
-									{stableSort(rows, getComparator(order, orderBy))
+									{stableSort(nonPickedUpRows, getComparator(order, orderBy))
 										.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 										.map((originalRow, index) => {
 											const isItemSelected = isSelected(originalRow.no);
@@ -487,7 +486,7 @@ export default function Pickups() {
 						<TablePagination
 							rowsPerPageOptions={[5, 10, 25]}
 							component="div"
-							count={rows.length}
+							count={nonPickedUpRows.length}
 							rowsPerPage={rowsPerPage}
 							page={page}
 							onPageChange={handleChangePage}
@@ -528,7 +527,7 @@ export default function Pickups() {
 													key={originalRow.no}
 													selected={isItemSelected}
 												>
-													
+
 													<TableCell
 														component="th"
 														id={labelId}
