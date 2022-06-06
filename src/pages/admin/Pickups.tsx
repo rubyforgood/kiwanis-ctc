@@ -351,15 +351,27 @@ export default function Pickups() {
 	});
 
 	const [rows, setRows] = useState<Data[]>(originalRows);
+	const [pickedUpRowsA, setPickedUpRowsA] = useState<Data[]>(pickedUpRows);
+	const [nonPickedUpRowsA, setNonPickedUpRowsA] = useState<Data[]>(nonPickedUpRows);
 	const [searched, setSearched] = useState<string>("");
 	const fullNameArray = [];
 	const requestSearch = (searchedVal: string) => {
-		const filteredRows = originalRows.filter((row) => {
-			const fullName = row.firstName + " " + row.lastName;
-			fullNameArray.push(fullName);
-			return fullName.toLowerCase().includes(searchedVal.toLowerCase());
-		});
-		setRows(filteredRows);
+		if (value === 0) {
+			const filteredRows = nonPickedUpRowsA.filter((row) => {
+				const fullName = row.firstName + " " + row.lastName;
+				fullNameArray.push(fullName);
+				return fullName.toLowerCase().includes(searchedVal.toLowerCase());
+			});
+			setNonPickedUpRowsA(filteredRows);
+		}
+		else if (value === 1) {
+			const filteredRows = pickedUpRowsA.filter((row) => {
+				const fullName = row.firstName + " " + row.lastName;
+				fullNameArray.push(fullName);
+				return fullName.toLowerCase().includes(searchedVal.toLowerCase());
+			});
+			setPickedUpRowsA(filteredRows);
+		}
 	};
 
 	const cancelSearch = () => {
@@ -369,7 +381,7 @@ export default function Pickups() {
 
 
 	return (
-		<div style={{ marginTop: "7rem", marginRight: "1rem" }}>
+		<div style={{ marginRight: "1rem" }}>
 			<AdminTaskbar />
 			<Box sx={{ width: "85%", float: "right" }}>
 				<Box sx={{ pl: 5 }}>
@@ -393,13 +405,11 @@ export default function Pickups() {
 						</Tabs>
 					</Box>
 				</Box>
-				{/* <SearchBar
+				<SearchBar
 					value={searched}
 					onChange={(searchVal) => requestSearch(searchVal)}
 					onCancelSearch={() => cancelSearch()}
-
-				/> */}
-				<SearchBar style={{ width: "20%", margin: "1rem 2rem" }} />
+					style={{ width: "20%", margin: "1rem 2rem" }} />
 				<TabPanel value={value} index={0}>
 					<Paper sx={{ width: "100%", mb: 2 }}>
 						<TableContainer
@@ -414,12 +424,12 @@ export default function Pickups() {
 									orderBy={orderBy}
 									onSelectAllClick={handleSelectAllClick}
 									onRequestSort={handleRequestSort}
-									rowCount={nonPickedUpRows.length}
+									rowCount={nonPickedUpRowsA.length}
 								/>
 								<TableBody>
 									{/* if you don't need to support IE11, you can replace the `stableSort` call with:
 				rows.slice().sort(getComparator(order, orderBy)) */}
-									{stableSort(nonPickedUpRows, getComparator(order, orderBy))
+									{stableSort(nonPickedUpRowsA, getComparator(order, orderBy))
 										.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 										.map((originalRow, index) => {
 											const isItemSelected = isSelected(originalRow.no);
@@ -486,7 +496,7 @@ export default function Pickups() {
 						<TablePagination
 							rowsPerPageOptions={[5, 10, 25]}
 							component="div"
-							count={nonPickedUpRows.length}
+							count={nonPickedUpRowsA.length}
 							rowsPerPage={rowsPerPage}
 							page={page}
 							onPageChange={handleChangePage}
@@ -508,10 +518,10 @@ export default function Pickups() {
 									orderBy={orderBy}
 									onSelectAllClick={handleSelectAllClick}
 									onRequestSort={handleRequestSort}
-									rowCount={pickedUpRows.length}
+									rowCount={pickedUpRowsA.length}
 								/>
 								<TableBody>
-									{stableSort(pickedUpRows, getComparator(order, orderBy))
+									{stableSort(pickedUpRowsA, getComparator(order, orderBy))
 										.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 										.map((originalRow, index) => {
 											const isItemSelected = isSelected(originalRow.no);
@@ -579,7 +589,7 @@ export default function Pickups() {
 						<TablePagination
 							rowsPerPageOptions={[5, 10, 25]}
 							component="div"
-							count={pickedUpRows.length}
+							count={pickedUpRowsA.length}
 							rowsPerPage={rowsPerPage}
 							page={page}
 							onPageChange={handleChangePage}

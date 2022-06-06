@@ -47,7 +47,7 @@ const Navbar = (props: { authing: any; }) => {
 	};
 
 	return (
-		<AppBar position="fixed" elevation={0} style={{ background: "#FFFFFF", zIndex: theme.zIndex.drawer + 1}}>
+		<AppBar position="sticky" elevation={0} style={{ background: "#FFFFFF", zIndex: theme.zIndex.drawer + 1}}>
 			<Container maxWidth={false}>
 				<Toolbar disableGutters >
 
