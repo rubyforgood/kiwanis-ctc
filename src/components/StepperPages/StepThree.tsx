@@ -67,7 +67,7 @@ const StepThree: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOr
 				}} placeholder="$0" type="number" />
 				{Number.isNaN(cash) ? "$0" : "$" + cash}
 			</Box>
-			<Button variant="outlined" onClick={handleSubmit}>Confirm</Button>
+			<Button variant="contained" sx={{backgroundColor: "secondary.light"}} onClick={handleSubmit}>Confirm</Button>
 		</Box>
 	);
 

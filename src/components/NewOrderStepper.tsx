@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { OrderDetails } from "./Interfaces/OrderDetails";
 import { UpdateProps } from "./Interfaces/UpdateProps";
-import { addDoc } from "firebase/firestore"; 
+import { addDoc } from "firebase/firestore";
 
 // Stepper Pages
 import StepOne from "./StepperPages/StepOne";
@@ -107,14 +107,14 @@ const NewOrderStepper: React.FC<UpdateProps> = ({ colRef, updatedState: [updated
 						</Step>
 					))}
 				</Stepper>
-				{activeStep === 0 && <StepOne orderDetailState={[orderDetails, setOrderDetails]}/>}
-				{activeStep === 1 && <StepTwo orderDetailState={[orderDetails, setOrderDetails]}/>}
+				{activeStep === 0 && <StepOne orderDetailState={[orderDetails, setOrderDetails]} />}
+				{activeStep === 1 && <StepTwo orderDetailState={[orderDetails, setOrderDetails]} />}
 				{activeStep === 2 && <StepThree orderDetailState={[orderDetails, setOrderDetails]} />}
-				{activeStep === 3 && <StepFour orderDetailState={[orderDetails, setOrderDetails]}/>}
+				{activeStep === 3 && <StepFour orderDetailState={[orderDetails, setOrderDetails]} />}
 				{activeStep === steps.length && (
 					<Paper square elevation={0} sx={{ p: 3 }}>
 						<Typography>All information has been saved!</Typography>
-						<Button onClick={handleSubmit} sx={{ mt: 1, mr: 1 }} type="submit">
+						<Button onClick={handleSubmit} sx={{ mt: 1, mr: 1, backgroundColor:"secondary.light" }} type="submit" variant="contained">
 							Submit Order
 						</Button>
 					</Paper>
