@@ -13,14 +13,14 @@ const AuthRoute: React.FC<IAuthRouteProps> = ({ children }) => {
 		if (user) {
 			setLoading(false);
 		} else {
-			navigate("/login");
+			navigate("/");
 		}
 	});
 	useEffect(() => {
 		AuthCheck();
 		return () => AuthCheck();
 	}, [auth]);
-	
+
 	{ loading ? <p>...</p> : <div></div>; }
 	return <>{children}</>;
 };
