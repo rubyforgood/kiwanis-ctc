@@ -27,7 +27,7 @@ const NewOrder: React.FC<UpdateProps> = ({ colRef, updatedState: [updated, setUp
 
 	return (
 		<div>
-			<Button variant="contained" onClick={handleOpen}>Add New Order</Button>
+			<Button variant="contained" sx={{backgroundColor: "secondary.light"}} onClick={handleOpen}>Add New Order</Button>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -35,12 +35,14 @@ const NewOrder: React.FC<UpdateProps> = ({ colRef, updatedState: [updated, setUp
 				aria-describedby="modal-modal-description"
 			>
 				<Box sx={style}>
-					<Typography id="modal-modal-title" variant="subtitle1">
-						Pick Up Confirmation For:
-					</Typography>
-					<Typography id="modal-modal-description" variant="h4">
-						Add New Order
-					</Typography>
+					<Box sx={{borderBottom: "solid", borderWidth: 3, borderColor: "primary.dark", mb: 5}}>
+						<Typography id="modal-modal-title" variant="subtitle1" fontSize={20}>
+							Pick Up Confirmation Info:
+						</Typography>
+						<Typography id="modal-modal-description" variant="h4" fontWeight={600}>
+							Add New Order
+						</Typography>
+					</Box>
 					<NewOrderStepper colRef={colRef} updatedState={[updated, setUpdated]} />
 				</Box>
 			</Modal>

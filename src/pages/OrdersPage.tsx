@@ -4,7 +4,7 @@ import { getDocs, getFirestore, collection } from "firebase/firestore";
 import { config } from "../Firebase";
 import { initializeApp } from "firebase/app";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import Button from "@material-ui/core/Button";
+import Box from "@mui/material/Box";
 import NewOrder from "../components/NewOrder";
 
 const OrdersPage = () => {
@@ -23,8 +23,7 @@ const OrdersPage = () => {
 					tmpClients.push({
 						...doc.data(),
 						id: id++,
-						status: "Ready",
-						action: "details!!"
+						status: "Ready"
 					});
 				});
 				setClients(tmpClients);
@@ -53,27 +52,29 @@ const OrdersPage = () => {
 			width: 150,
 		},
 		{
-			field: "status",
-			headerName: "Status",
+			field: "Method",
+			headerName: "Check, COD, Cash",
 			width: 150,
 		},
 		{
-			field: "action",
-			headerName: "Action",
+			field: "status",
+			headerName: "Status",
 			width: 150,
-		},
+		}
 	];
 
 
 	return (
 		<>
-			<Typography variant="subtitle1">
-				Dashboard / Orders
-			</Typography>
-			<Typography variant="h1">
-				Orders
-			</Typography>
-			<NewOrder colRef={colRef} updatedState={[updated, setUpdated]}/>
+			<Box sx={{borderBottom: "solid", borderWidth: 2, borderColor: "primary.dark", mb: 2, width: "70%"}}>
+				<Typography variant="subtitle1" fontSize={15}>
+					Dashboard / Orders
+				</Typography>
+				<Typography variant="h1" fontSize={30}>
+					Orders
+				</Typography>
+			</Box>
+			<NewOrder colRef={colRef} updatedState={[updated, setUpdated]} />
 			<div style={{ height: 600, width: "70%" }}>
 				<DataGrid
 					rows={clients}

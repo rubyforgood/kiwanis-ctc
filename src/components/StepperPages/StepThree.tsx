@@ -20,36 +20,44 @@ const StepThree: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOr
 		}));
 	};
 
+	const buttonCounter = {
+		fontSize: 20,
+		fontWeight: 600
+	};
+
 	return (
-		<Box sx={{ ml: 30 }}>
-			<Typography>
+		<Box sx={{ width: 300, display: "flex", flexDirection: "column", alignItems: "center", gap: 2, fontWeight: 600 }}>
+			<Typography sx={{}}>
 				Add blueberry boxes
 			</Typography>
 
-			<Box sx={{ display: "flex" }}>
+			<Box sx={{
+				display: "flex", justifyContent: "space-between", width: 300, alignItems: "baseline",
+				borderTop: "solid", borderColor: "primary.dark", borderWidth: 2, pt: 3
+			}}>
 				<Typography>
 					Self
 				</Typography>
 				<ButtonGroup>
-					{self === 0 ? <Button disabled>-</Button> : <Button onClick={() => setSelf(self - 1)}>
+					{self === 0 ? <Button sx={buttonCounter} disabled>-</Button> : <Button sx={buttonCounter} onClick={() => setSelf(self - 1)}>
 						-
 					</Button>}
-					<Button disabled>{self}</Button>
-					<Button onClick={() => setSelf(self + 1)}>+</Button>
+					<Button sx={buttonCounter} disabled>{self}</Button>
+					<Button sx={buttonCounter} onClick={() => setSelf(self + 1)}>+</Button>
 				</ButtonGroup>
 				{"$" + self * 40}
 			</Box>
 
-			<Box sx={{ display: "flex" }}>
+			<Box sx={{ display: "flex", justifyContent: "space-between", width: 300, alignItems: "baseline" }}>
 				<Typography>
 					AFAC
 				</Typography>
 				<ButtonGroup>
-					{AFAC === 0 ? <Button disabled>-</Button> : <Button onClick={() => setAFAC(AFAC - 1)}>
+					{AFAC === 0 ? <Button sx={buttonCounter} disabled>-</Button> : <Button sx={buttonCounter} onClick={() => setAFAC(AFAC - 1)}>
 						-
 					</Button>}
-					<Button disabled>{AFAC}</Button>
-					<Button onClick={() => setAFAC(AFAC + 1)}>+</Button>
+					<Button sx={buttonCounter} disabled>{AFAC}</Button>
+					<Button sx={buttonCounter} onClick={() => setAFAC(AFAC + 1)}>+</Button>
 				</ButtonGroup>
 				{"$" + AFAC * 40}
 			</Box>
@@ -57,7 +65,10 @@ const StepThree: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOr
 			<Typography>
 				Add cash donation
 			</Typography>
-			<Box sx={{ display: "flex" }}>
+			<Box sx={{
+				display: "flex", justifyContent: "space-between", width: 300, alignItems: "baseline",
+				borderTop: "solid", borderColor: "primary.dark", borderWidth: 2, pt: 3
+			}}>
 				<Typography>
 					Cash
 				</Typography>
@@ -67,7 +78,7 @@ const StepThree: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOr
 				}} placeholder="$0" type="number" />
 				{Number.isNaN(cash) ? "$0" : "$" + cash}
 			</Box>
-			<Button variant="contained" sx={{backgroundColor: "secondary.light"}} onClick={handleSubmit}>Confirm</Button>
+			<Button variant="contained" sx={{ backgroundColor: "secondary.light" }} onClick={handleSubmit}>Confirm</Button>
 		</Box>
 	);
 

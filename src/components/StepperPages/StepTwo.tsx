@@ -23,44 +23,46 @@ const StepTwo: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrde
 	const name = "selectedOption";
 
 	return (
-		<Formik
-			initialValues={{
-				selectedOption: Options.Option1.toString()
-			}}
-			onSubmit={(values) => {
-				setOrderDetails(prevDetails => ({
-					...prevDetails,
-					"selectedOption": values.selectedOption
-				}));
-			}}
-		>
-			{({ values, setFieldValue }) => (
-				<Form>
-					<FormControl component="fieldset">
-						<FormLabel component="legend">Selected Option</FormLabel>
-						<RadioGroup name={name} value={values.selectedOption.toString()} onChange={(event) => {
-							setFieldValue(name, event.currentTarget.value);
-						}}>
-							<FormControlLabel value={Options.Option1.toString()} control={<Radio />} label="Marketing Email" />
-							<FormControlLabel value={Options.Option2.toString()} control={<Radio />} label="Returning Customer" />
-							<FormControlLabel value={Options.Option3.toString()} control={<Radio />} label="Sun Gazette" />
-							<FormControlLabel value={Options.Option4.toString()} control={<Radio />} label="Next Door" />
-							<FormControlLabel value={Options.Option5.toString()} control={<Radio />} label="Facebook" />
-							<FormControlLabel value={Options.Option6.toString()} control={<Radio />} label="Friends/Neighbour" />
-							<FormControlLabel value={Options.Option7.toString()} control={<Radio />} label="Kiwanis Member" />
-						</RadioGroup>
-						<Button
-							variant="contained"
-							sx={{ mt: 1, mr: 1, backgroundColor: "secondary.light" }}
-							type="submit"
-						>
-							Confirm
-						</Button>
-					</FormControl>
+		<Box sx={{width: 300}}>
+			<Formik
+				initialValues={{
+					selectedOption: Options.Option1.toString()
+				}}
+				onSubmit={(values) => {
+					setOrderDetails(prevDetails => ({
+						...prevDetails,
+						"selectedOption": values.selectedOption
+					}));
+				}}
+			>
+				{({ values, setFieldValue }) => (
+					<Form>
+						<FormControl component="fieldset">
+							<FormLabel component="legend">Selected Option</FormLabel>
+							<RadioGroup name={name} value={values.selectedOption.toString()} onChange={(event) => {
+								setFieldValue(name, event.currentTarget.value);
+							}}>
+								<FormControlLabel value={Options.Option1.toString()} control={<Radio />} label="Marketing Email" />
+								<FormControlLabel value={Options.Option2.toString()} control={<Radio />} label="Returning Customer" />
+								<FormControlLabel value={Options.Option3.toString()} control={<Radio />} label="Sun Gazette" />
+								<FormControlLabel value={Options.Option4.toString()} control={<Radio />} label="Next Door" />
+								<FormControlLabel value={Options.Option5.toString()} control={<Radio />} label="Facebook" />
+								<FormControlLabel value={Options.Option6.toString()} control={<Radio />} label="Friends/Neighbour" />
+								<FormControlLabel value={Options.Option7.toString()} control={<Radio />} label="Kiwanis Member" />
+							</RadioGroup>
+							<Button
+								variant="contained"
+								sx={{ mt: 1, mr: 1, backgroundColor: "secondary.light" }}
+								type="submit"
+							>
+								Confirm
+							</Button>
+						</FormControl>
 
-				</Form>
-			)}
-		</Formik>
+					</Form>
+				)}
+			</Formik>
+		</Box>
 	);
 };
 

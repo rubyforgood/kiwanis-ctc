@@ -42,7 +42,7 @@ const StepOne: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrde
 	});
 
 	return (
-		<Box sx={{ ml: 30 }}>
+		<Box sx={{ width: 300}}>
 			<form onSubmit={formik.handleSubmit}>
 				<TextField
 					fullWidth
@@ -106,7 +106,7 @@ const StepOne: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrde
 				/>
 				<Button
 					variant="contained"
-					sx={{ mt: 1, mr: 1, backgroundColor: "secondary.light" }}
+					sx={{ mt: 2, mr: 1, backgroundColor: "secondary.light" }}
 					type="submit"
 				>
 					Confirm

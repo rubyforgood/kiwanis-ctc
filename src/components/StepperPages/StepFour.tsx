@@ -16,14 +16,20 @@ const StepFour: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrd
 	};
 
 	return (
-		<Box sx={{}}>
+		<Box sx={{
+			display: "flex", flexDirection: "column", width: 300, alignItems: "center",
+			justifyContent: "center", borderTop: "solid", borderBottom: "solid", borderColor: "primary.dark",
+			height: 150, mt: 10, borderWidth: 2
+		}}>
 			<Typography>
 				Pending balance collected?
 			</Typography>
-			{orderDetails.paid ? <Button disabled>Yes</Button> :
-				<Button variant="outlined" onClick={() => setDetails(true)}>Yes</Button>}
-			{!orderDetails.paid ? <Button disabled>No</Button> :
-				<Button variant="outlined" onClick={() => setDetails(false)}>No</Button>}
+			<Box sx={{ display: "flex", justifyContent: "space-between", width: 150, marginTop: 1 }}>
+				{orderDetails.paid ? <Button disabled>Yes</Button> :
+					<Button sx={{backgroundColor: "secondary.light" }} variant="contained" onClick={() => setDetails(true)}>Yes</Button>}
+				{!orderDetails.paid ? <Button disabled>No</Button> :
+					<Button sx={{backgroundColor: "secondary.light" }} variant="contained" onClick={() => setDetails(false)}>No</Button>}
+			</Box>
 		</Box>
 	);
 

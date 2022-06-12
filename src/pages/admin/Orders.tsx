@@ -15,7 +15,7 @@ const Orders = () => {
 				</Typography>
 			</Box>
 		</div>
-		
+
 	);
 };
 

@@ -60,14 +60,15 @@ const NewOrderStepper: React.FC<UpdateProps> = ({ colRef, updatedState: [updated
 		addDoc(colRef, {
 			"Boxes for AFAC": orderDetails.AFAC,
 			"Boxes for Customer": orderDetails.self,
-			"Cell Phone Number": orderDetails.cellPhone,
-			"Home Phone Number": orderDetails.homePhone,
+			"Cell Phone": orderDetails.cellPhone,
+			"Home Phone": orderDetails.homePhone,
 			"E-mail": orderDetails.email,
 			"First Name": orderDetails.firstName,
 			"Last Name": orderDetails.lastName,
 			"How did you hear about us?": orderDetails.selectedOption,
 			"Total": orderDetails.cash + (orderDetails.AFAC + orderDetails.self) * 40,
 			"Submission Date": date,
+			"Method": "Cash"
 		});
 		setActiveStep(0);
 		setUpdated(!updated);
@@ -75,8 +76,8 @@ const NewOrderStepper: React.FC<UpdateProps> = ({ colRef, updatedState: [updated
 
 	return (
 		<>
-			<Box sx={{ maxWidth: 900, display: "flex", justifyContent: "space-around" }}>
-				<Stepper activeStep={activeStep} orientation="vertical">
+			<Box sx={{ maxWidth: 900, display: "flex", justifyContent: "space-between" }}>
+				<Stepper activeStep={activeStep} orientation="vertical" sx={{ height: 300, lineHeight: 5 }}>
 					{steps.map((step, index) => (
 						<Step key={step.label}>
 							<StepLabel>
@@ -114,7 +115,7 @@ const NewOrderStepper: React.FC<UpdateProps> = ({ colRef, updatedState: [updated
 				{activeStep === steps.length && (
 					<Paper square elevation={0} sx={{ p: 3 }}>
 						<Typography>All information has been saved!</Typography>
-						<Button onClick={handleSubmit} sx={{ mt: 1, mr: 1, backgroundColor:"secondary.light" }} type="submit" variant="contained">
+						<Button onClick={handleSubmit} sx={{ mt: 1, mr: 1, backgroundColor: "secondary.light" }} type="submit" variant="contained">
 							Submit Order
 						</Button>
 					</Paper>
