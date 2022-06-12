@@ -14,37 +14,6 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
 import { Chip, Tabs, Tab } from "@mui/material";
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles({
-	indicator: {
-		background: "none"
-	},
-	tabs: {
-		"& button[aria-selected='true']": {
-			borderRadius: "12px 12px 0px 0px",
-			textDecoration: "none",
-			backgroundColor: "#E8C887",
-			color: "#01050F",
-		},
-		"& button[aria-selected='false']": {
-			borderRadius: "12px 12px 0px 0px",
-			textDecoration: "none",
-			backgroundColor: "#CFD1D4",
-			color: "#01050F",
-		},
-	},
-	activeTab: {
-		fontSize: "18px",
-		fontWeight: 700,
-		color: "#01050F"
-	},
-	customStyleOnTab: {
-		fontSize: "18px",
-		fontWeight: 400,
-		color: "#01050F"
-	}
-});
 
 interface Data {
 	no: string,
@@ -252,7 +221,6 @@ function a11yProps(index: number) {
 }
 
 export default function Pickups() {
-	const classes = useStyles();
 	const [order, setOrder] = React.useState<Order>("asc");
 	const [orderBy, setOrderBy] = React.useState<keyof Data>("lastName");
 	const [selected, setSelected] = React.useState<readonly string[]>([]);
@@ -379,16 +347,44 @@ export default function Pickups() {
 		requestSearch(searched);
 	};
 
+	const styles = {
+		activeTab: {
+			fontSize: "18px",
+			fontWeight: value === 0 ? 700 : 400,
+			color: "#01050F",
+		},
+		nonActiveTab: {
+			fontSize: "18px",
+			fontWeight: value === 1 ? 700 : 400,
+			color: "#01050F",
+		},
+		tabs: {
+			"& button[aria-selected='true']": {
+				background: "none",
+				borderRadius: "12px 12px 0px 0px",
+				textDecoration: "none",
+				backgroundColor: "#E8C887",
+				color: "#01050F",
+			},
+			"& button[aria-selected='false']": {
+				background: "none",
+				borderRadius: "12px 12px 0px 0px",
+				textDecoration: "none",
+				backgroundColor: "#CFD1D4",
+				color: "#01050F",
+			},
+		}
+	};
 
 	return (
-		<div style={{ marginRight: "1rem" }}>
+		<div style={{ marginRight: "1rem" }} >
 			<AdminTaskbar />
 			<Box sx={{ width: "85%", float: "right" }}>
 				<Box sx={{ pl: 5 }}>
-					<Typography paragraph align="left" fontSize="16px" fontWeight="400" color="#54575E">
+					<Typography paragraph align="left" fontSize="16px" fontWeight="400" color="#54575E" sx={{ m: 0 }}>
 						Dashboard/Pickups
 					</Typography>
-					<Typography paragraph align="left" fontSize="24px" fontWeight="700" color="#000000">
+					<Typography paragraph align="left" fontSize="24px" fontWeight="700" color="#000000" sx={{ m: 0 }}>
 						Order Pick-ups
 					</Typography>
 					<Typography paragraph align="left" fontSize="20px" fontWeight="400" color="#82692E">
@@ -396,12 +392,15 @@ export default function Pickups() {
 					</Typography>
 
 					<Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-						<Tabs value={value} onChange={handleChange} className={classes.tabs}
-							classes={{ indicator: classes.indicator }} TabIndicatorProps={{
+						<Tabs
+							value={value}
+							onChange={handleChange}
+							sx={styles.tabs}
+							TabIndicatorProps={{
 								style: { display: "none" }
 							}}>
-							<Tab disableRipple sx={{ mr: 5 }} label={<span className={value === 0 ? classes.activeTab : classes.customStyleOnTab}>Ready for pick up</span>}{...a11yProps(0)} />
-							<Tab disableRipple label={<span className={value === 1 ? classes.activeTab : classes.customStyleOnTab}>Picked Up</span>} {...a11yProps(1)} />
+							<Tab disableRipple sx={{ px: 0.5, py: 0, mr: 5, height: "10px" }} label={<span style={styles.activeTab}>Ready for pick up</span>}{...a11yProps(0)} />
+							<Tab disableRipple sx={{ px: 0.5, py: 0 }} label={<span style={styles.nonActiveTab}>Picked Up</span>} {...a11yProps(1)} />
 						</Tabs>
 					</Box>
 				</Box>
@@ -467,21 +466,21 @@ export default function Pickups() {
 																	{originalRow.paid}
 																</Typography>
 															}
-															// color={getChipColor(row.paid)}
 
 															style={{ backgroundColor: getChipColorPaid(originalRow.paid), borderRadius: "0" }}
 														/>
 													</TableCell>
-													<TableCell align="center"><Chip
-														label={
-															<Typography color="black" variant="body2">
-																{originalRow.pickUp}
-															</Typography>
-														}
-														// color={getChipColor(row.pickUp)}
+													<TableCell align="center">
+														<Chip
+															label={
+																<Typography color="black" variant="body2">
+																	{originalRow.pickUp}
+																</Typography>
+															}
 
-														style={{ backgroundColor: getChipColorPickUp(originalRow.pickUp), borderRadius: "0" }}
-													/></TableCell>
+															style={{ backgroundColor: getChipColorPickUp(originalRow.pickUp), borderRadius: "0" }}
+														/>
+													</TableCell>
 												</TableRow>
 											);
 										})}
@@ -560,8 +559,6 @@ export default function Pickups() {
 																	{originalRow.paid}
 																</Typography>
 															}
-															// color={getChipColor(row.paid)}
-
 															style={{ backgroundColor: getChipColorPaid(originalRow.paid), borderRadius: "0" }}
 														/>
 													</TableCell>
@@ -571,8 +568,6 @@ export default function Pickups() {
 																{originalRow.pickUp}
 															</Typography>
 														}
-														// color={getChipColor(row.pickUp)}
-
 														style={{ backgroundColor: getChipColorPickUp(originalRow.pickUp), borderRadius: "0" }}
 													/></TableCell>
 												</TableRow>
@@ -598,6 +593,6 @@ export default function Pickups() {
 					</Paper>
 				</TabPanel>
 			</Box>
-		</div>
+		</div >
 	);
 }
