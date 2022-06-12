@@ -15,7 +15,7 @@ const navList = [
 	{
 		name: "Dashboard",
 		href: "/dashboard",
-		icon: <HomeIcon height={30}/>,
+		icon: <HomeIcon height={30} />,
 	},
 	{
 		name: "Orders",
@@ -35,7 +35,7 @@ const navList = [
 	{
 		name: "Communications",
 		href: "/communications",
-		icon: <ChatAlt2Icon height={30}/>,
+		icon: <ChatAlt2Icon height={30} />,
 	}
 
 ];
@@ -53,15 +53,17 @@ const AdminTaskbar = () => {
 					["& .MuiDrawer-paper"]: { width: drawerWidth, boxSizing: "border-box", border: "solid #FFFFFF 10px", background: "#21315C", },
 				}}
 			>
-				<Toolbar/>
+				<Toolbar />
 				<Box sx={{ overflow: "auto" }}>
 					<List>
 						{navList.map((el) => (
-							<ListItem key={el.name} disablePadding sx={{color: "#FFFFFF"}}>
-								<ListItemButton disableRipple sx={{"&.active": {
-									FontWeight: "bold",
-								},}}>
-									<ListItemIcon sx={{color: "#FAFAFB", minWidth: "50px", borderRadius: "5px", }}>
+							<ListItem key={el.name} disablePadding sx={{ color: "#FFFFFF" }}>
+								<ListItemButton disableRipple sx={{
+									"&.active": {
+										FontWeight: "bold",
+									},
+								}}>
+									<ListItemIcon sx={{ color: "#FAFAFB", minWidth: "50px", borderRadius: "5px", }}>
 										{el.icon}
 									</ListItemIcon>
 									<NavLink to={el.href} style={({ isActive }) => ({
