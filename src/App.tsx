@@ -22,7 +22,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 // !Admin Pages
-import AdminPage from "./pages/admin/AdminPage";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminOrders from "./pages/admin/Orders";
 import AdminPickups from "./pages/admin/Pickups";
@@ -53,7 +52,6 @@ export default function App() {
 			<Router>
 				<Routes>
 					<Route path="/" element={<AdminLogin />} />
-					<Route path="/admin" element={<AuthRoute><AdminPage /></AuthRoute>} />
 					<Route path="/dashboard" element={<AuthRoute><AdminDashboard /></AuthRoute>} />
 					<Route path="/orders" element={<AuthRoute><AdminOrders /></AuthRoute>} />
 					<Route path="/pickups" element={<AuthRoute><AdminPickups /></AuthRoute>} />

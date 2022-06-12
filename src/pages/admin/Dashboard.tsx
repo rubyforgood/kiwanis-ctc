@@ -18,7 +18,7 @@ const Dashboard = () => {
 				2022 Blueberry Fundraiser - Dashboard
 				</Typography>
 			</Box>
-			<Button sx={{ml: 60 }}onClick={() => { signOut(auth); window.location.reload(); }}>Sign Out</Button>
+			<Button variant="contained" sx={{ml: 60 }}onClick={() => { signOut(auth); window.location.reload(); }}>Sign Out</Button>
 		</div>
 		
 	);
