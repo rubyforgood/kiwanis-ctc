@@ -357,7 +357,7 @@ export default function Pickups() {
 	const fullNameArray = [];
 	const requestSearch = (searchedVal: string) => {
 		if (value === 0) {
-			const filteredRows = nonPickedUpRowsA.filter((row) => {
+			const filteredRows = nonPickedUpRows.filter((row) => {
 				const fullName = row.firstName + " " + row.lastName;
 				fullNameArray.push(fullName);
 				return fullName.toLowerCase().includes(searchedVal.toLowerCase());
@@ -365,7 +365,7 @@ export default function Pickups() {
 			setNonPickedUpRowsA(filteredRows);
 		}
 		else if (value === 1) {
-			const filteredRows = pickedUpRowsA.filter((row) => {
+			const filteredRows = pickedUpRows.filter((row) => {
 				const fullName = row.firstName + " " + row.lastName;
 				fullNameArray.push(fullName);
 				return fullName.toLowerCase().includes(searchedVal.toLowerCase());
