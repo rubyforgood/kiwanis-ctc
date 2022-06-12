@@ -50,7 +50,7 @@ const AdminTaskbar = () => {
 				sx={{
 					width: drawerWidth,
 					flexShrink: 0,
-					["& .MuiDrawer-paper"]: { width: drawerWidth, boxSizing: "border-box", border: "solid #FFFFFF 10px", background: "#21315C", },
+					["& .MuiDrawer-paper"]: { width: drawerWidth, boxSizing: "border-box", border: "solid #FFFFFF 10px", background: "#21315C", zIndex: 1 },
 				}}
 			>
 				<Toolbar />
