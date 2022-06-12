@@ -28,8 +28,6 @@ import AdminPickups from "./pages/admin/Pickups";
 import AdminDonors from "./pages/admin/Donors";
 import AdminCommunications from "./pages/admin/Communication";
 import AdminLogin from "./pages/AdminLogin";
-import OrdersPage from "./pages/OrdersPage";
-// import Test from "./pages/admin/Test";
 
 function Copyright() {
 	return (
