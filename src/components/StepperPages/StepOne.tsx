@@ -105,14 +105,13 @@ const StepOne: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrde
 					error={formik.touched.email && Boolean(formik.errors.email)}
 					helperText={formik.touched.email && formik.errors.email}
 				/>
-				{/* <Button
+				<Button
 					variant="contained"
 					sx={{ mt: 2, mr: 1, backgroundColor: "secondary.light", width: 300 }}
 					type="submit"
 				>
 					Confirm
-				</Button> */}
-				<StepButton index={1} />
+				</Button>
 			</form>
 		</Box>
 	);
