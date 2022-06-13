@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Formik, Form } from "formik";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -8,6 +7,10 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import { StepProps } from "../Interfaces/StepProps";
+import StepButton from "./StepButton";
+
+// Types
+import { ActiveStepContext } from "../Interfaces/StepContext";
 
 enum Options {
 	Option1 = "Marketing Email",
@@ -21,6 +24,7 @@ enum Options {
 
 const StepTwo: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrderDetails] }) => {
 	const name = "selectedOption";
+	const step = useContext(ActiveStepContext);
 
 	return (
 		<Box sx={{width: 300}}>
@@ -33,6 +37,7 @@ const StepTwo: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrde
 						...prevDetails,
 						"selectedOption": values.selectedOption
 					}));
+					step[1]((prevActiveStep) => prevActiveStep + 1);
 				}}
 			>
 				{({ values, setFieldValue }) => (
@@ -50,13 +55,7 @@ const StepTwo: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrde
 								<FormControlLabel value={Options.Option6.toString()} control={<Radio />} label="Friends/Neighbour" />
 								<FormControlLabel value={Options.Option7.toString()} control={<Radio />} label="Kiwanis Member" />
 							</RadioGroup>
-							<Button
-								variant="contained"
-								sx={{ mt: 1, mr: 1, backgroundColor: "secondary.light", width: 300}}
-								type="submit"
-							>
-								Confirm
-							</Button>
+							<StepButton type={"submit"} />
 						</FormControl>
 
 					</Form>

@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
 import { StepProps } from "../Interfaces/StepProps";
+import StepButton from "./StepButton";
+
+// Types
+import { ActiveStepContext } from "../Interfaces/StepContext";
 
 const StepThree: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrderDetails] }) => {
 	const [self, setSelf] = useState(0);
 	const [AFAC, setAFAC] = useState(0);
 	const [cash, setCash] = useState(0);
 
+	const step = useContext(ActiveStepContext);
 	const handleSubmit = () => {
 		setOrderDetails(prevDetails => ({
 			...prevDetails,
@@ -18,6 +23,7 @@ const StepThree: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOr
 			"AFAC": AFAC,
 			"cash": cash || 0
 		}));
+		step[1]((prevActiveStep) => prevActiveStep + 1);
 	};
 
 	const buttonCounter = {
@@ -78,7 +84,8 @@ const StepThree: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOr
 				}} placeholder="$0" type="number" />
 				{Number.isNaN(cash) ? "$0" : "$" + cash}
 			</Box>
-			<Button variant="contained" sx={{ backgroundColor: "secondary.light", width: 300 }} onClick={handleSubmit}>Confirm</Button>
+			{/* <Button variant="contained" sx={{ backgroundColor: "secondary.light", width: 300 }} onClick={handleSubmit}>Confirm</Button> */}
+			<StepButton type={"button"} handleSubmit={handleSubmit}/>
 		</Box>
 	);
 

@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { StepProps } from "../Interfaces/StepProps";
 import StepButton from "./StepButton";
 
+// Types
+import { ActiveStepContext } from "../Interfaces/StepContext";
+
 const StepOne: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrderDetails] }) => {
+	const step = useContext(ActiveStepContext);
+
 	const validationSchema = yup.object({
 		firstName: yup
 			.string()
@@ -39,6 +43,7 @@ const StepOne: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrde
 				"homePhone": values.homePhone,
 				"email": values.email,
 			}));
+			step[1]((prevActiveStep) => prevActiveStep + 1);
 		}
 	});
 
@@ -105,13 +110,7 @@ const StepOne: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrde
 					error={formik.touched.email && Boolean(formik.errors.email)}
 					helperText={formik.touched.email && formik.errors.email}
 				/>
-				<Button
-					variant="contained"
-					sx={{ mt: 2, mr: 1, backgroundColor: "secondary.light", width: 300 }}
-					type="submit"
-				>
-					Confirm
-				</Button>
+				<StepButton type={"submit"} />
 			</form>
 		</Box>
 	);

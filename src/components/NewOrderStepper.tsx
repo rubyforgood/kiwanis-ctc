@@ -17,6 +17,9 @@ import StepTwo from "./StepperPages/StepTwo";
 import StepThree from "./StepperPages/StepThree";
 import StepFour from "./StepperPages/StepFour";
 
+// Types
+import { StepContext, ActiveStepContext } from "./Interfaces/StepContext";
+
 const steps = [
 	{
 		label: "Add Donor Details",
@@ -33,14 +36,6 @@ const steps = [
 ];
 
 const NewOrderStepper: React.FC<UpdateProps> = ({ colRef, updatedState: [updated, setUpdated] }) => {
-
-	type GlobalContent = {
-		copy: string
-	}
-	const MyGlobalContext = createContext<GlobalContent>({
-		copy: "Hello World"
-	});
-	const useGlobalContext = () => useContext(MyGlobalContext);
 
 	const [orderDetails, setOrderDetails] = useState<OrderDetails>({
 		"firstName": "",
@@ -84,36 +79,14 @@ const NewOrderStepper: React.FC<UpdateProps> = ({ colRef, updatedState: [updated
 	};
 
 	return (
-		<>
+		<ActiveStepContext.Provider value={[activeStep, setActiveStep]}>
 			<Box sx={{ maxWidth: 900, display: "flex", justifyContent: "space-between" }}>
 				<Stepper activeStep={activeStep} orientation="vertical" sx={{ height: 300, lineHeight: 5 }}>
-					{steps.map((step, index) => (
+					{steps.map((step) => (
 						<Step key={step.label}>
 							<StepLabel>
 								{step.label}
 							</StepLabel>
-							<StepContent>
-								<Box sx={{ mb: 2 }}>
-									<div>
-										<Button
-											variant="contained"
-											onClick={handleNext}
-											sx={{ mt: 1, mr: 1 }}
-											type="button"
-										>
-											{index === steps.length - 1 ? "Finish" : "Continue"}
-										</Button>
-										<Button
-											disabled={index === 0}
-											onClick={handleBack}
-											sx={{ mt: 1, mr: 1 }}
-											type="button"
-										>
-											Back
-										</Button>
-									</div>
-								</Box>
-							</StepContent>
 						</Step>
 					))}
 				</Stepper>
@@ -130,7 +103,7 @@ const NewOrderStepper: React.FC<UpdateProps> = ({ colRef, updatedState: [updated
 					</Paper>
 				)}
 			</Box>
-		</>
+		</ActiveStepContext.Provider>
 	);
 };
 export default NewOrderStepper;

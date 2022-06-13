@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Button from "@mui/material/Button";
-import StepContent from "@mui/material/StepContent";
 import Box from "@mui/material/Box";
-import StepLabel from "@mui/material/StepLabel";
-import Step from "@mui/material/Step";
 
-const StepButton: React.FC<{index: number}> = ({ index }) => {
+// Types
+import { ActiveStepContext } from "../Interfaces/StepContext";
 
-	const [activeStep, setActiveStep] = useState(0);
+const StepButton: React.FC<{ type: any, handleSubmit?: any, setOrderDetails?: any }> = ({ type, handleSubmit, setOrderDetails }) => {
+	const step = useContext(ActiveStepContext);
 
 	const handleNext = () => {
-		setActiveStep((prevActiveStep) => prevActiveStep + 1);
+		step[1]((prevActiveStep) => prevActiveStep + 1);
+		setOrderDetails((prevDetails: any) => ({
+			...prevDetails,
+			"paid": false
+		}));
+	};
+
+	const handleBack = () => {
+		step[1]((prevActiveStep) => prevActiveStep - 1);
 	};
 
 	const steps = [
@@ -31,16 +38,23 @@ const StepButton: React.FC<{index: number}> = ({ index }) => {
 	return (
 		<>
 			<Box sx={{ mb: 2 }}>
-				<div>
-					<Button
-						variant="contained"
-						onClick={handleNext}
-						sx={{ mt: 1, mr: 1 }}
-						type="submit"
-					>
-						{index === steps.length - 1 ? "Finish" : "Continue"}
-					</Button>
-				</div>
+				<Button
+					variant="contained"
+					{...step[0] === 2 && {onClick: handleSubmit}}
+					{...step[0] === 3 && {onClick: handleNext}}
+					sx={{ mt: 1, mr: 1 }}
+					type={type}
+				>
+					{step[0] === steps.length - 1 ? "Finish" : "Continue"}
+				</Button>
+				<Button
+					disabled={step[0] === 0}
+					onClick={handleBack}
+					sx={{ mt: 1, mr: 1 }}
+					type="button"
+				>
+					Back
+				</Button>
 			</Box>
 		</>
 	);
