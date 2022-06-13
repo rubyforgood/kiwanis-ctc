@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createContext, useContext } from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -33,6 +33,15 @@ const steps = [
 ];
 
 const NewOrderStepper: React.FC<UpdateProps> = ({ colRef, updatedState: [updated, setUpdated] }) => {
+
+	type GlobalContent = {
+		copy: string
+	}
+	const MyGlobalContext = createContext<GlobalContent>({
+		copy: "Hello World"
+	});
+	const useGlobalContext = () => useContext(MyGlobalContext);
+
 	const [orderDetails, setOrderDetails] = useState<OrderDetails>({
 		"firstName": "",
 		"lastName": "",

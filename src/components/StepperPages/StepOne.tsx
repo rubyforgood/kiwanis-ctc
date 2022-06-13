@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { StepProps } from "../Interfaces/StepProps";
+import StepButton from "./StepButton";
 
 const StepOne: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrderDetails] }) => {
 	const validationSchema = yup.object({
@@ -42,7 +43,7 @@ const StepOne: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrde
 	});
 
 	return (
-		<Box sx={{ width: 300}}>
+		<Box sx={{ width: 300 }}>
 			<form onSubmit={formik.handleSubmit}>
 				<TextField
 					fullWidth
@@ -104,13 +105,14 @@ const StepOne: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrde
 					error={formik.touched.email && Boolean(formik.errors.email)}
 					helperText={formik.touched.email && formik.errors.email}
 				/>
-				<Button
+				{/* <Button
 					variant="contained"
-					sx={{ mt: 2, mr: 1, backgroundColor: "secondary.light" }}
+					sx={{ mt: 2, mr: 1, backgroundColor: "secondary.light", width: 300 }}
 					type="submit"
 				>
 					Confirm
-				</Button>
+				</Button> */}
+				<StepButton index={1} />
 			</form>
 		</Box>
 	);

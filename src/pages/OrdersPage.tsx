@@ -66,7 +66,10 @@ const OrdersPage = () => {
 
 	return (
 		<>
-			<Box sx={{borderBottom: "solid", borderWidth: 2, borderColor: "primary.dark", mb: 2, width: "70%"}}>
+			<Box sx={{
+				borderBottom: "solid", borderWidth: 2, borderColor: "primary.dark", mb: 2, width: "70%",
+				display: "flex", flexDirection: "column"
+			}}>
 				<Typography variant="subtitle1" fontSize={15}>
 					Dashboard / Orders
 				</Typography>

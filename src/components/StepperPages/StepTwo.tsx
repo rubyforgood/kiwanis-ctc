@@ -52,7 +52,7 @@ const StepTwo: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOrde
 							</RadioGroup>
 							<Button
 								variant="contained"
-								sx={{ mt: 1, mr: 1, backgroundColor: "secondary.light" }}
+								sx={{ mt: 1, mr: 1, backgroundColor: "secondary.light", width: 300}}
 								type="submit"
 							>
 								Confirm
