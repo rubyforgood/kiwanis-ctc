@@ -42,7 +42,7 @@ const AdminLogin = () => {
 			).then((userCredentials) => {
 				setUser(userCredentials.user);
 				setAuthing(true);
-				navigate("/");
+				navigate("/admin");
 			}).catch((error) => {
 				alert("User not found: " + error.code);
 			});
