@@ -57,7 +57,7 @@ const AdminTaskbar = () => {
 				<Box sx={{ overflow: "auto" }}>
 					<List>
 						{navList.map((el) => (
-							<ListItem key={el.name} disablePadding sx={{ color: "#FFFFFF" }}>
+							<ListItem key={el.name} disablePadding sx={{ color: "#FFFFFF"}}>
 								<ListItemButton disableRipple sx={{
 									"&.active": {
 										FontWeight: "bold",

@@ -45,7 +45,7 @@ const Navbar = (props: { authing: any; }) => {
 							variant="h6"
 							noWrap
 							component="a"
-							href="/"
+							href="/dashboard"
 							sx={{
 								mr: 2,
 								display: { xs: "none", md: "flex" },
@@ -79,7 +79,7 @@ const Navbar = (props: { authing: any; }) => {
 							variant="h6"
 							noWrap
 							component="a"
-							href="/"
+							href="/dashboard"
 							sx={{
 								mr: 2,
 								display: { xs: "none", md: "flex" },
@@ -105,7 +105,6 @@ const Navbar = (props: { authing: any; }) => {
 									textDecoration: "none",
 								}}
 							>
-								{/* Nothing is Displayed Here */}
 							</Typography>
 						)}
 
