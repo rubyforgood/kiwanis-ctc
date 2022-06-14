@@ -27,7 +27,7 @@ const NewOrder: React.FC<UpdateProps> = ({ colRef, updatedState: [updated, setUp
 
 	return (
 		<div>
-			<Button variant="contained" sx={{backgroundColor: "secondary.light", mb: 2, ml: 2}} onClick={handleOpen}>Add New Order</Button>
+			<Button variant="contained" sx={{backgroundColor: "secondary.light", mb: 2}} onClick={handleOpen}>Add New Order</Button>
 			<Modal
 				open={open}
 				onClose={handleClose}
