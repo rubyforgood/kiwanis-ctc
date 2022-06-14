@@ -1,6 +1,7 @@
 import { Box, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import AdminTaskbar from "../../components/AdminTaskbar";
+import Navbar from "../../components/Navbar";
 
 const Donors = () => {
 	return (

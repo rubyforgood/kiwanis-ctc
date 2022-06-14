@@ -42,7 +42,7 @@ const AdminLogin = () => {
 			).then((userCredentials) => {
 				setUser(userCredentials.user);
 				setAuthing(true);
-				navigate("/");
+				navigate("/dashboard");
 			}).catch((error) => {
 				alert("User not found: " + error.code);
 			});
@@ -57,14 +57,12 @@ const AdminLogin = () => {
 					height: "100vh",
 				}}
 			>
-				<Navbar authing={authing} />
 				<Container
 					sx={{
 						backgroundColor: "shades.white",
 						opacity: 0.75,
 						height: 450,
 						width: 400,
-						marginTop: 10,
 						borderRadius: 5,
 						paddingTop: 10,
 					}}>
