@@ -54,9 +54,9 @@ function getComparator<Key extends keyof any>(
 	order: Order,
 	orderBy: Key,
 ): (
-	a: { [key in Key]: number | string },
-	b: { [key in Key]: number | string },
-) => number {
+		a: { [key in Key]: number | string },
+		b: { [key in Key]: number | string },
+	) => number {
 	return order === "desc"
 		? (a, b) => descendingComparator(a, b, orderBy)
 		: (a, b) => -descendingComparator(a, b, orderBy);
@@ -282,27 +282,27 @@ export default function Pickups() {
 
 	const getChipColorPaid = (paidStatus: string) => {
 		switch (paidStatus) {
-		case "Yes":
-			return "#E3EECB";
-		case "No":
-			return "#FFD0CA";
-		case "Partial":
-			return "#CFD1D4";
-		default:
-			return "#CFD1D4";
+			case "Yes":
+				return "#E3EECB";
+			case "No":
+				return "#FFD0CA";
+			case "Partial":
+				return "#CFD1D4";
+			default:
+				return "#CFD1D4";
 		}
 	};
 
 	const getChipColorPickUp = (readyStatus: string) => {
 		switch (readyStatus) {
-		case "Ready":
-			return "#FFF0CB";
-		case "Not Ready":
-			return "#FFD0CA";
-		case "Picked Up":
-			return "#E3EECB";
-		default:
-			return "#CFD1D4";
+			case "Ready":
+				return "#FFF0CB";
+			case "Not Ready":
+				return "#FFD0CA";
+			case "Picked Up":
+				return "#E3EECB";
+			default:
+				return "#CFD1D4";
 		}
 	};
 
