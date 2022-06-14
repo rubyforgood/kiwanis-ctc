@@ -3,7 +3,7 @@ import * as React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-import { ThemeProvider } from "@material-ui/core";
+import { ThemeProvider } from "@mui/material/styles";
 
 import {
 	BrowserRouter as Router,
@@ -13,6 +13,7 @@ import {
 import theme from "./theme";
 import { initializeApp } from "firebase/app";
 import { config } from "./Firebase";
+import { signOut, getAuth, reload } from "firebase/auth";
 
 // import your route components too
 
@@ -45,9 +46,12 @@ initializeApp(config.firebaseConfig);
 
 
 export default function App() {
+	const auth = getAuth();
+
 	return (
 		<ThemeProvider theme={theme}>
 			<Router>
+				<Navbar authing />
 				<Routes>
 					<Route path="/" element={<AdminLogin />} />
 					<Route path="/dashboard" element={<AuthRoute><AdminDashboard /></AuthRoute>} />
