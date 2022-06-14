@@ -20,7 +20,6 @@ import { signOut, getAuth, reload } from "firebase/auth";
 // !Components
 import AuthRoute from "./components/AuthRoute";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 
 // !Admin Pages
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -60,7 +59,6 @@ export default function App() {
 					<Route path="/donors" element={<AuthRoute><AdminDonors /></AuthRoute>} />
 					<Route path="/communications" element={<AuthRoute><AdminCommunications /></AuthRoute>} />
 				</Routes>
-				<Footer />
 			</Router>
 		</ThemeProvider>
 	);

@@ -21,7 +21,6 @@ const Navbar = (props: { authing: any; }) => {
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 	const [activeOne, setActiveOne] = useState("");
-	const [isAdmin, setAdmin] = useState("True"); //If wanting to test add True to this state to become an Admin
 
 	const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorElUser(event.currentTarget);
@@ -34,7 +33,6 @@ const Navbar = (props: { authing: any; }) => {
 	const handleLogoReset = () => {
 		setActiveOne("home");
 	};
-
 	return (
 		<AppBar position="sticky" elevation={0} style={{ background: "#FFFFFF", zIndex: 2 }}>
 			<Container maxWidth={false}>
@@ -75,7 +73,7 @@ const Navbar = (props: { authing: any; }) => {
 						<img src={logo} alt="logo" style={{ maxWidth: "30rem", width: "85%" }} />
 					</Paper>
 					{props.authing && <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-						{isAdmin ? (<Typography
+						{props.authing ? (<Typography
 							variant="h6"
 							noWrap
 							component="a"
@@ -110,7 +108,7 @@ const Navbar = (props: { authing: any; }) => {
 						)}
 
 					</Box>}
-					{isAdmin ? (
+					{props.authing ? (
 						<Box sx={{ flexGrow: 0, display: "inline", }}>
 							{props.authing && <Box
 								display="flex"
@@ -121,7 +119,7 @@ const Navbar = (props: { authing: any; }) => {
 
 								<Paper
 									elevation={0}
-									sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next", minHeight: "0", minWidth: "0", padding: "0" }} >Remy</Paper>
+									sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next", minHeight: "0", minWidth: "0", padding: "0" }} >Admin</Paper>
 
 								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 

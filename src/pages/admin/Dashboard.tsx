@@ -10,7 +10,6 @@ const Dashboard = () => {
 
 	return (
 		<div>
-			<Navbar authing={false}/>
 			<AdminTaskbar />
 			<Box component="main" sx={{ flexGrow: 1, p: 15 }}>
 				<Toolbar />
