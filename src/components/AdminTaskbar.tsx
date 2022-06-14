@@ -70,6 +70,7 @@ const AdminTaskbar = () => {
 										fontWeight: isActive ? "bolder" : "lighter",
 										textDecoration: "none",
 										color: "#FFFFFF",
+										width: 100
 									})}>
 										{el.name}
 									</NavLink>

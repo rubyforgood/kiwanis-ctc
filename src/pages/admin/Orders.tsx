@@ -9,7 +9,6 @@ import Box from "@mui/material/Box";
 import NewOrder from "../../components/NewOrder";
 
 const Orders = () => {
-
 	const [clients, setClients] = useState([]);
 	const [updated, setUpdated] = useState(false);
 	const app = initializeApp(config.firebaseConfig);

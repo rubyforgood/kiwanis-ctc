@@ -14,12 +14,11 @@ const Dashboard = () => {
 			<Box component="main" sx={{ flexGrow: 1, p: 15 }}>
 				<Toolbar />
 				<Typography paragraph align="center">
-				2022 Blueberry Fundraiser - Dashboard
+					2022 Blueberry Fundraiser - Dashboard
 				</Typography>
 			</Box>
-			<Button variant="contained" sx={{ml: 60 }}onClick={() => { signOut(auth); window.location.reload(); }}>Sign Out</Button>
 		</div>
-		
+
 	);
 };
 

@@ -13,11 +13,13 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import logo from "../images/logo.svg";
 import account from "../images/account.svg";
+import { signOut, getAuth } from "firebase/auth";
 
 
 const settings = ["Logout"];
 
 const Navbar = (props: { authing: any; }) => {
+	const auth = getAuth();
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 	const [activeOne, setActiveOne] = useState("");
@@ -144,7 +146,7 @@ const Navbar = (props: { authing: any; }) => {
 							>
 								{settings.map((setting) => (
 									<MenuItem key={setting} onClick={handleCloseUserMenu}>
-										<Typography textAlign="center">{setting}</Typography>
+										<Typography textAlign="center" onClick={() => { signOut(auth); window.location.reload(); }}>{setting}</Typography>
 									</MenuItem>
 								))}
 							</Menu>
