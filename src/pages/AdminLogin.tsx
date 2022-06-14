@@ -55,6 +55,9 @@ const AdminLogin = () => {
 				sx={{
 					backgroundColor: "primary.dark",
 					height: "100vh",
+					display: "flex",
+					justifyContent: "center",
+					pt: 10
 				}}
 			>
 				<Container
