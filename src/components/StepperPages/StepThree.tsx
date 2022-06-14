@@ -78,14 +78,17 @@ const StepThree: React.FC<StepProps> = ({ orderDetailState: [orderDetails, setOr
 				<Typography>
 					Cash
 				</Typography>
-				<TextField onChange={(event) => {
-					const formattedCash = Math.abs(parseFloat(parseFloat(event.target.value).toFixed(2)));
-					setCash(formattedCash);
-				}} placeholder="$0" type="number" />
-				{Number.isNaN(cash) ? "$0" : "$" + cash}
+				<TextField
+					onChange={(event) => {
+						const formattedCash = Math.abs(parseFloat(parseFloat(event.target.value).toFixed(2)));
+						setCash(formattedCash);
+					}} placeholder="$0" type="number" sx={{width: 150}}/>
+				<Typography sx={{ width: 30 }}>
+					{Number.isNaN(cash) ? "$0" : "$" + cash}
+				</Typography>
 			</Box>
 			{/* <Button variant="contained" sx={{ backgroundColor: "secondary.light", width: 300 }} onClick={handleSubmit}>Confirm</Button> */}
-			<StepButton type={"button"} handleSubmit={handleSubmit}/>
+			<StepButton type={"button"} handleSubmit={handleSubmit} />
 		</Box>
 	);
 
