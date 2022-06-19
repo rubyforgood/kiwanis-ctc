@@ -14,27 +14,27 @@ const drawerWidth = 250;
 const navList = [
 	{
 		name: "Dashboard",
-		href: "/dashboard",
+		href: "/kiwanis-ctc/dashboard",
 		icon: <HomeIcon height={30} />,
 	},
 	{
 		name: "Orders",
-		href: "/orders",
+		href: "/kiwanis-ctc/orders",
 		icon: <ShoppingBagIcon height={30} />,
 	},
 	{
 		name: "Pickups",
-		href: "/pickups",
+		href: "/kiwanis-ctc/pickups",
 		icon: <PhoneIncomingIcon height={30} />,
 	},
 	{
 		name: "Donors",
-		href: "/donors",
+		href: "/kiwanis-ctc/donors",
 		icon: <UserGroupIcon height={30} />,
 	},
 	{
 		name: "Communications",
-		href: "/communications",
+		href: "/kiwanis-ctc/communications",
 		icon: <ChatAlt2Icon height={30} />,
 	}
 
