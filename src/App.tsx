@@ -49,15 +49,15 @@ export default function App() {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<Router>
+			<Router basename="/kiwanis-ctc">
 				<Navbar authing={auth} />
 				<Routes>
-					<Route path="/kiwanis-ctc/" element={<AdminLogin />} />
-					<Route path="/kiwanis-ctc/dashboard" element={<AuthRoute><AdminDashboard /></AuthRoute>} />
-					<Route path="/kiwanis-ctc/orders" element={<AuthRoute><AdminOrders /></AuthRoute>} />
-					<Route path="/kiwanis-ctc/pickups" element={<AuthRoute><AdminPickups /></AuthRoute>} />
-					<Route path="/kiwanis-ctc/donors" element={<AuthRoute><AdminDonors /></AuthRoute>} />
-					<Route path="/kiwanis-ctc/communications" element={<AuthRoute><AdminCommunications /></AuthRoute>} />
+					<Route path="/" element={<AdminLogin />} />
+					<Route path="dashboard" element={<AuthRoute><AdminDashboard /></AuthRoute>} />
+					<Route path="orders" element={<AuthRoute><AdminOrders /></AuthRoute>} />
+					<Route path="pickups" element={<AuthRoute><AdminPickups /></AuthRoute>} />
+					<Route path="donors" element={<AuthRoute><AdminDonors /></AuthRoute>} />
+					<Route path="communications" element={<AuthRoute><AdminCommunications /></AuthRoute>} />
 				</Routes>
 			</Router>
 		</ThemeProvider>

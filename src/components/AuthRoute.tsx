@@ -13,7 +13,7 @@ const AuthRoute: React.FC<IAuthRouteProps> = ({ children }) => {
 		if (user) {
 			setLoading(false);
 		} else {
-			navigate("/kiwanis-ctc/");
+			navigate("/");
 		}
 	});
 	useEffect(() => {
