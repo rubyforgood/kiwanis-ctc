@@ -35,7 +35,7 @@ function Copyright() {
 			{"Copyright © "}
 			<Link color="inherit" href="https://mui.com/">
 				Your Website
-			</Link>{" "}
+			</Link>{""}
 			{new Date().getFullYear()}.
 		</Typography>
 	);
@@ -50,14 +50,14 @@ export default function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<Router>
-				<Navbar authing />
+				<Navbar authing={auth} />
 				<Routes>
-					<Route path="/" element={<AdminLogin />} />
-					<Route path="/dashboard" element={<AuthRoute><AdminDashboard /></AuthRoute>} />
-					<Route path="/orders" element={<AuthRoute><AdminOrders /></AuthRoute>} />
-					<Route path="/pickups" element={<AuthRoute><AdminPickups /></AuthRoute>} />
-					<Route path="/donors" element={<AuthRoute><AdminDonors /></AuthRoute>} />
-					<Route path="/communications" element={<AuthRoute><AdminCommunications /></AuthRoute>} />
+					<Route path="/kiwanis-ctc/" element={<AdminLogin />} />
+					<Route path="/kiwanis-ctc/dashboard" element={<AuthRoute><AdminDashboard /></AuthRoute>} />
+					<Route path="/kiwanis-ctc/orders" element={<AuthRoute><AdminOrders /></AuthRoute>} />
+					<Route path="/kiwanis-ctc/pickups" element={<AuthRoute><AdminPickups /></AuthRoute>} />
+					<Route path="/kiwanis-ctc/donors" element={<AuthRoute><AdminDonors /></AuthRoute>} />
+					<Route path="/kiwanis-ctc/communications" element={<AuthRoute><AdminCommunications /></AuthRoute>} />
 				</Routes>
 			</Router>
 		</ThemeProvider>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminTaskbar from "../../components/AdminTaskbar";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -14,6 +14,9 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
 import { Chip, Tabs, Tab } from "@mui/material";
+import { initializeApp } from "firebase/app";
+import { config } from "../../Firebase";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
 
 interface Data {
 	no: string,
@@ -157,6 +160,8 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 		(property: keyof Data) => (event: React.MouseEvent<unknown>) => {
 			onRequestSort(event, property);
 		};
+
+
 
 	return (
 		<TableHead sx={{ backgroundColor: "#E5E5E5" }}>
@@ -377,7 +382,7 @@ export default function Pickups() {
 	};
 
 	return (
-		<div style={{ marginRight: "1rem" }} >
+		<Box sx={{display: "flex"}}>
 			<AdminTaskbar />
 			<Box sx={{ width: "85%", float: "right" }}>
 				<Box sx={{ pl: 5 }}>
@@ -593,6 +598,6 @@ export default function Pickups() {
 					</Paper>
 				</TabPanel>
 			</Box>
-		</div >
+		</Box >
 	);
 }

@@ -70,7 +70,7 @@ const NewOrderStepper: React.FC<UpdateProps> = ({ colRef, updatedState: [updated
 			"First Name": orderDetails.firstName,
 			"Last Name": orderDetails.lastName,
 			"How did you hear about us?": orderDetails.selectedOption,
-			"Total": orderDetails.cash + (orderDetails.AFAC + orderDetails.self) * 40,
+			"Total": "$" + (orderDetails.cash + (orderDetails.AFAC + orderDetails.self) * 40.00).toFixed(2),
 			"Submission Date": date,
 			"Method": "Cash"
 		});

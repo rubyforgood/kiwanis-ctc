@@ -42,7 +42,7 @@ const AdminLogin = () => {
 			).then((userCredentials) => {
 				setUser(userCredentials.user);
 				setAuthing(true);
-				navigate("/dashboard");
+				navigate("/kiwanis-ctc/dashboard");
 			}).catch((error) => {
 				alert("User not found: " + error.code);
 			});
@@ -55,6 +55,9 @@ const AdminLogin = () => {
 				sx={{
 					backgroundColor: "primary.dark",
 					height: "100vh",
+					display: "flex",
+					justifyContent: "center",
+					pt: 10
 				}}
 			>
 				<Container

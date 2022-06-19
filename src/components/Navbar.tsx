@@ -10,9 +10,11 @@ import Paper from "@mui/material/Paper";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import AuthRoute from "../components/AuthRoute";
 
 import logo from "../images/logo.svg";
 import account from "../images/account.svg";
+import { signOut } from "firebase/auth";
 
 
 const settings = ["Logout"];
@@ -30,9 +32,6 @@ const Navbar = (props: { authing: any; }) => {
 		setAnchorElUser(null);
 	};
 
-	const handleLogoReset = () => {
-		setActiveOne("home");
-	};
 	return (
 		<AppBar position="sticky" elevation={0} style={{ background: "#FFFFFF", zIndex: 2 }}>
 			<Container maxWidth={false}>
@@ -43,7 +42,6 @@ const Navbar = (props: { authing: any; }) => {
 							variant="h6"
 							noWrap
 							component="a"
-							href="/"
 							sx={{
 								mr: 2,
 								display: { xs: "none", md: "flex" },
@@ -57,11 +55,7 @@ const Navbar = (props: { authing: any; }) => {
 							LOGO
 						</Typography>
 					</Box>
-
 					<Paper
-						component={Link}
-						to={""}
-						onClick={handleLogoReset}
 						elevation={0}
 						sx={{
 							my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next", minHeight: "0", minWidth: "0", padding: "0",
@@ -77,7 +71,6 @@ const Navbar = (props: { authing: any; }) => {
 							variant="h6"
 							noWrap
 							component="a"
-							href="/"
 							sx={{
 								mr: 2,
 								display: { xs: "none", md: "flex" },
@@ -93,7 +86,6 @@ const Navbar = (props: { authing: any; }) => {
 								variant="h6"
 								noWrap
 								component="a"
-								href="/"
 								sx={{
 									mr: 2,
 									display: { xs: "none", md: "flex" },
@@ -103,56 +95,54 @@ const Navbar = (props: { authing: any; }) => {
 									textDecoration: "none",
 								}}
 							>
-								{/* Nothing is Displayed Here */}
 							</Typography>
 						)}
 
 					</Box>}
-					{props.authing ? (
-						<Box sx={{ flexGrow: 0, display: "inline", }}>
-							{props.authing && <Box
-								display="flex"
-								justifyContent="center"
-								alignItems="center"
-							>
-								<img src={account} alt="account" style={{ width: "50%", maxWidth: "2rem" }} />
+					<Box sx={{ flexGrow: 0, display: "inline", }}>
+						{props.authing && <Box
+							display="flex"
+							justifyContent="center"
+							alignItems="center"
+						>
+							<img src={account} alt="account" style={{ width: "50%", maxWidth: "2rem" }} />
 
-								<Paper
-									elevation={0}
-									sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next", minHeight: "0", minWidth: "0", padding: "0" }} >Admin</Paper>
+							<Paper
+								elevation={0}
+								sx={{ my: 2, color: "black", display: "block", textTransform: "unset !important", fontFamily: "Avenir Next", minHeight: "0", minWidth: "0", padding: "0" }} >Admin</Paper>
 
-								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 
-									<ArrowDropDownIcon sx={{ display: { xs: "none", md: "flex" } }} />
-								</IconButton>
-							</Box>}
-							<Menu
-								sx={{ mt: "45px" }}
-								id="menu-appbar"
-								anchorEl={anchorElUser}
-								anchorOrigin={{
-									vertical: "top",
-									horizontal: "right",
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: "top",
-									horizontal: "right",
-								}}
-								open={Boolean(anchorElUser)}
-								onClose={handleCloseUserMenu}
-							>
-								{settings.map((setting) => (
-									<MenuItem key={setting} onClick={handleCloseUserMenu}>
-										<Typography textAlign="center">{setting}</Typography>
-									</MenuItem>
-								))}
-							</Menu>
-						</Box>) : (
-						<Box>
-							{/* Empty Box since not Admin */}
-						</Box>
-					)}
+								<ArrowDropDownIcon sx={{ display: { xs: "none", md: "flex" } }} />
+							</IconButton>
+						</Box>}
+						<Menu
+							sx={{ mt: "45px" }}
+							id="menu-appbar"
+							anchorEl={anchorElUser}
+							anchorOrigin={{
+								vertical: "top",
+								horizontal: "right",
+							}}
+							keepMounted
+							transformOrigin={{
+								vertical: "top",
+								horizontal: "right",
+							}}
+							open={Boolean(anchorElUser)}
+							onClose={handleCloseUserMenu}
+						>
+							{settings.map((setting) => (
+								<MenuItem key={setting} onClick={handleCloseUserMenu}>
+									<Typography textAlign="center" onClick={() => { signOut(props.authing); window.location.reload(); }}>{setting}</Typography>
+								</MenuItem>
+							))}
+						</Menu>
+					</Box>) : (
+					<Box>
+						{/* Empty Box since not Admin */}
+					</Box>
+					)
 				</Toolbar >
 			</Container >
 		</AppBar >
