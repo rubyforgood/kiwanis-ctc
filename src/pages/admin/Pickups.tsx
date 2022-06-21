@@ -30,16 +30,6 @@ interface Data {
 	pickUp: string;
 }
 
-const originalRows: Data[] = [
-	{ no: "01", firstName: "Ava", lastName: "Miller", self: 1, afac: 4, total: 5, method: "Credit Card", paid: "Yes", pickUp: "Ready" },
-	{ no: "02", firstName: "James", lastName: "Cole", self: 2, afac: 0, total: 2, method: "Credit Card", paid: "Yes", pickUp: "Ready" },
-	{ no: "03", firstName: "Vivian", lastName: "Eggers", self: 5, afac: 5, total: 10, method: "Credit Card", paid: "Partial", pickUp: "Not Ready" },
-	{ no: "04", firstName: "Ellijah", lastName: "Sandis", self: 0, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickUp: "Ready" },
-	{ no: "05", firstName: "Anjali", lastName: "Sharma", self: 1, afac: 1, total: 2, method: "Credit Card", paid: "No", pickUp: "Not Ready" },
-	{ no: "06", firstName: "Sarah", lastName: "Smith", self: 1, afac: 4, total: 5, method: "Credit Card", paid: "Yes", pickUp: "Picked Up" },
-	{ no: "07", firstName: "Noah", lastName: "Davis", self: 0, afac: 3, total: 3, method: "Credit Card", paid: "Yes", pickUp: "Picked Up" },
-	{ no: "08", firstName: "Mary", lastName: "Brown", self: 1, afac: 1, total: 2, method: "Credit Card", paid: "Partial", pickUp: "Ready" },
-];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 	if (b[orderBy] < a[orderBy]) {
@@ -57,9 +47,9 @@ function getComparator<Key extends keyof any>(
 	order: Order,
 	orderBy: Key,
 ): (
-		a: { [key in Key]: number | string },
-		b: { [key in Key]: number | string },
-	) => number {
+	a: { [key in Key]: number | string },
+	b: { [key in Key]: number | string },
+) => number {
 	return order === "desc"
 		? (a, b) => descendingComparator(a, b, orderBy)
 		: (a, b) => -descendingComparator(a, b, orderBy);
@@ -226,11 +216,25 @@ function a11yProps(index: number) {
 }
 
 export default function Pickups() {
+
+	let ogRows: Data[];
+	const [rows, setRows] = useState<Data[]>([]);
+
+	useEffect(() => {
+		fetch("https://firestore.googleapis.com/v1/projects/kiwanis-international/databases/(default)/documents/pickups")
+			.then(response => response.json())
+			.then(data => {
+				ogRows = data.documents.map((row: any) => ({ no: row.fields.no.stringValue, firstName: row.fields.firstName.stringValue, lastName: row.fields.lastName.stringValue, self: parseInt(row.fields.self.integerValue), afac: parseInt(row.fields.afac.integerValue), total: parseInt(row.fields.total.integerValue), method: row.fields.method.stringValue, paid: row.fields.paid.stringValue, pickUp: row.fields.pickUp.stringValue }));
+				setRows(ogRows);
+			});
+
+	}, []);
 	const [order, setOrder] = React.useState<Order>("asc");
 	const [orderBy, setOrderBy] = React.useState<keyof Data>("lastName");
 	const [selected, setSelected] = React.useState<readonly string[]>([]);
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
 
 	const handleRequestSort = (
 		event: React.MouseEvent<unknown>,
@@ -243,7 +247,7 @@ export default function Pickups() {
 
 	const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.checked) {
-			const newSelecteds = originalRows.map((n) => n.firstName);
+			const newSelecteds = rows.map((n) => n.firstName);
 			setSelected(newSelecteds);
 			return;
 		}
@@ -283,7 +287,7 @@ export default function Pickups() {
 
 	// Avoid a layout jump when reaching the last page with empty rows.
 	const emptyRows =
-		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - originalRows.length) : 0;
+		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
 	const getChipColorPaid = (paidStatus: string) => {
 		switch (paidStatus) {
@@ -316,14 +320,25 @@ export default function Pickups() {
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
-	const pickedUpRows = originalRows.filter((obj) => {
+	let pickedUpRows = rows.filter((obj) => {
 		return obj.pickUp === "Picked Up";
 	});
-	const nonPickedUpRows = originalRows.filter((obj) => {
+	let nonPickedUpRows = rows.filter((obj) => {
 		return obj.pickUp === "Not Ready" || obj.pickUp === "Ready";
 	});
 
-	const [rows, setRows] = useState<Data[]>(originalRows);
+	useEffect(() => {
+		pickedUpRows = rows.filter((obj) => {
+			return obj.pickUp === "Picked Up";
+		});
+		nonPickedUpRows = rows.filter((obj) => {
+			return obj.pickUp === "Not Ready" || obj.pickUp === "Ready";
+		});
+		setPickedUpRowsA(pickedUpRows);
+		setNonPickedUpRowsA(nonPickedUpRows);
+
+	}, [rows]);
+
 	const [pickedUpRowsA, setPickedUpRowsA] = useState<Data[]>(pickedUpRows);
 	const [nonPickedUpRowsA, setNonPickedUpRowsA] = useState<Data[]>(nonPickedUpRows);
 	const [searched, setSearched] = useState<string>("");
@@ -381,8 +396,24 @@ export default function Pickups() {
 		}
 	};
 
+
+	useEffect(() => {
+		const reloadCount: string = sessionStorage.getItem("reloadCount")!;
+		if (reloadCount === null) {
+			sessionStorage.setItem("reloadCount", String(1));
+			window.location.reload();
+		} else if (parseInt(reloadCount) < 2) {
+			sessionStorage.setItem("reloadCount", String(reloadCount + 1));
+			window.location.reload();
+		} else {
+			sessionStorage.removeItem("reloadCount");
+		}
+	}, []);
+
+
+
 	return (
-		<Box sx={{display: "flex"}}>
+		<Box sx={{ display: "flex" }}>
 			<AdminTaskbar />
 			<Box sx={{ width: "85%", float: "right" }}>
 				<Box sx={{ pl: 5 }}>
