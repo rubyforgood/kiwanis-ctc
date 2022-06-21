@@ -8,5 +8,6 @@ export interface OrderDetails {
 	self: number,
 	AFAC: number,
 	cash: number,
-	paid: boolean
+	paid: boolean,
+	method: string
 }

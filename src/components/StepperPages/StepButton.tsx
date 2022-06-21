@@ -37,11 +37,11 @@ const StepButton: React.FC<{ type: any, handleSubmit?: any, setOrderDetails?: an
 
 	return (
 		<>
-			<Box sx={{ mb: 2 }}>
+			<Box sx={{ mb: 2, mt: 2 }}>
 				<Button
 					variant="contained"
-					{...step[0] === 2 && {onClick: handleSubmit}}
-					{...step[0] === 3 && {onClick: handleNext}}
+					{...step[0] === 2 && { onClick: handleSubmit }}
+					{...step[0] === 3 && { onClick: handleNext }}
 					sx={{ mt: 1, mr: 1 }}
 					type={type}
 				>
