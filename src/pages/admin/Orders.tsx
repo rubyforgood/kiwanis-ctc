@@ -69,7 +69,7 @@ const Orders = () => {
 		<Box sx={{ display: "flex" }}>
 			<AdminTaskbar />
 			<Box sx={{
-				display: "flex", flexDirection: "column", width: "100%"
+				display: "flex", flexDirection: "column", width: "70%"
 			}}>
 				<Typography variant="subtitle1" fontSize={15}>
 					Dashboard / Orders

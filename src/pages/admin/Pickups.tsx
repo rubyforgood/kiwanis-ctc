@@ -216,15 +216,13 @@ function a11yProps(index: number) {
 }
 
 export default function Pickups() {
-	const [clients, setClients] = useState([]);
-	const [updated, setUpdated] = useState(false);
 	const app = initializeApp(config.firebaseConfig);
 	const db = getFirestore(app);
 	const colRef = collection(db, "clients");
 	const tmpClients: any = [];
 
-	let ogRows: Data[];
 	const [rows, setRows] = useState<Data[]>([]);
+	const [updated, setUpdated] = useState(false);
 
 	useEffect(() => {
 		getDocs(colRef)
@@ -233,12 +231,12 @@ export default function Pickups() {
 				snapshot.docs.forEach((doc) => {
 					tmpClients.push({
 						...doc.data(),
-						id: id++,
+						no: id++,
 					});
 				});
 				setRows(tmpClients);
 			});
-	}, []);
+	}, [updated]);
 	const [order, setOrder] = React.useState<Order>("asc");
 	const [orderBy, setOrderBy] = React.useState<keyof Data>("Last Name");
 	const [selected, setSelected] = React.useState<readonly string[]>([]);
@@ -330,18 +328,19 @@ export default function Pickups() {
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
-	let pickedUpRows = rows.filter((obj) => {
+
+	let pickedUpRows = Object.values(rows).filter((obj) => {
 		return obj["Pick Up"] === "Picked Up";
 	});
-	let nonPickedUpRows = rows.filter((obj) => {
+	let nonPickedUpRows = Object.values(rows).filter((obj) => {
 		return obj["Pick Up"] === "Not Ready" || obj["Pick Up"] === "Ready";
 	});
 
 	useEffect(() => {
-		pickedUpRows = rows.filter((obj) => {
+		pickedUpRows = Object.values(rows).filter((obj) => {
 			return obj["Pick Up"] === "Picked Up";
 		});
-		nonPickedUpRows = rows.filter((obj) => {
+		nonPickedUpRows = Object.values(rows).filter((obj) => {
 			return obj["Pick Up"] === "Not Ready" || obj["Pick Up"] === "Ready";
 		});
 		setPickedUpRowsA(pickedUpRows);
@@ -406,21 +405,13 @@ export default function Pickups() {
 		}
 	};
 
-
-	// useEffect(() => {
-	// 	const reloadCount: string = sessionStorage.getItem("reloadCount")!;
-	// 	if (reloadCount === null) {
-	// 		sessionStorage.setItem("reloadCount", String(1));
-	// 		window.location.reload();
-	// 	} else if (parseInt(reloadCount) < 2) {
-	// 		sessionStorage.setItem("reloadCount", String(reloadCount + 1));
-	// 		window.location.reload();
-	// 	} else {
-	// 		sessionStorage.removeItem("reloadCount");
-	// 	}
-	// }, []);
-
-
+	const changePickUp = (originalRow: any) => {
+		console.log(originalRow.no);
+		const changedRow = rows.filter(row => 
+			row.no === originalRow.no
+		);
+		console.log(changedRow);
+	};
 
 	return (
 		<Box sx={{ display: "flex" }}>
@@ -519,7 +510,9 @@ export default function Pickups() {
 													<TableCell align="center">
 														<Chip
 															label={
-																<Typography color="black" variant="body2">
+																<Typography color="black" variant="body2" onClick={() => changePickUp(originalRow)}
+																	sx={{ cursor: "pointer" }}
+																>
 																	{originalRow["Pick Up"]}
 																</Typography>
 															}

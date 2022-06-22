@@ -73,7 +73,8 @@ const NewOrderStepper: React.FC<UpdateProps> = ({ colRef, updatedState: [updated
 			"How did you hear about us?": orderDetails.selectedOption,
 			"Total": "$" + (orderDetails.cash + (orderDetails.AFAC + orderDetails.self) * 40.00).toFixed(2),
 			"Submission Date": date,
-			"Method": orderDetails.method
+			"Method": orderDetails.method,
+			"Paid": orderDetails.paid
 		});
 		setActiveStep(0);
 		setUpdated(!updated);
