@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
 import { Chip, Tabs, Tab } from "@mui/material";
-import { getDocs, getFirestore, collection } from "firebase/firestore";
+import { getDocs, getFirestore, collection, doc, updateDoc, getDoc } from "firebase/firestore";
 import { config } from "../../Firebase";
 import { initializeApp } from "firebase/app";
 
@@ -262,7 +262,25 @@ export default function Pickups() {
 		setSelected([]);
 	};
 
-	const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+	const handleClick = (event: React.MouseEvent<unknown>, name: string, pickUp: string, paid: string) => {
+		const filteredRow = rows.filter(row => row.no === name);
+		if (pickUp === "Not Ready") {
+			pickUp = "Ready";
+		} else {
+			pickUp = "Not Ready";
+		}
+		if (paid === "No") {
+			paid = "Yes";
+		} else {
+			paid = "No";
+		}
+		filteredRow[0]["Pick Up"] = pickUp;
+		filteredRow[0]["Paid"] = paid;
+
+		// currently the ID is set to 1, needs to be dynamically changed to whatever ID actually is
+		/* const docRef = doc(db,"clients", "1");
+		updateDoc(docRef, {"Pick Up": pickUp}); */
+
 		const selectedIndex = selected.indexOf(name);
 		let newSelected: readonly string[] = [];
 
@@ -407,7 +425,7 @@ export default function Pickups() {
 
 	const changePickUp = (originalRow: any) => {
 		console.log(originalRow.no);
-		const changedRow = rows.filter(row => 
+		const changedRow = rows.filter(row =>
 			row.no === originalRow.no
 		);
 		console.log(changedRow);
@@ -474,7 +492,7 @@ export default function Pickups() {
 											return (
 												<TableRow
 													hover
-													onClick={(event) => handleClick(event, originalRow.no)}
+													onClick={(event) => handleClick(event, originalRow.no, originalRow["Pick Up"], originalRow["Paid"])}
 													role="checkbox"
 													aria-checked={isItemSelected}
 													tabIndex={-1}
@@ -568,7 +586,7 @@ export default function Pickups() {
 											return (
 												<TableRow
 													hover
-													onClick={(event) => handleClick(event, originalRow.no)}
+													onClick={(event) => handleClick(event, originalRow.no, originalRow["Pick Up"] , originalRow["Paid"])}
 													role="checkbox"
 													aria-checked={isItemSelected}
 													tabIndex={-1}
