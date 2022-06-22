@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/kiwanis-ctc/static/css/main.ce69836f.css",
-    "main.js": "/kiwanis-ctc/static/js/main.5664be64.js",
+    "main.js": "/kiwanis-ctc/static/js/main.a501d8d0.js",
     "static/media/AvenirNext.ttf": "/kiwanis-ctc/static/media/AvenirNext.ba09f45da85124ab7d78.ttf",
-    "static/media/logo.svg": "/kiwanis-ctc/static/media/logo.85f28454aaf21f8a87758e38cb382276.svg",
-    "static/media/account.svg": "/kiwanis-ctc/static/media/account.99c0beeb62970dcb2024829a4683cf52.svg",
+    "static/media/logo.svg": "/kiwanis-ctc/static/media/logo.c76c9245ca89b485a244c01463333b07.svg",
+    "static/media/account.svg": "/kiwanis-ctc/static/media/account.0a7b893af2015bfd93e1d399fedca336.svg",
     "index.html": "/kiwanis-ctc/index.html",
     "main.ce69836f.css.map": "/kiwanis-ctc/static/css/main.ce69836f.css.map",
-    "main.5664be64.js.map": "/kiwanis-ctc/static/js/main.5664be64.js.map"
+    "main.a501d8d0.js.map": "/kiwanis-ctc/static/js/main.a501d8d0.js.map"
   },
   "entrypoints": [
     "static/css/main.ce69836f.css",
-    "static/js/main.5664be64.js"
+    "static/js/main.a501d8d0.js"
   ]
 }
