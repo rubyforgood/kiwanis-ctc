@@ -14,20 +14,20 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
 import { Chip, Tabs, Tab } from "@mui/material";
-import { initializeApp } from "firebase/app";
+import { getDocs, getFirestore, collection } from "firebase/firestore";
 import { config } from "../../Firebase";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
 
 interface Data {
 	no: string,
-	firstName: string,
-	lastName: string,
-	self: number,
-	afac: number,
-	total: number,
-	method: string,
-	paid: string,
-	pickUp: string;
+	"First Name": string,
+	"Last Name": string,
+	"Boxes for Customer": number,
+	"Boxes for AFAC": number,
+	"Total": number,
+	"Method": string,
+	"Paid": string,
+	"Pick Up": string;
 }
 
 
@@ -47,9 +47,9 @@ function getComparator<Key extends keyof any>(
 	order: Order,
 	orderBy: Key,
 ): (
-	a: { [key in Key]: number | string },
-	b: { [key in Key]: number | string },
-) => number {
+		a: { [key in Key]: number | string },
+		b: { [key in Key]: number | string },
+	) => number {
 	return order === "desc"
 		? (a, b) => descendingComparator(a, b, orderBy)
 		: (a, b) => -descendingComparator(a, b, orderBy);
@@ -84,49 +84,49 @@ const headCells: readonly HeadCell[] = [
 		label: "No.",
 	},
 	{
-		id: "firstName",
+		id: "First Name",
 		numeric: false,
 		disablePadding: false,
 		label: "First Name",
 	},
 	{
-		id: "lastName",
+		id: "Last Name",
 		numeric: false,
 		disablePadding: false,
 		label: "Last Name",
 	},
 	{
-		id: "self",
+		id: "Boxes for Customer",
 		numeric: true,
 		disablePadding: false,
 		label: "Self",
 	},
 	{
-		id: "afac",
+		id: "Boxes for AFAC",
 		numeric: true,
 		disablePadding: false,
 		label: "AFAC",
 	},
 	{
-		id: "total",
+		id: "Total",
 		numeric: true,
 		disablePadding: false,
 		label: "Total",
 	},
 	{
-		id: "method",
+		id: "Method",
 		numeric: false,
 		disablePadding: false,
 		label: "Method",
 	},
 	{
-		id: "paid",
+		id: "Paid",
 		numeric: false,
 		disablePadding: false,
 		label: "Paid",
 	},
 	{
-		id: "pickUp",
+		id: "Pick Up",
 		numeric: false,
 		disablePadding: false,
 		label: "Pick Up",
@@ -216,21 +216,31 @@ function a11yProps(index: number) {
 }
 
 export default function Pickups() {
+	const [clients, setClients] = useState([]);
+	const [updated, setUpdated] = useState(false);
+	const app = initializeApp(config.firebaseConfig);
+	const db = getFirestore(app);
+	const colRef = collection(db, "clients");
+	const tmpClients: any = [];
 
 	let ogRows: Data[];
 	const [rows, setRows] = useState<Data[]>([]);
 
 	useEffect(() => {
-		fetch("https://firestore.googleapis.com/v1/projects/kiwanis-international/databases/(default)/documents/pickups")
-			.then(response => response.json())
-			.then(data => {
-				ogRows = data.documents.map((row: any) => ({ no: row.fields.no.stringValue, firstName: row.fields.firstName.stringValue, lastName: row.fields.lastName.stringValue, self: parseInt(row.fields.self.integerValue), afac: parseInt(row.fields.afac.integerValue), total: parseInt(row.fields.total.integerValue), method: row.fields.method.stringValue, paid: row.fields.paid.stringValue, pickUp: row.fields.pickUp.stringValue }));
-				setRows(ogRows);
+		getDocs(colRef)
+			.then((snapshot) => {
+				let id = 1;
+				snapshot.docs.forEach((doc) => {
+					tmpClients.push({
+						...doc.data(),
+						id: id++,
+					});
+				});
+				setRows(tmpClients);
 			});
-
 	}, []);
 	const [order, setOrder] = React.useState<Order>("asc");
-	const [orderBy, setOrderBy] = React.useState<keyof Data>("lastName");
+	const [orderBy, setOrderBy] = React.useState<keyof Data>("Last Name");
 	const [selected, setSelected] = React.useState<readonly string[]>([]);
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -247,7 +257,7 @@ export default function Pickups() {
 
 	const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.checked) {
-			const newSelecteds = rows.map((n) => n.firstName);
+			const newSelecteds = rows.map((n) => n["First Name"]);
 			setSelected(newSelecteds);
 			return;
 		}
@@ -321,18 +331,18 @@ export default function Pickups() {
 		setValue(newValue);
 	};
 	let pickedUpRows = rows.filter((obj) => {
-		return obj.pickUp === "Picked Up";
+		return obj["Pick Up"] === "Picked Up";
 	});
 	let nonPickedUpRows = rows.filter((obj) => {
-		return obj.pickUp === "Not Ready" || obj.pickUp === "Ready";
+		return obj["Pick Up"] === "Not Ready" || obj["Pick Up"] === "Ready";
 	});
 
 	useEffect(() => {
 		pickedUpRows = rows.filter((obj) => {
-			return obj.pickUp === "Picked Up";
+			return obj["Pick Up"] === "Picked Up";
 		});
 		nonPickedUpRows = rows.filter((obj) => {
-			return obj.pickUp === "Not Ready" || obj.pickUp === "Ready";
+			return obj["Pick Up"] === "Not Ready" || obj["Pick Up"] === "Ready";
 		});
 		setPickedUpRowsA(pickedUpRows);
 		setNonPickedUpRowsA(nonPickedUpRows);
@@ -346,7 +356,7 @@ export default function Pickups() {
 	const requestSearch = (searchedVal: string) => {
 		if (value === 0) {
 			const filteredRows = nonPickedUpRows.filter((row) => {
-				const fullName = row.firstName + " " + row.lastName;
+				const fullName = row["First Name"] + " " + row["Last Name"];
 				fullNameArray.push(fullName);
 				return fullName.toLowerCase().includes(searchedVal.toLowerCase());
 			});
@@ -354,7 +364,7 @@ export default function Pickups() {
 		}
 		else if (value === 1) {
 			const filteredRows = pickedUpRows.filter((row) => {
-				const fullName = row.firstName + " " + row.lastName;
+				const fullName = row["First Name"] + " " + row["Last Name"];
 				fullNameArray.push(fullName);
 				return fullName.toLowerCase().includes(searchedVal.toLowerCase());
 			});
@@ -397,18 +407,18 @@ export default function Pickups() {
 	};
 
 
-	useEffect(() => {
-		const reloadCount: string = sessionStorage.getItem("reloadCount")!;
-		if (reloadCount === null) {
-			sessionStorage.setItem("reloadCount", String(1));
-			window.location.reload();
-		} else if (parseInt(reloadCount) < 2) {
-			sessionStorage.setItem("reloadCount", String(reloadCount + 1));
-			window.location.reload();
-		} else {
-			sessionStorage.removeItem("reloadCount");
-		}
-	}, []);
+	// useEffect(() => {
+	// 	const reloadCount: string = sessionStorage.getItem("reloadCount")!;
+	// 	if (reloadCount === null) {
+	// 		sessionStorage.setItem("reloadCount", String(1));
+	// 		window.location.reload();
+	// 	} else if (parseInt(reloadCount) < 2) {
+	// 		sessionStorage.setItem("reloadCount", String(reloadCount + 1));
+	// 		window.location.reload();
+	// 	} else {
+	// 		sessionStorage.removeItem("reloadCount");
+	// 	}
+	// }, []);
 
 
 
@@ -489,32 +499,32 @@ export default function Pickups() {
 													>
 														{originalRow.no}
 													</TableCell>
-													<TableCell align="center">{originalRow.firstName}</TableCell>
-													<TableCell align="center">{originalRow.lastName}</TableCell>
-													<TableCell align="center">{originalRow.self}</TableCell>
-													<TableCell align="center">{originalRow.afac}</TableCell>
-													<TableCell align="center">{originalRow.total}</TableCell>
-													<TableCell align="center">{originalRow.method}</TableCell>
+													<TableCell align="center">{originalRow["First Name"]}</TableCell>
+													<TableCell align="center">{originalRow["Last Name"]}</TableCell>
+													<TableCell align="center">{originalRow["Boxes for Customer"]}</TableCell>
+													<TableCell align="center">{originalRow["Boxes for AFAC"]}</TableCell>
+													<TableCell align="center">{originalRow["Total"]}</TableCell>
+													<TableCell align="center">{originalRow["Method"]}</TableCell>
 													<TableCell align="center">
 														<Chip
 															label={
 																<Typography color="black" variant="body2">
-																	{originalRow.paid}
+																	{originalRow["Paid"]}
 																</Typography>
 															}
 
-															style={{ backgroundColor: getChipColorPaid(originalRow.paid), borderRadius: "0" }}
+															style={{ backgroundColor: getChipColorPaid(originalRow["Paid"]), borderRadius: "0" }}
 														/>
 													</TableCell>
 													<TableCell align="center">
 														<Chip
 															label={
 																<Typography color="black" variant="body2">
-																	{originalRow.pickUp}
+																	{originalRow["Pick Up"]}
 																</Typography>
 															}
 
-															style={{ backgroundColor: getChipColorPickUp(originalRow.pickUp), borderRadius: "0" }}
+															style={{ backgroundColor: getChipColorPickUp(originalRow["Pick Up"]), borderRadius: "0" }}
 														/>
 													</TableCell>
 												</TableRow>
@@ -582,29 +592,29 @@ export default function Pickups() {
 													>
 														{originalRow.no}
 													</TableCell>
-													<TableCell align="center">{originalRow.firstName}</TableCell>
-													<TableCell align="center">{originalRow.lastName}</TableCell>
-													<TableCell align="center">{originalRow.self}</TableCell>
-													<TableCell align="center">{originalRow.afac}</TableCell>
-													<TableCell align="center">{originalRow.total}</TableCell>
-													<TableCell align="center">{originalRow.method}</TableCell>
+													<TableCell align="center">{originalRow["First Name"]}</TableCell>
+													<TableCell align="center">{originalRow["Last Name"]}</TableCell>
+													<TableCell align="center">{originalRow["Boxes for Customer"]}</TableCell>
+													<TableCell align="center">{originalRow["Boxes for AFAC"]}</TableCell>
+													<TableCell align="center">{originalRow["Total"]}</TableCell>
+													<TableCell align="center">{originalRow["Method"]}</TableCell>
 													<TableCell align="center">
 														<Chip
 															label={
 																<Typography color="black" variant="body2">
-																	{originalRow.paid}
+																	{originalRow["Paid"]}
 																</Typography>
 															}
-															style={{ backgroundColor: getChipColorPaid(originalRow.paid), borderRadius: "0" }}
+															style={{ backgroundColor: getChipColorPaid(originalRow["Paid"]), borderRadius: "0" }}
 														/>
 													</TableCell>
 													<TableCell align="center"><Chip
 														label={
 															<Typography color="black" variant="body2">
-																{originalRow.pickUp}
+																{originalRow["Pick Up"]}
 															</Typography>
 														}
-														style={{ backgroundColor: getChipColorPickUp(originalRow.pickUp), borderRadius: "0" }}
+														style={{ backgroundColor: getChipColorPickUp(originalRow["Pick Up"]), borderRadius: "0" }}
 													/></TableCell>
 												</TableRow>
 											);
