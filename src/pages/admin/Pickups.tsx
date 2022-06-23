@@ -231,7 +231,7 @@ export default function Pickups() {
 				snapshot.docs.forEach((doc) => {
 					tmpClients.push({
 						...doc.data(),
-						no: id++,
+						no: id++
 					});
 				});
 				setRows(tmpClients);
@@ -274,6 +274,7 @@ export default function Pickups() {
 		} else {
 			paid = "No";
 		}
+		console.log(filteredRow[0]);
 		filteredRow[0]["Pick Up"] = pickUp;
 		filteredRow[0]["Paid"] = paid;
 
@@ -586,7 +587,7 @@ export default function Pickups() {
 											return (
 												<TableRow
 													hover
-													onClick={(event) => handleClick(event, originalRow.no, originalRow["Pick Up"] , originalRow["Paid"])}
+													onClick={(event) => handleClick(event, originalRow.no, originalRow["Pick Up"], originalRow["Paid"])}
 													role="checkbox"
 													aria-checked={isItemSelected}
 													tabIndex={-1}
