@@ -138,11 +138,10 @@ const Navbar = (props: { authing: any; }) => {
 								</MenuItem>
 							))}
 						</Menu>
-					</Box>) : (
+					</Box>
 					<Box>
 						{/* Empty Box since not Admin */}
 					</Box>
-					)
 				</Toolbar >
 			</Container >
 		</AppBar >

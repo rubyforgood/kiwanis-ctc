@@ -279,8 +279,8 @@ export default function Pickups() {
 		filteredRow[0]["Paid"] = paid;
 
 		// currently the ID is set to 1, needs to be dynamically changed to whatever ID actually is
-		/* const docRef = doc(db,"clients", "1");
-		updateDoc(docRef, {"Pick Up": pickUp}); */
+		const docRef = doc(db,"clients", "1");
+		updateDoc(docRef, {"Pick Up": pickUp});
 
 		const selectedIndex = selected.indexOf(name);
 		let newSelected: readonly string[] = [];
