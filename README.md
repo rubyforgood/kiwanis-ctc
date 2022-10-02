@@ -5,7 +5,7 @@
     <img src="src/images/logo.svg" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Ruby For Good Kiwanis</h3>
+  <h3 align="center">Kiwanis</h3>
 
 
 </div>
@@ -34,7 +34,7 @@
 
 ## About The Project
 
-An upcoming project for Ruby for Good for Kiwanis Fundrasing platform. Aimed to compeleted in Summer of 2023.
+An upcoming project for the Kiwanis Blueberry Fundraiser. Aimed to be completed by the Summer of 2023.
 
 ### Built With
 
@@ -51,7 +51,7 @@ This section entails the technologies we have used thus far in our project.
 
 ## Getting Started
 
-We recommend downloading [Visual Studio Code](https://code.visualstudio.com/download) for any development/debugging as it has some helpful extensions suggested below. Also, if on Windows, please ensure you have a command line program like [Git Bash Terminal](https://git-scm.com/downloads).
+We recommend downloading [Visual Studio Code](https://code.visualstudio.com/download) as it has helpful extensions as suggested below. Also, if on Windows, please ensure you have a command line program like [Git Bash Terminal](https://git-scm.com/downloads).
 
 Some helpful extensions on VS Code:
 
@@ -66,23 +66,23 @@ Some helpful extensions on VS Code:
 
 ### Prerequisites
 
-Start by checking your version of Node installed on your device by running the following command:
+Start by checking the version of Node installed on your device by running the following command:
 
 ```bash
 npm -v
 ```
 
-If the npm command is not recongnized please install [Node.js](https://nodejs.org/en/download/).
+If the npm command is not recognized, please install the latest version of [Node.js](https://nodejs.org/en/download/).
 
 ### Installation
 
-1. After you have cloned the git repository and ensured you have npm and node.js installed, to install all necessary node modules, please type:
+1. After you have cloned the git repository and ensured npm and node.js is installed, to install all necessary node modules, please type:
 
 ```bash
 npm i
 ```
 
-2. To start the local server please run this command:
+2. To start the local server, please run this command:
 
 ```bash
 npm start
@@ -90,13 +90,13 @@ npm start
 
 **_Note:_**
 
-After running this command a browser should load to the following local server link:
+After running this command, the following link should open in your default browser:
 
 ```
 http://localhost:3000/kiwanis-ctc
 ```
 
-If you have issues with the linter, please run
+If you have issues with the linter, please run:
 
 ```bash
 ./node_modules/eslint/bin/eslint.js --fix src*
@@ -106,7 +106,7 @@ If you have issues with the linter, please run
 
 ## Usage
 
-To login to the web application, use these default credentails:
+To login to the web application, use these default credentials:
 
 **Test (Admin) User**
 ```
@@ -114,4 +114,4 @@ email: test@gmail.com
 password: kiwanis2022
 ```
 **_Note:_**
-For any changes made to the codebase while developing we recommend making use of the suggested extension of Live Server to reflect the most updated changes instead of refreshing the localserver over and over.
+For any changes made to the codebase while developing, we recommend using Live Server to automatically reflect any code changes instead of refreshing the local server.
