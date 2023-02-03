@@ -5,20 +5,23 @@
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
+    "@mui/icons-material": "^5.11.0",
     "@mui/material": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-hook-form": "^7.29.0",
+    "react-hook-form": "latest",
     "react-scripts": "latest",
+    "recharts": "latest",
     "typescript": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "npx eslint ."
   },
   "devDependencies": {
     "@testing-library/react": "^13.0.0",
@@ -28,5 +31,17 @@
     "eslint-plugin-react": "^7.29.4",
     "jest": "^27.5.1",
     "prettier": "2.6.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
