@@ -1,3 +1,4 @@
+//External Modules
 import * as React from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,17 +18,25 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { SxProps, Theme } from "@mui/material/styles";
+
+//Internal Modules
 import { mainListItems, secondaryListItems } from "./listItems";
 import Chart from "./Chart";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
 
-function Copyright() {
+interface ListDashboardProps {
+	sx?: SxProps<Theme>;
+}
+
+function Copyright(props: ListDashboardProps) {
+
 	return (
 		<Typography variant="body2" color="text.secondary" align="center" {...props}>
 			{"Copyright © "}
 			<Link color="inherit" href="https://mui.com/">
-        Your Website
+				Your Website
 			</Link>{" "}
 			{new Date().getFullYear()}
 			{"."}
@@ -38,7 +47,7 @@ function Copyright() {
 const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
+	open?: boolean;
 }
 
 const AppBar = styled(MuiAppBar, {
@@ -122,7 +131,7 @@ function DashboardContent() {
 							noWrap
 							sx={{ flexGrow: 1 }}
 						>
-              Dashboard
+							Dashboard
 						</Typography>
 						<IconButton color="inherit">
 							<Badge badgeContent={4} color="secondary">
