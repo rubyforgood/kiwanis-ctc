@@ -22,7 +22,7 @@ import Chart from "./Chart";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
 
-function Copyright() {
+function Copyright(props: any) {
 	return (
 		<Typography variant="body2" color="text.secondary" align="center" {...props}>
 			{"Copyright © "}
