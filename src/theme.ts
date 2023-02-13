@@ -21,6 +21,7 @@ const theme = createTheme({
     },
     dark: {
       main: "#21315C",
+      box: "#FAFAFB",
     },
   } as CustomPalletteOption,
 });
