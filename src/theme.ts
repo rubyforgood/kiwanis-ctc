@@ -2,7 +2,7 @@
 import { createTheme, Palette, PaletteOptions } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 
-interface CustomPalletteOptions extends PaletteOptions {
+interface CustomPalletteOption extends PaletteOptions {
   dark: {
     main: "#21315C";
   };
@@ -22,7 +22,7 @@ const theme = createTheme({
     dark: {
       main: "#21315C",
     },
-  } as CustomPalletteOptions,
+  } as CustomPalletteOption,
 });
 
 export default theme;
