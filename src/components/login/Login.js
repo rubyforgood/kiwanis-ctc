@@ -12,7 +12,9 @@ export default function Login() {
           display: "flex",
           backgroundColor: "primary.dark",
         }}
-      ></Box>
+      >
+        Hello
+      </Box>
     </ThemeProvider>
   );
 }
