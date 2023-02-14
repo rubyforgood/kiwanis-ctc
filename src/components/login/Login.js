@@ -11,18 +11,18 @@ import Header from "./Header";
 export default function Login() {
   return (
     <ThemeProvider>
-      <Box>
+      <Box sx={{ height: "70px" }}>
         <Header />
       </Box>
 
       <Box
         sx={{
-          height: "926px",
-          width: "1440px",
+          height: "100vh",
+          width: "auto",
           backgroundColor: "dark.main",
-          position: "absolute",
-          left: "0px",
-          top: "98px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <Box
@@ -30,19 +30,16 @@ export default function Login() {
             width: 400,
             height: 450,
             backgroundColor: "dark.box",
-            opacity: "0.75",
+            opacity: "0.55",
             border: "3px solid #FAFAFB",
             borderRadius: "24px",
-            position: "absolute",
-            left: "520px",
-            top: "301px",
-            boxSizing: "border-box",
+            position: "relative",
           }}
         >
           <Typography
             position="absolute"
-            top="39px"
-            left="43px"
+            top="12%"
+            left="13%"
             component="h2"
             variant="h6"
             color="#000"
@@ -65,38 +62,40 @@ export default function Login() {
               width: "282px",
               height: "60px",
               position: "absolute",
-              top: "100px",
-              left: "43px",
+              top: "25%",
+              left: "13%",
             }}
           />
           <TextField
             id="standard basic"
             label="Password"
+            type="password"
             sx={{
               width: "282px",
               height: "60px",
               position: "absolute",
-              top: "180px",
-              left: "43px",
+              top: "43%",
+              left: "13%",
             }}
           />
 
           <Link
             position="absolute"
+            top="60%"
+            left="13%"
             width="121px"
             height="22px"
-            left="46px"
-            top="250px"
             color="#000"
-            fontFamily="Avernir Next"
             fontStyle="normal"
             fontWeight="400"
-            fontSizw="16px"
+            fontFamily="Avenir Next"
+            fontSize="14px"
             lineHeight="140%"
             display="flex"
             alignItems="center"
             textAlign="center"
             href="#"
+            underline="none"
           >
             Forgot Password
           </Link>
@@ -110,14 +109,39 @@ export default function Login() {
               width: "175px",
               height: "38px",
               position: "absolute",
-              top: "350px",
-              left: "calc(50% - 175px/2 - 0.5px)",
+              top: "75%",
+              left: "25%",
               textTransform: "capitalize",
               fontWeight: "300",
             }}
           >
             Sign In
           </Button>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "absolute",
+              top: "87%",
+              left: "20%",
+            }}
+          >
+            <Typography sx={{ color: "#000", fontWeight: "400" }}>
+              Don&apos;t have an account?
+            </Typography>
+            <Button
+              variant="text"
+              sx={{
+                textTransform: "capitalize",
+                color: "#586BA4",
+                fontWeight: "400",
+              }}
+              href="#"
+            >
+              Sign Up
+            </Button>
+          </Box>
         </Box>
       </Box>
     </ThemeProvider>
