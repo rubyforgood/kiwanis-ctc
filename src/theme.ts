@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import { createTheme, Palette, PaletteOptions } from "@mui/material/styles";
+import { createTheme, PaletteOptions } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 
 interface CustomPalletteOption extends PaletteOptions {
