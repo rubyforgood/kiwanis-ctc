@@ -9,15 +9,13 @@
     "@material-ui/core": "^4.12.4",
     "@material-ui/styles": "^4.11.5",
     "@mui/icons-material": "^5.11.0",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
-    "devextreme-react": "^22.2.4",
+    "@mui/material": "^5.11.8",
     "react": "latest",
     "react-dom": "latest",
-    "react-hook-form": "latest",
+    "react-hook-form": "^7.43.1",
     "react-scripts": "latest",
-    "recharts": "latest",
-    "typescript": "latest"
+    "recharts": "^2.4.1",
+    "typescript": "^4.9.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -27,12 +25,13 @@
     "lint": "npx eslint ."
   },
   "devDependencies": {
-    "@mui/x-data-grid": "^5.17.24",
-    "@testing-library/react": "^13.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.18.0",
-    "@typescript-eslint/parser": "^5.18.0",
-    "eslint": "^8.12.0",
-    "eslint-plugin-react": "^7.29.4",
+    "@testing-library/react": "^13.4.0",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.10",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
+    "eslint": "^8.34.0",
+    "eslint-plugin-react": "^7.32.2",
     "jest": "^27.5.1",
     "prettier": "2.6.2"
   },
