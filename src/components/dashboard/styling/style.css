@@ -31,8 +31,9 @@
     max-width: 600px;
     margin: 0 auto
 }
+
 .dashboard-card {
-    min-height: 7em;
+    min-height: 7vh;
     border: lightGrey 2px solid;
     padding: 16px;
     display: flex;
@@ -40,5 +41,16 @@
     align-items: center;
     height: 150px;
     text-align: center;
+}
 
-  }
+/* @media (max-width: 600px) {
+    .dashboard-card {
+        height: 100px;
+    }
+}
+
+@media (max-width: 400px) {
+    .dashboard-card {
+        height: 40px;
+    }
+} */

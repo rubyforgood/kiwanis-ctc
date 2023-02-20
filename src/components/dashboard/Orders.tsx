@@ -14,33 +14,36 @@ const columns: GridColDef[] = [
 	  headerName: "Full name",
 	  sortable: true,
 	  width: 200,
-	  headerClassName: "super-app-theme--header",
+	  align:"center",
 	  valueGetter: (params: GridValueGetterParams) =>
 			`${params.row.firstName || ""} ${params.row.lastName || ""}`
 	},
 	{
 	  field: "boxesOrdered",
+	  align: "center",
 	  headerName: " Boxes Order",
 	  type: "number",
-	  headerClassName: "super-app-theme--header",
-	  width: 100
+
+	  width: 140
 	},
 	{
 	  field: "totalAmount",
+	  align: "center",
 	  headerName: " Total Amount ($)",
 	  type: "number",
-	  headerClassName: "super-app-theme--header",
 	  width: 160
 	},
 	{
 		field: "paid",
 		headerName: "Paid",
+		align:"center",
 		sortable: true,
 		width: 150,
 		cellClassName: (params) => (params.value === "Yes" ? "green" : "red")
 	  },
 	  {
 		field: "status",
+		align:"center",
 		headerName: "Status",
 		sortable: true,
 		width: 150,
@@ -49,7 +52,7 @@ const columns: GridColDef[] = [
 	{
 	  field: "action",
 	  headerName: "Action",
-	  headerClassName: "super-app-theme--header",
+
 	  sortable: false,
 	  renderCell: (params) => {
 			const onClick = (e: { stopPropagation: () => void; }) => {
