@@ -1,58 +1,174 @@
 import * as React from "react";
-import Link from "@mui/material/Link";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
+import {Button } from "@material-ui/core";
+import { DataGrid, GridApi, GridCellValue, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import "./styling/style.css";
 
+
+
+
+const columns: GridColDef[] = [
+	{ field: "id", headerName: "No.", width: 70, headerClassName: "super-app-theme--header"},
+	{
+	  field: "fullName",
+	  headerName: "Full name",
+	  sortable: true,
+	  width: 200,
+	  headerClassName: "super-app-theme--header",
+	  valueGetter: (params: GridValueGetterParams) =>
+			`${params.row.firstName || ""} ${params.row.lastName || ""}`
+	},
+	{
+	  field: "boxesOrdered",
+	  headerName: " Boxes Order",
+	  type: "number",
+	  headerClassName: "super-app-theme--header",
+	  width: 100
+	},
+	{
+	  field: "totalAmount",
+	  headerName: " Total Amount ($)",
+	  type: "number",
+	  headerClassName: "super-app-theme--header",
+	  width: 160
+	},
+	{
+		field: "paid",
+		headerName: "Paid",
+		sortable: true,
+		width: 150,
+		cellClassName: (params) => (params.value === "Yes" ? "green" : "red")
+	  },
+	  {
+		field: "status",
+		headerName: "Status",
+		sortable: true,
+		width: 150,
+		cellClassName: (params) => (params.value === "Ready" ? "ready" : "notReady")
+	  },
+	{
+	  field: "action",
+	  headerName: "Action",
+	  headerClassName: "super-app-theme--header",
+	  sortable: false,
+	  renderCell: (params) => {
+			const onClick = (e: { stopPropagation: () => void; }) => {
+		  e.stopPropagation(); // don't select this row after clicking
+  
+		  const api: GridApi = params.api;
+		  const thisRow: Record<string, GridCellValue> = {};
+  
+		  api
+					.getAllColumns()
+					.filter((c) => c.field !== "__check__" && !!c)
+					.forEach(
+			  (c) => (thisRow[c.field] = params.getValue(params.id, c.field))
+					);
+  
+		  return alert(JSON.stringify(thisRow, null, 4));
+			};
+  
+			return <Button onClick={onClick}>Click</Button>;
+	  }
+	}
+];
+  
 // Generate Order Data
-function createData(
-	id: number,
-	date: string,
-	name: string,
-	shipTo: string,
-	paymentMethod: string,
-	amount: number,
-) {
-	return { id, date, name, shipTo, paymentMethod, amount };
-}
 
+function RowData (
+	id: number,
+	lastName: string,
+	firstName: string,
+	boxesOrdered: number | null,
+	totalAmount: string,
+	paid: string,
+	status: string,
+){
+	return { id, lastName, firstName, boxesOrdered, totalAmount, paid,status };
+}
+  
 const rows = [
-	createData(
-		0,
-		"16 Mar, 2019",
-		"Elvis Presley",
-		"Tupelo, MS",
-		"VISA ⠀•••• 3719",
-		312.44,
+	RowData(
+	   1,
+	   "Snow",
+	   "Jon",
+	   35,
+	   "100",
+	   "Yes",
+	   "Ready"
 	),
-	createData(
-		1,
-		"16 Mar, 2019",
-		"Paul McCartney",
-		"London, UK",
-		"VISA ⠀•••• 2574",
-		866.99,
+	RowData(
+	   2,
+	   "Lannister",
+	   "Cersei",
+	   42,
+	   "190",
+	   "Yes",
+	   "Ready"
 	),
-	createData(2, "16 Mar, 2019", "Tom Scholz", "Boston, MA", "MC ⠀•••• 1253", 100.81),
-	createData(
-		3,
-		"16 Mar, 2019",
-		"Michael Jackson",
-		"Gary, IN",
-		"AMEX ⠀•••• 2000",
-		654.39,
+	RowData(
+	   3,
+	   "Lannister",
+	   "Jaime",
+	   45,
+	   "2100",
+	   "Yes",
+	   "Not Ready"
 	),
-	createData(
-		4,
-		"15 Mar, 2019",
-		"Bruce Springsteen",
-		"Long Branch, NJ",
-		"VISA ⠀•••• 5919",
-		212.79,
+	RowData(
+	   4,
+	   "Stark",
+	   "Arya",
+	   16,
+	   "80",
+	   "No",
+	   "Ready"
 	),
+	RowData(
+	   5,
+	   "Targaryen",
+	   "Daenerys",
+	   null,
+	   "180",
+	   "Yes",
+	   "Not Ready"
+	),
+	RowData(
+	   6,
+	   "Melisandre",
+	   "Brad",
+	   150,
+	   "240",
+	   "No",
+	   "Ready"
+	),
+	RowData(
+	   7,
+	   "Clifford",
+	   "Ferrara",
+	   44,
+	   "1232",
+	   "No",
+	   "Ready"
+	),
+	RowData(
+	   8,
+	   "Frances",
+	   "Rossini",
+	   36,
+	   "1020",
+	   "Yes",
+	   "Not Ready"
+	),
+	RowData(
+	   9,
+	   "Roxie",
+	   "Harvey",
+	   65,
+	   "1",
+	   "No",
+	   "Not Ready"
+	)
 ];
 
 function preventDefault(event: React.MouseEvent) {
@@ -61,33 +177,17 @@ function preventDefault(event: React.MouseEvent) {
 
 export default function Orders() {
 	return (
-		<React.Fragment>
-			<Title>Recent Orders</Title>
-			<Table size="small">
-				<TableHead>
-					<TableRow>
-						<TableCell>Date</TableCell>
-						<TableCell>Name</TableCell>
-						<TableCell>Ship To</TableCell>
-						<TableCell>Payment Method</TableCell>
-						<TableCell align="right">Sale Amount</TableCell>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{rows.map((row) => (
-						<TableRow key={row.id}>
-							<TableCell>{row.date}</TableCell>
-							<TableCell>{row.name}</TableCell>
-							<TableCell>{row.shipTo}</TableCell>
-							<TableCell>{row.paymentMethod}</TableCell>
-							<TableCell align="right">{`$${row.amount}`}</TableCell>
-						</TableRow>
-					))}
-				</TableBody>
-			</Table>
-			<Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
-			</Link>
+		<React.Fragment >
+			<Title> Orders</Title>
+			<div style={{ height: 400, width: "100%" }}>
+				<DataGrid
+					rows={rows}
+					columns={columns}
+					pageSize={5}
+					rowsPerPageOptions={[5]}
+					checkboxSelection
+				/>
+			</div>
 		</React.Fragment>
 	);
 }

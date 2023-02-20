@@ -21,6 +21,7 @@ import { mainListItems, secondaryListItems } from "./listItems";
 import Chart from "./Chart";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
+import AdminContent from "./customAdminPage";
 
 function Copyright(props: any) {
 	return (
@@ -122,7 +123,7 @@ function DashboardContent() {
 							noWrap
 							sx={{ flexGrow: 1 }}
 						>
-              Dashboard
+              Dashboardssss
 						</Typography>
 						<IconButton color="inherit">
 							<Badge badgeContent={4} color="secondary">
@@ -176,7 +177,8 @@ function DashboardContent() {
 										height: 240,
 									}}
 								>
-									<Chart />
+									{/* <Chart /> */}
+									<AdminContent />
 								</Paper>
 							</Grid>
 							{/* Recent Deposits */}

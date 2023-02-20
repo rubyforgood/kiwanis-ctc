@@ -56,17 +56,17 @@ export const secondaryListItems = (
 			</ListItemIcon>
 			<ListItemText primary="Current month" />
 		</ListItemButton>
-		<ListItemButton>
+		{/* <ListItemButton>
 			<ListItemIcon>
 				<AssignmentIcon />
 			</ListItemIcon>
 			<ListItemText primary="Last quarter" />
-		</ListItemButton>
+		</ListItemButton> */}
 		<ListItemButton>
 			<ListItemIcon>
 				<AssignmentIcon />
 			</ListItemIcon>
-			<ListItemText primary="Year-end sale" />
+			<ListItemText primary="Year-end salesssss" />
 		</ListItemButton>
 	</React.Fragment>
 );
