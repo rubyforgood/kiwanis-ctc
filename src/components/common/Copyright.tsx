@@ -3,14 +3,14 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 
 export function Copyright() {
-	return (
-		<Typography variant="body2" color="text.secondary" align="center" pt={4}>
-			{"Copyright © "}
-			<Link color="inherit" href="https://mui.com/">
+    return (
+        <Typography variant="body2" color="text.secondary" align="center" pt={4}>
+            {"Copyright © "}
+            <Link color="inherit" href="https://mui.com/">
 				Your Website
-			</Link>{" "}
-			{new Date().getFullYear()}
-			{"."}
-		</Typography>
-	);
+            </Link>{" "}
+            {new Date().getFullYear()}
+            {"."}
+        </Typography>
+    );
 }
