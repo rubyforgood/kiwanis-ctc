@@ -11,27 +11,29 @@ const dataSource = [
  
 export default function DashboardChart() {
 	return (
-		<PieChart
-			id="pieChartContainer"
-			dataSource={dataSource}
-			type="doughnut"
-			palette="Ocean"
-			adaptiveLayout={{ width: 300 }}
-			height={280} // Set the height to 200 pixels
-			series={[
-				{
-					argumentField: "status",
-					valueField: "amount",
-					label: {
-						visible: true,
-						connector: { visible: true },
-						format: {
-							type: "largeNumber",
-							precision: 2
+		<React.Fragment>
+			<PieChart
+				id="pieChartContainer"
+				dataSource={dataSource}
+				type="doughnut"
+				palette="Ocean"
+				adaptiveLayout={{ width: 300 }}
+				height={280} // Set the height to 200 pixels
+				series={[
+					{
+						argumentField: "status",
+						valueField: "amount",
+						label: {
+							visible: true,
+							connector: { visible: true },
+							format: {
+								type: "largeNumber",
+								precision: 2
+							}
 						}
 					}
-				}
-			]}
-		/>
+				]}
+			/>
+		</React.Fragment>
 	);
 }
