@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "./Header";
 
-function Pickup() {
+function Main() {
 	return (
 		<Header/>
 	);
 }
 
-export default Pickup;
+export default Main;    
