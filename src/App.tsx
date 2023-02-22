@@ -4,9 +4,9 @@ import CustomAdminPage from "./components/dashboard/customAdminPage";
 import Orders from "./components/dashboard/Orders";
 
 export default function App() {
-	return (
-		<Dashboard />
+    return (
+        <Dashboard />
 		// <CustomAdminPage />
 		// <Orders/>
-	);
+    );
 }

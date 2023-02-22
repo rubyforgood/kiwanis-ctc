@@ -175,7 +175,7 @@ const rows = [
 ];
 
 function preventDefault(event: React.MouseEvent) {
-	event.preventDefault();
+    event.preventDefault();
 }
 
 export default function Orders() {
