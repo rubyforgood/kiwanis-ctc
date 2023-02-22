@@ -6,7 +6,5 @@ import Orders from "./components/dashboard/Orders";
 export default function App() {
     return (
         <Dashboard />
-		// <CustomAdminPage />
-		// <Orders/>
     );
 }

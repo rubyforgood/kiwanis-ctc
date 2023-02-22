@@ -28,29 +28,18 @@
 }
 
 #pieChartContainer {
-    max-width: 600px;
+    max-width:500px;
     margin: 0 auto
 }
 
 .dashboard-card {
-    min-height: 7vh;
-    border: lightGrey 2px solid;
-    padding: 16px;
+    /* min-height: 2vh; */
+    border: lightGrey 0.1vh solid;
+    /* padding: 1vh; */
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 150px;
+    /* height: 10px; */
     text-align: center;
 }
 
-/* @media (max-width: 600px) {
-    .dashboard-card {
-        height: 100px;
-    }
-}
-
-@media (max-width: 400px) {
-    .dashboard-card {
-        height: 40px;
-    }
-} */
