@@ -7,6 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
 
+
 // Generate Order Data
 function createData(
     id: number,
@@ -86,7 +87,7 @@ export default function Orders() {
                 </TableBody>
             </Table>
             <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
+                See more orders
             </Link>
         </React.Fragment>
     );
