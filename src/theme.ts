@@ -8,21 +8,21 @@ interface CustomPalletteOption extends PaletteOptions {
 }
 // A custom theme for this app
 const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#556cd6",
-    },
-    secondary: {
-      main: "#19857b",
-    },
-    error: {
-      main: red.A400,
-    },
-    dark: {
-      main: "#21315C",
-      box: "#FAFAFB",
-    },
-  } as CustomPalletteOption,
+	palette: {
+		primary: {
+			main: "#556cd6",
+		},
+		secondary: {
+			main: "#19857b",
+		},
+		error: {
+			main: red.A400,
+		},
+		dark: {
+			main: "#21315C",
+			box: "#FAFAFB",
+		},
+	} as CustomPalletteOption,
 });
 
 export default theme;
