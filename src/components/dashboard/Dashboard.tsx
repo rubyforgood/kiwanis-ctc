@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import * as React from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -24,10 +23,15 @@ import Deposits from "./Deposits";
 import Orders from "./Orders";
 
 function Copyright(props: any) {
-	return (
-		<Typography variant="body2" color="text.secondary" align="center" {...props}>
-			{"Copyright © "}
-			<Link color="inherit" href="https://mui.com/">
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
         Your Website
       </Link>{" "}
       {new Date().getFullYear()}

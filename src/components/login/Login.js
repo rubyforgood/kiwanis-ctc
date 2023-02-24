@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material/styles";
@@ -81,15 +80,15 @@ export default function Login() {
 
           <Link
             position="absolute"
-            top="60%"
-            left="13%"
+            top="59%"
+            left="13.75%"
             width="121px"
             height="22px"
             color="#000"
             fontStyle="normal"
             fontWeight="400"
             fontFamily="Avenir Next"
-            fontSize="14px"
+            fontSize="12px"
             lineHeight="140%"
             display="flex"
             alignItems="center"
@@ -97,7 +96,7 @@ export default function Login() {
             href="#"
             underline="none"
           >
-            Forgot Password
+            Forgot Password?
           </Link>
 
           <Button

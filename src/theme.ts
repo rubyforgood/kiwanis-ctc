@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import { createTheme, PaletteOptions } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 
