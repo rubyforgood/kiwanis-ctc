@@ -43,16 +43,19 @@ function CustomPagination() {
     );
 }
 
+type SearchResultState =(string|number)[]
+type rowState = (string|number)[]
+
 export default function Orders() {
 
     const [searchField, setSearchField] = useState<string>("");
-    const [searchResults, setSearchResults] = useState<any[]>([]);
+    const [searchResults, setSearchResults] = useState<SearchResultState>([]);
 
     const [isFilePicked, setIsFilePicked] = useState(false);
 
 
     // Datagrid Table
-    const [rows, setRows] = useState<any[]>([]);
+    const [rows, setRows] = useState<rowState>([]);
     const [columns, setColumns] = useState<GridColDef[]>([]);
 
     // Search area
@@ -91,8 +94,13 @@ export default function Orders() {
         const rows = XLSX.utils.sheet_to_json(ws, {
             header: 1
         });
+     
 
-        setRows(rows.slice(1));
+        if(Array.isArray(rows) && rows.every((item) => typeof item === "string" || typeof item === "number")){
+            setRows(rows.slice(1));
+        }
+
+ 
 
         // DataGrid
         const range = XLSX.utils.decode_range(ws["!ref"] || "A1");
@@ -114,12 +122,15 @@ export default function Orders() {
             const result = sheetDataCp.filter(t => t[1].toLowerCase().startsWith(searchField));
             setSearchResults(result);
         }
+        {console.log("search reasults",searchResults);}
+        {console.log("rows",rows);}
     }, [searchField]);
 
 
 
     return (
         <React.Fragment>
+        
             <Box
                 component='main'
                 sx={{
