@@ -96,7 +96,7 @@ export default function Orders() {
         });
      
 
-        if(Array.isArray(rows) && rows.every((item) => typeof item === "string" || typeof item === "number")){
+        if(Array.isArray(rows)){
             setRows(rows.slice(1));
         }
 
