@@ -3,7 +3,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import logo from "./images/logo.svg";
 import { Link } from "@mui/material";
-import { red } from "@mui/material/colors";
+
 import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import Sidebar from "./Sidebar";
@@ -17,6 +17,7 @@ export default function Header() {
           alignItems: "center",
           justifyContent: "space-between",
           padding: "10px",
+          borderBottom: "3px solid #26282c",
         }}
       >
         <Link href="#">
@@ -35,7 +36,7 @@ export default function Header() {
           }}
 
         >
-          2022 Blueberry Fundraiser
+          2023 Blueberry Fundraiser
 
         </Box>
 
@@ -57,6 +58,7 @@ export default function Header() {
         <Box
           sx={{
             paddingRight: "10px",
+            paddingTop: "8px",
           }}>
 
           <ArrowDropDownOutlinedIcon />
