@@ -25,7 +25,7 @@ import { Copyright } from "../common/Copyright";
 const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
-	open?: boolean;
+    open?: boolean;
 }
 
 const AppBar = styled(MuiAppBar, {
@@ -109,7 +109,7 @@ function DashboardContent() {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
-							Dashboard
+                            Dashboard
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
@@ -184,7 +184,7 @@ function DashboardContent() {
                                 </Paper>
                             </Grid>
                         </Grid>
-                        <Copyright/>
+                        <Copyright />
                     </Container>
                 </Box>
             </Box>
