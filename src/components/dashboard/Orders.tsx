@@ -118,12 +118,10 @@ export default function Orders() {
     useEffect(() => {
         if (isFilePicked) {
             const sheetDataCp = [...rows];
-
             const result = sheetDataCp.filter(t => t[1].toLowerCase().startsWith(searchField));
             setSearchResults(result);
         }
-        {console.log("search reasults",searchResults);}
-        {console.log("rows",rows);}
+
     }, [searchField]);
 
 
@@ -224,15 +222,18 @@ export default function Orders() {
                             if(!params){
                                 return "";
                             }
-                            if(params.value ==="Yes"||params.value ==="yes"){
+                            switch(params.value){
+                            case "Yes" || "yes":
                                 return "paid";
-                            }else if(params.value === "No" ||params.value === "no"){
+                            case "No" || "no":
                                 return "notPaid";
-                            }else if(params.value === "Ready"){
+                            case   "Ready":
                                 return "status";
+                            default:
+                                return "";
                             }
-                            return "";
-                        }}
+                        }
+                        }
                         /></div> : <h3> Upload your excel file</h3>}
                     </Box>
 
