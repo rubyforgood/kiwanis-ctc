@@ -15,14 +15,15 @@ import {
     gridPageSelector,
     useGridApiContext,
     useGridSelector,
-    GridCellParams
 } from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 
-import Title from "./Title";
 
 
+
+
+//! Helper function for custom Pagination 
 function CustomPagination() {
     const apiRef = useGridApiContext();
     const page = useGridSelector(apiRef, gridPageSelector);
@@ -55,11 +56,11 @@ export default function Orders() {
     const [isFilePicked, setIsFilePicked] = useState(false);
 
 
-    // Datagrid Table
+    //* Datagrid Table
     const [rows, setRows] = useState<rowState>([]);
     const [columns, setColumns] = useState<GridColDef[]>([]);
 
-    // Search area
+    //* Search area
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchField((e.target.value).toLowerCase());
         console.log(searchField);
@@ -73,7 +74,7 @@ export default function Orders() {
     //     return cells.filter(item => headerRegex.test(item)).map(item => item.split("='")[1]);
     // }
 
-    //upload file
+    //* upload file
     const changeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
 
         setIsFilePicked(true);
@@ -114,17 +115,19 @@ export default function Orders() {
 
         //static Header
         const columns: GridColDef[] = [
-            { field: "id", headerName: "No.", width: 90 },
+            { field: "id", headerName: "No.", width: 90 , align:"center",},
             {
                 field: "fullName",
                 headerName: "Name",
                 width: 200,
+                align:"center",
 
             },
             {
                 field: "totalBoxes",
                 headerName: "Boxes Ordered",
                 width: 150,
+                align:"center",
 
             },
             {
@@ -132,17 +135,36 @@ export default function Orders() {
                 headerName: "Total Amount",
                 type: "number",
                 width: 150,
+                align:"center",
             },
             {
                 field: "isPaid",
                 headerName: "Paid",
-                type: "number",
                 width: 150,
+                align:"center",
+                renderCell: (params) => (
+                    <span style={params.value==="Yes" || params.value==="yes"?{ 
+                        padding:"1px 5px" ,
+                
+                        backgroundColor:"#E3EECB" }:{padding:"1px 5px" ,
+                        backgroundColor:"#FFD0CA"}}>
+                        {params.value}
+                    </span>
+                ),
             },
             {
                 field: "status",
                 headerName: "Status",
                 width: 150,
+                align:"center",
+                renderCell: (params) => (
+                    
+                    <span style={{ 
+                        padding:"1px 5px" ,
+                        backgroundColor:"#FFF0CB" }}>
+                        {params.value}
+                    </span>
+                ),
             },{
                 field: "action",
                 headerName: "Details",
@@ -155,19 +177,19 @@ export default function Orders() {
 
 
     useEffect(() => {
-        if (isFilePicked) {
+        if (isFilePicked && rows.length > 0) {
             const sheetDataCp = [...rows];
-            const result = sheetDataCp.filter(t => t[1].toLowerCase().startsWith(searchField));
+            const result = sheetDataCp.filter(t => t["fullName"].toLowerCase().startsWith(searchField));
             setSearchResults(result);
+            console.log(rows);
         }
-        console.log(rows,"rows");
     }, [searchField]);
 
 
+  
 
     return (
         <React.Fragment>
-        
             <Box
                 component='main'
                 sx={{
@@ -186,14 +208,18 @@ export default function Orders() {
                         p: 2,
                     }}
                 >
-                    <Title>
-                        <Typography>Orders</Typography>
-                    </Title>
+                    <Typography fontSize={15}  variant="subtitle1" sx={{ mb: 1}}>
+					Dashboard / Orders
+                    </Typography>
+
+                    <Typography  fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.dark", mb: 2, width: "100%" }}>Orders</Typography>
+          
                     <Divider
                         role='presentation'
                         variant='middle'
                         sx={{ borderBottomWidth: 1, borderColor: "primary", mb: 2 }}
                     />
+         
                     <Stack spacing={2} direction='row' sx={{ mb: 2 }}>
                         <FormControl sx={{ width: "75%" }}>
                             <TextField
@@ -240,39 +266,13 @@ export default function Orders() {
                     <Box sx={{
                         "& .super-app-theme--header": {
                             backgroundColor: "#F0F0F0",
-                        },
-                        "& .paid": {
-                            backgroundColor: "success.main",
-    
-                        },
-                        "& .notPaid": {
-                            backgroundColor: "error.main",
-                        },
-                        "& .status": {
-                            backgroundColor: "info.main",
-                        },
-                     
+                        },                     
                     }}>
-                        {isFilePicked ? <div style={{ height: 570, width: "100%" }}><DataGrid getRowId={(row) => row.id} rows={searchResults.length > 0 ? searchResults : rows} columns={columns} pageSize={9} rowsPerPageOptions={[9]} components={{
+                        {isFilePicked ? <div style={{ height: 570, width: "100%" }}><DataGrid  getRowId={(row) => row.id} rows={searchResults.length > 0 ? searchResults : rows} columns={columns} pageSize={9} rowsPerPageOptions={[9]}  components={{
                             Pagination: CustomPagination,
                             //! Toolbar: GridToolbar, //It's not required in our ptojec(I think It would be better if we add this feature)
                         }}
-                        getCellClassName={(params?: GridCellParams<string>) => {
-                            if(!params){
-                                return "";
-                            }
-                            switch(params.value){
-                            case "Yes" || "yes":
-                                return "paid";
-                            case "No" || "no":
-                                return "notPaid";
-                            case   "Ready":
-                                return "status";
-                            default:
-                                return "";
-                            }
-                        }
-                        }
+
                         /></div> : <h3> Upload your excel file</h3>}
                     </Box>
 
