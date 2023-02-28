@@ -22,6 +22,7 @@ import PaginationItem from "@mui/material/PaginationItem";
 
 import Title from "./Title";
 
+
 function CustomPagination() {
     const apiRef = useGridApiContext();
     const page = useGridSelector(apiRef, gridPageSelector);
@@ -44,7 +45,7 @@ function CustomPagination() {
 }
 
 type SearchResultState =(string|number)[]
-type rowState = (string|number)[]
+type rowState = (string|number)[] 
 
 export default function Orders() {
 
@@ -64,13 +65,13 @@ export default function Orders() {
         console.log(searchField);
     };
 
-    //Helper function to get header
-    function getSheetHeaders(sheet: XLSX.WorkSheet) {
-        const headerRegex = new RegExp("^([A-Za-z]+)1='(.*)$");
+    //!Helper function to get header (for Dynamic Header)
+    // function getSheetHeaders(sheet: XLSX.WorkSheet) {
+    //     const headerRegex = new RegExp("^([A-Za-z]+)1='(.*)$");
 
-        const cells = XLSX.utils.sheet_to_formulae(sheet);
-        return cells.filter(item => headerRegex.test(item)).map(item => item.split("='")[1]);
-    }
+    //     const cells = XLSX.utils.sheet_to_formulae(sheet);
+    //     return cells.filter(item => headerRegex.test(item)).map(item => item.split("='")[1]);
+    // }
 
     //upload file
     const changeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -91,25 +92,63 @@ export default function Orders() {
         const ws = wb.Sheets[wb.SheetNames[0]];
 
 
-        const rows = XLSX.utils.sheet_to_json(ws, {
-            header: 1
-        });
+        const rows = XLSX.utils.sheet_to_json(ws);
      
-
         if(Array.isArray(rows)){
-            setRows(rows.slice(1));
+            setRows(rows);
+
+            //! in case of using dynamic Header
+            // setRows(rows.slice(1))
         }
 
  
 
-        // DataGrid
-        const range = XLSX.utils.decode_range(ws["!ref"] || "A1");
-        const columns = Array.from({ length: range.e.c + 1 }, (_, i) => ({
-            field: String(i), // MUIDG will access row["0"], row["1"], etc
-            headerName: getSheetHeaders(ws)[i], // the column labels
-            editable: true, // enable cell editing
-            headerClassName: "super-app-theme--header",
-        }));
+        //! Dynamic Header
+        // const range = XLSX.utils.decode_range(ws["!ref"] || "A1");
+        // const columns = Array.from({ length: range.e.c + 1 }, (_, i) => ({
+        //     field: String(i), // MUIDG will access row["0"], row["1"], etc
+        //     headerName: getSheetHeaders(ws)[i], // the column labels
+        //     editable: true, // enable cell editing
+        //     headerClassName: "super-app-theme--header",
+        // }));
+
+        //static Header
+        const columns: GridColDef[] = [
+            { field: "id", headerName: "No.", width: 90 },
+            {
+                field: "fullName",
+                headerName: "Name",
+                width: 200,
+
+            },
+            {
+                field: "totalBoxes",
+                headerName: "Boxes Ordered",
+                width: 150,
+
+            },
+            {
+                field: "totalAmount",
+                headerName: "Total Amount",
+                type: "number",
+                width: 150,
+            },
+            {
+                field: "isPaid",
+                headerName: "Paid",
+                type: "number",
+                width: 150,
+            },
+            {
+                field: "status",
+                headerName: "Status",
+                width: 150,
+            },{
+                field: "action",
+                headerName: "Details",
+                width: 150, 
+            }
+        ];
 
         setColumns(columns);
     };
@@ -121,7 +160,7 @@ export default function Orders() {
             const result = sheetDataCp.filter(t => t[1].toLowerCase().startsWith(searchField));
             setSearchResults(result);
         }
-
+        console.log(rows,"rows");
     }, [searchField]);
 
 
@@ -214,7 +253,7 @@ export default function Orders() {
                         },
                      
                     }}>
-                        {isFilePicked ? <div style={{ height: 570, width: "100%" }}><DataGrid getRowId={(row) => row[0]} rows={searchResults.length > 0 ? searchResults : rows} columns={columns} pageSize={9} rowsPerPageOptions={[9]} components={{
+                        {isFilePicked ? <div style={{ height: 570, width: "100%" }}><DataGrid getRowId={(row) => row.id} rows={searchResults.length > 0 ? searchResults : rows} columns={columns} pageSize={9} rowsPerPageOptions={[9]} components={{
                             Pagination: CustomPagination,
                             //! Toolbar: GridToolbar, //It's not required in our ptojec(I think It would be better if we add this feature)
                         }}
