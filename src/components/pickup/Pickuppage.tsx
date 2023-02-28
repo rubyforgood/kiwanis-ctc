@@ -7,11 +7,11 @@ function Pickuppage() {
 	return(
 		<><Box
 			sx={{
-				paddingLeft: "250px",
+				paddingLeft: "20px",
 				paddingRight: "20px",
 				display: "flex",
 				flexDirection: "column",
-				flex: ".83",
+				flex: "1",
 				
 				height: "100vh",
 				fontFamily: "Avenir Next",
