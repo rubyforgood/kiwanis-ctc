@@ -4,9 +4,9 @@ import Link from "@mui/material/Link";
 import Login from "./components/login/Login";
 
 export default function App() {
-	return (
-		<Link>
-			<Login />
-		</Link>
-	);
+  return (
+    <Link>
+      <Login />
+    </Link>
+  );
 }
