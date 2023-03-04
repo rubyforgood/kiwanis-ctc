@@ -1,11 +1,52 @@
 import * as React from "react";
 import Title from "./Title";
 import {Button } from "@material-ui/core";
-import { DataGrid, GridApi, GridCellValue, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import "./styling/style.css";
+import { DataGrid, GridApi, GridCellValue, GridColDef, GridValueGetterParams,GridRenderCellParams } from "@mui/x-data-grid";
+import Chip, { ChipProps } from "@material-ui/core/Chip";
+import { red, blue, green } from "@material-ui/core/colors";
+
+function paidChipProps(params: GridRenderCellParams): ChipProps {
+    if (params.value === "Yes") {
+	  return {
+            label: params.value,
+            style: {
+		  borderColor: green[500],
+		  backgroundColor: green[100]
+            }
+	  };
+    } else {
+	  return {
+            label: params.value,
+            style: {
+		  borderColor: red[500],
+		  backgroundColor: red[100]
+            }
+	  };
+    }
+}
+
+function statusChipProps(params: GridRenderCellParams): ChipProps {
+    if (params.value === "Ready") {
+	  return {
+            label: params.value,
+            style: {
+		  borderColor: green[500],
+		  backgroundColor: green[100]
+            }
+	  };
+    } else {
+	  return {
+            label: params.value,
+            style: {
+		  borderColor: red[500],
+		  backgroundColor: red[100]
+            }
+	  };
+    }
+}
 
 const columns: GridColDef[] = [
-    { field: "id", headerName: "No.", width: 70, headerClassName: "super-app-theme--header"},
+    { field: "id", headerName: "No.", width: 80, headerClassName: "super-app-theme--header"},
     {
 	  field: "fullName",
 	  headerName: "Full name",
@@ -36,7 +77,9 @@ const columns: GridColDef[] = [
         align:"center",
         sortable: true,
         width: 150,
-        cellClassName: (params) => (params.value === "Yes" ? "green" : "red")
+        renderCell: (params) => {
+            return <Chip variant="outlined" size="medium" {...paidChipProps(params)} />;
+        }
 	  },
 	  {
         field: "status",
@@ -44,13 +87,16 @@ const columns: GridColDef[] = [
         headerName: "Status",
         sortable: true,
         width: 150,
-        cellClassName: (params) => (params.value === "Ready" ? "ready" : "notReady")
+        renderCell: (params) => {
+            return <Chip variant="outlined" size="medium" {...statusChipProps(params)} />;
+        }
 	  },
     {
 	  field: "action",
 	  headerName: "Action",
 
 	  sortable: false,
+	  
 	  renderCell: (params) => {
             const onClick = (e: { stopPropagation: () => void; }) => {
 		  e.stopPropagation(); // don't select this row after clicking
@@ -86,6 +132,8 @@ function RowData (
 ){
     return { id, lastName, firstName, boxesOrdered, totalAmount, paid,status };
 }
+
+/**Mock data */
   
 const rows = [
     RowData(
@@ -171,10 +219,12 @@ const rows = [
     )
 ];
 
-function preventDefault(event: React.MouseEvent) {
-    event.preventDefault();
-}
 
+/**
+ * Displays the orders in a Table. Almost alll columns are sortable.
+ * The status and Paid column include mui Chip. 
+ * @returns all Orders in a table
+ */
 export default function Orders() {
     return (
         <React.Fragment >
@@ -185,7 +235,7 @@ export default function Orders() {
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
-                    checkboxSelection
+                    disableSelectionOnClick
                 />
             </div>
         </React.Fragment>

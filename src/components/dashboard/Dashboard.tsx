@@ -17,11 +17,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems } from "./listItems";
-import Chart from "./Chart";
-import Deposits from "./Deposits";
 import Orders from "./Orders";
-import AdminContent from "./customAdminPage";
 import { Copyright } from "../common/Copyright";
+import AdminContent from "./customAdminPage";
 
 const drawerWidth = 240;
 
@@ -110,7 +108,7 @@ function DashboardContent() {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
-							Dashboard
+                          Dashboard
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
@@ -137,13 +135,11 @@ function DashboardContent() {
                         {mainListItems}
                     </List>
                 </Drawer>
+                {/**Swapped out the use of theme for background color for white background */}
                 <Box
                     component="main"
                     sx={{
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === "light"
-                                ? theme.palette.grey[100]
-                                : theme.palette.grey[900],
+                        backgroundColor:"white",
                         flexGrow: 1,
                         height: "100vh",
                         overflow: "auto",
@@ -152,21 +148,13 @@ function DashboardContent() {
                     <Toolbar />
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                         <Grid container spacing={3}>
-                            {/* Chart */}
+                            {/* Order and Chart */}
+                            {/**Added the Admin content  of component */}
                             <Grid item xs={12} md={11} lg={10}>
-                                {/* <Paper
-                                    sx={{
-                                        p: 2,
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        height: 270,
-                                    }}
-                                > */}
                                 <AdminContent />
-                                {/* </Paper> */}
                             </Grid>
 
-                            {/* Orders */}
+                            {/*List of Orders */}
                             <Grid item xs={12}>
                                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column", border:"1px solid lightgray",borderRadius:"2%" }}>
                                     <Orders />

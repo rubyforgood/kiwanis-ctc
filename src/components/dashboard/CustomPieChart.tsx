@@ -1,14 +1,15 @@
-
-
 import * as React from "react";
 import { PieChart } from "devextreme-react/pie-chart"; // npm i @devexpress/dx-react-chart
-import "./styling/style.css";
 
+
+/**mock data */
 const dataSource = [
     { status: "Picked Up", amount: 90 },
     { status: "Ready for Pick Up", amount: 69 }
 ];
- 
+/** Custom palette uses the theme colors */
+const scheme  = ["#21315C", "#E8C887"];
+
 export default function DashboardChart() {
     return (
         <React.Fragment>
@@ -16,9 +17,14 @@ export default function DashboardChart() {
                 id="pieChartContainer"
                 dataSource={dataSource}
                 type="doughnut"
-                palette="Ocean"
-                adaptiveLayout={{ width: 300 }}
-                height={203} // Set the height to 200 pixels
+                palette={scheme}
+                adaptiveLayout={{ width: 200}}
+
+                //make the height responsive
+                height={"30vh"}
+
+                //add padding to the bottom and top of the chart
+                margin={{ bottom: 20,top: 20}}
                 series={[
                     {
                         argumentField: "status",
