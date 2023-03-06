@@ -108,7 +108,7 @@ function DashboardContent() {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
-                          Dashboard
+                          2023 Blueberry Fundraiser
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
