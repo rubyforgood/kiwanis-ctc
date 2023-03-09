@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import DashboardChart from "./CustomPieChart";
 import Typography from "@mui/material/Typography";
+import "../style/styling.css";
 
 //using a custom object Item.
 /**
@@ -24,17 +25,20 @@ const Item = styled(Paper)(({ theme }) => ({
     justifyContent: "center", // align content in the center horizontally
 }));
 
+
 /***
- * This function displays the 4 mini grids and the PieChart
+ * This function displays the 4 mini grids and the PieChart (from the CustomPieChart.tsx)
  * There are two Boxes used
  *  The first one nest everything 
  * The second one is used to display the PieChart
+ * @returns returns the Admin Dashboard component
  */
 export default function Dashboard() {
     return (
         <React.Fragment>
-            {/* <Paper > */}
-            
+            <Typography sx={{fontSize:"1.5em", fontWeight:"bold",marginBottom:"1em"}} >
+                2023 Blueberry Fundraiser - Dashboard
+            </Typography>
             <Box sx={{ flexGrow: 1, height: "100%"}} >
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
@@ -86,7 +90,6 @@ export default function Dashboard() {
                     </Grid>
                 </Grid>
             </Box>
-            {/* </Paper> */}
         </React.Fragment>
     );
 }

@@ -3,8 +3,15 @@ import Title from "./Title";
 import {Button } from "@material-ui/core";
 import { DataGrid, GridApi, GridCellValue, GridColDef, GridValueGetterParams,GridRenderCellParams } from "@mui/x-data-grid";
 import Chip, { ChipProps } from "@material-ui/core/Chip";
-import { red, blue, green } from "@material-ui/core/colors";
+import { red, green } from "@material-ui/core/colors";
+import "../style/styling.css";
+import Typography from "@mui/material/Typography";
 
+/**
+ * paidChipProps is used to render a green or red chip around the paid column
+ * @param params Takes in the params of the GridRenderCellParams
+ * @returns returns the ChipProps
+ */
 function paidChipProps(params: GridRenderCellParams): ChipProps {
     if (params.value === "Yes") {
 	  return {
@@ -25,6 +32,11 @@ function paidChipProps(params: GridRenderCellParams): ChipProps {
     }
 }
 
+/**
+ * statusChipProps is used to render a green or red chip around the status column
+ * @param params Takes in the params of the GridRenderCellParams
+ * @returns returns the ChipProps
+ */
 function statusChipProps(params: GridRenderCellParams): ChipProps {
     if (params.value === "Ready") {
 	  return {
@@ -45,20 +57,26 @@ function statusChipProps(params: GridRenderCellParams): ChipProps {
     }
 }
 
+/**
+ * defines an array of objects representing the header columns in the table
+ */
 const columns: GridColDef[] = [
     { field: "id", headerName: "No.", width: 80, headerClassName: "super-app-theme--header"},
     {
 	  field: "fullName",
+	  headerClassName:"tableHeader",
 	  headerName: "Full name",
+        headerAlign:"center", // align header text to center
 	  sortable: true,
 	  width: 200,
-	  align:"center",
+	  align:"center",// align content to center
 	  valueGetter: (params: GridValueGetterParams) =>
             `${params.row.firstName || ""} ${params.row.lastName || ""}`
     },
     {
 	  field: "boxesOrdered",
-	  align: "center",
+	  headerClassName:"tableHeader",
+	  align: "center",// align content to center
 	  headerName: " Boxes Order",
 	  type: "number",
 
@@ -66,15 +84,18 @@ const columns: GridColDef[] = [
     },
     {
 	  field: "totalAmount",
-	  align: "center",
+	  headerClassName:"tableHeader",
+	  align: "center", // align content to center
 	  headerName: " Total Amount ($)",
 	  type: "number",
 	  width: 160
     },
     {
         field: "paid",
+        headerClassName:"tableHeader",
+        headerAlign:"center", // align header text to center
         headerName: "Paid",
-        align:"center",
+        align:"center", // align content to center
         sortable: true,
         width: 150,
         renderCell: (params) => {
@@ -83,8 +104,10 @@ const columns: GridColDef[] = [
 	  },
 	  {
         field: "status",
+        headerClassName:"tableHeader",
         align:"center",
         headerName: "Status",
+        headerAlign:"center", // align header text to center
         sortable: true,
         width: 150,
         renderCell: (params) => {
@@ -94,7 +117,7 @@ const columns: GridColDef[] = [
     {
 	  field: "action",
 	  headerName: "Action",
-
+	  headerClassName:"tableHeader",
 	  sortable: false,
 	  
 	  renderCell: (params) => {
@@ -120,7 +143,17 @@ const columns: GridColDef[] = [
 ];
   
 // Generate Order Data
-
+/**
+ * function RowData returns an object with properties representing an order data
+ * @param id 
+ * @param lastName
+ * @param firstName 
+ * @param boxesOrdered 
+ * @param totalAmount 
+ * @param paid 
+ * @param status 
+ * @returns returns an object of an order
+ */
 function RowData (
     id: number,
     lastName: string,
@@ -134,7 +167,10 @@ function RowData (
 }
 
 /**Mock data */
-  
+/**
+ * rows is an array of objects representing the data in the table
+ * rows contains an array of mock data generated using the RowData function, representing a table of orders. 
+ */
 const rows = [
     RowData(
 	   1,
@@ -228,7 +264,9 @@ const rows = [
 export default function Orders() {
     return (
         <React.Fragment >
-            <Title> Orders</Title>
+            <Typography sx={{fontSize:"1.5em", fontWeight:"bold",marginBottom:"1em"}} >
+                Orders
+            </Typography>
             <div style={{ height: 400, width: "100%" }}>
                 <DataGrid
                     rows={rows}
