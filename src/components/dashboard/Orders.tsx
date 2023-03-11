@@ -13,21 +13,21 @@ import Typography from "@mui/material/Typography";
  */
 function paidChipProps(params: GridRenderCellParams): ChipProps {
     if (params.value === "Yes") {
-	  return {
+        return {
             label: params.value,
             style: {
-		  borderColor: green[500],
-		  backgroundColor: green[100]
+                borderColor: green[500],
+                backgroundColor: green[100]
             }
-	  };
+        };
     } else {
-	  return {
+        return {
             label: params.value,
             style: {
-		  borderColor: red[500],
-		  backgroundColor: red[100]
+                borderColor: red[500],
+                backgroundColor: red[100]
             }
-	  };
+        };
     }
 }
 
@@ -38,21 +38,21 @@ function paidChipProps(params: GridRenderCellParams): ChipProps {
  */
 function statusChipProps(params: GridRenderCellParams): ChipProps {
     if (params.value === "Ready") {
-	  return {
+        return {
             label: params.value,
             style: {
-		  borderColor: green[500],
-		  backgroundColor: green[100]
+                borderColor: green[500],
+                backgroundColor: green[100]
             }
-	  };
+        };
     } else {
-	  return {
+        return {
             label: params.value,
             style: {
-		  borderColor: red[500],
-		  backgroundColor: red[100]
+                borderColor: red[500],
+                backgroundColor: red[100]
             }
-	  };
+        };
     }
 }
 
@@ -62,32 +62,32 @@ function statusChipProps(params: GridRenderCellParams): ChipProps {
 const columns: GridColDef[] = [
     { field: "id", headerName: "No.", width: 80, headerClassName: "super-app-theme--header"},
     {
-	  field: "fullName",
-	  headerClassName:"tableHeader",
-	  headerName: "Full name",
+        field: "fullName",
+        headerClassName:"tableHeader",
+        headerName: "Full name",
         headerAlign:"center", // align header text to center
-	  sortable: true,
-	  width: 200,
-	  align:"center",// align content to center
-	  valueGetter: (params: GridValueGetterParams) =>
+        sortable: true,
+        width: 200,
+        align:"center",// align content to center
+        valueGetter: (params: GridValueGetterParams) =>
             `${params.row.firstName || ""} ${params.row.lastName || ""}`
     },
     {
-	  field: "boxesOrdered",
-	  headerClassName:"tableHeader",
-	  align: "center",// align content to center
-	  headerName: " Boxes Order",
-	  type: "number",
+        field: "boxesOrdered",
+        headerClassName:"tableHeader",
+        align: "center",// align content to center
+        headerName: " Boxes Order",
+        type: "number",
 
-	  width: 140
+        width: 140
     },
     {
-	  field: "totalAmount",
-	  headerClassName:"tableHeader",
-	  align: "center", // align content to center
-	  headerName: " Total Amount ($)",
-	  type: "number",
-	  width: 160
+        field: "totalAmount",
+        headerClassName:"tableHeader",
+        align: "center", // align content to center
+        headerName: " Total Amount ($)",
+        type: "number",
+        width: 160
     },
     {
         field: "paid",
@@ -100,8 +100,8 @@ const columns: GridColDef[] = [
         renderCell: (params) => {
             return <Chip variant="outlined" size="medium" {...paidChipProps(params)} />;
         }
-	  },
-	  {
+    },
+    {
         field: "status",
         headerClassName:"tableHeader",
         align:"center",
@@ -112,32 +112,32 @@ const columns: GridColDef[] = [
         renderCell: (params) => {
             return <Chip variant="outlined" size="medium" {...statusChipProps(params)} />;
         }
-	  },
+    },
     {
-	  field: "action",
-	  headerName: "Action",
-	  headerClassName:"tableHeader",
-	  sortable: false,
-	  
-	  renderCell: (params) => {
+        field: "action",
+        headerName: "Action",
+        headerClassName:"tableHeader",
+        sortable: false,
+      
+        renderCell: (params) => {
             const onClick = (e: { stopPropagation: () => void; }) => {
-		  e.stopPropagation(); // don't select this row after clicking
+                e.stopPropagation(); // don't select this row after clicking
   
-		  const api: GridApi = params.api;
-		  const thisRow: Record<string, GridCellValue> = {};
+                const api: GridApi = params.api;
+                const thisRow: Record<string, GridCellValue> = {};
   
-		  api
+                api
                     .getAllColumns()
                     .filter((c) => c.field !== "__check__" && !!c)
                     .forEach(
-			  (c) => (thisRow[c.field] = params.getValue(params.id, c.field))
+                        (c) => (thisRow[c.field] = params.getValue(params.id, c.field))
                     );
   
-		  return alert(JSON.stringify(thisRow, null, 4));
+                return alert(JSON.stringify(thisRow, null, 4));
             };
   
             return <Button onClick={onClick}>Click</Button>;
-	  }
+        }
     }
 ];
   
@@ -172,85 +172,85 @@ function RowData (
  */
 const rows = [
     RowData(
-	   1,
-	   "Snow",
-	   "Jon",
-	   35,
-	   "100",
-	   "Yes",
-	   "Ready"
+        1,
+        "Snow",
+        "Jon",
+        35,
+        "100",
+        "Yes",
+        "Ready"
     ),
     RowData(
-	   2,
-	   "Lannister",
-	   "Cersei",
-	   42,
-	   "190",
-	   "Yes",
-	   "Ready"
+        2,
+        "Lannister",
+        "Cersei",
+        42,
+        "190",
+        "Yes",
+        "Ready"
     ),
     RowData(
-	   3,
-	   "Lannister",
-	   "Jaime",
-	   45,
-	   "2100",
-	   "Yes",
-	   "Not Ready"
+        3,
+        "Lannister",
+        "Jaime",
+        45,
+        "2100",
+        "Yes",
+        "Not Ready"
     ),
     RowData(
-	   4,
-	   "Stark",
-	   "Arya",
-	   16,
-	   "80",
-	   "No",
-	   "Ready"
+        4,
+        "Stark",
+        "Arya",
+        16,
+        "80",
+        "No",
+        "Ready"
     ),
     RowData(
-	   5,
-	   "Targaryen",
-	   "Daenerys",
-	   null,
-	   "180",
-	   "Yes",
-	   "Not Ready"
+        5,
+        "Targaryen",
+        "Daenerys",
+        null,
+        "180",
+        "Yes",
+        "Not Ready"
     ),
     RowData(
-	   6,
-	   "Melisandre",
-	   "Brad",
-	   150,
-	   "240",
-	   "No",
-	   "Ready"
+        6,
+        "Melisandre",
+        "Brad",
+        150,
+        "240",
+        "No",
+        "Ready"
     ),
     RowData(
-	   7,
-	   "Clifford",
-	   "Ferrara",
-	   44,
-	   "1232",
-	   "No",
-	   "Ready"
+        7,
+        "Clifford",
+        "Ferrara",
+        44,
+        "1232",
+        "No",
+        "Ready"
     ),
     RowData(
-	   8,
-	   "Frances",
-	   "Rossini",
-	   36,
-	   "1020",
-	   "Yes",
-	   "Not Ready"
+        8,
+        "Frances",
+        "Rossini",
+        36,
+        "1020",
+        "Yes",
+        "Not Ready"
     ),
     RowData(
-	   9,
-	   "Roxie",
-	   "Harvey",
-	   65,
-	   "1",
-	   "No",
-	   "Not Ready"
+        9,
+        "Roxie",
+        "Harvey",
+        65,
+        "1",
+        "No",
+        "Not Ready"
     )
 ];
 
