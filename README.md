@@ -26,7 +26,6 @@
     </li>
     <li><a href="#react-style-guide">React Style Guide</a></li>
     <li><a href="#commit-style-guide">Commit Style Guide</a></li>
-    <li><a href="#updates">Installation</a></li>
 
     Updates
   </ol>
@@ -113,6 +112,3 @@ npx eslint --fix .
 * Follow [semantic commit messages](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716) when writing your commits
 * Branch names should be in the format `jdoe/name-of-feature` where `jdoe` is in the format first initial, last name. Use dashes (`-`) to separate words
 
-## updates
-Feb 20, 2023:
-  * Implemented the components into the Dasboard page.
