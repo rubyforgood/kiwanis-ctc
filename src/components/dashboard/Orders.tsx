@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Button } from "@material-ui/core";
-import { DataGrid, GridApi, GridCellValue, GridColDef, GridValueGetterParams,GridRenderCellParams } from "@mui/x-data-grid";
+import { DataGrid, GridApi, GridKeyValue, GridColDef, GridValueGetterParams,GridRenderCellParams } from "@mui/x-data-grid";
 import Chip, { ChipProps } from "@material-ui/core/Chip";
 import { red, green } from "@material-ui/core/colors";
 import "../style/styling.css";
@@ -124,13 +124,13 @@ const columns: GridColDef[] = [
                 e.stopPropagation(); // don't select this row after clicking
   
                 const api: GridApi = params.api;
-                const thisRow: Record<string, GridCellValue> = {};
+                const thisRow: Record<string, GridKeyValue> = {};
   
                 api
                     .getAllColumns()
                     .filter((c) => c.field !== "__check__" && !!c)
                     .forEach(
-                        (c) => (thisRow[c.field] = params.getValue(params.id, c.field))
+                        (c) => (thisRow[c.field] = params.row[c.field])
                     );
   
                 return alert(JSON.stringify(thisRow, null, 4));
@@ -270,9 +270,11 @@ export default function Orders() {
                 <DataGrid
                     rows={rows}
                     columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
-                    disableSelectionOnClick
+                    initialState={{
+                        pagination: { paginationModel: { pageSize: 5 } },
+                    }}
+                    pageSizeOptions={[5, 10, 25]}
+                    disableRowSelectionOnClick
                 />
             </div>
         </React.Fragment>
