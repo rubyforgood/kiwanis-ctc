@@ -3,8 +3,8 @@ import {Button } from "@material-ui/core";
 import { DataGrid, GridApi, GridKeyValue, GridColDef, GridValueGetterParams,GridRenderCellParams } from "@mui/x-data-grid";
 import Chip, { ChipProps } from "@material-ui/core/Chip";
 import { red, green } from "@material-ui/core/colors";
-import "../style/styling.css";
 import Typography from "@mui/material/Typography";
+import { useTheme } from "@mui/material/styles";
 
 /**
  * paidChipProps is used to render a green or red chip around the paid column
@@ -12,20 +12,19 @@ import Typography from "@mui/material/Typography";
  * @returns returns the ChipProps
  */
 function paidChipProps(params: GridRenderCellParams): ChipProps {
+    const them = useTheme();
     if (params.value === "Yes") {
         return {
             label: params.value,
             style: {
-                borderColor: green[500],
-                backgroundColor: green[100]
+                backgroundColor: them.palette.success.light
             }
         };
     } else {
         return {
             label: params.value,
             style: {
-                borderColor: red[500],
-                backgroundColor: red[100]
+                backgroundColor: them.palette.error.light
             }
         };
     }
@@ -37,20 +36,20 @@ function paidChipProps(params: GridRenderCellParams): ChipProps {
  * @returns returns the ChipProps
  */
 function statusChipProps(params: GridRenderCellParams): ChipProps {
+    const them = useTheme();
+
     if (params.value === "Ready") {
         return {
             label: params.value,
             style: {
-                borderColor: green[500],
-                backgroundColor: green[100]
+                backgroundColor: them.palette.success.light
             }
         };
     } else {
         return {
             label: params.value,
             style: {
-                borderColor: red[500],
-                backgroundColor: red[100]
+                backgroundColor: them.palette.error.light
             }
         };
     }
@@ -63,19 +62,22 @@ const columns: GridColDef[] = [
     { field: "id", headerName: "No.", width: 80, headerClassName: "super-app-theme--header"},
     {
         field: "fullName",
-        headerClassName:"tableHeader",
         headerName: "Full name",
-        headerAlign:"center", // align header text to center
+        renderHeader: (params)  =>( 
+            <Typography style={{color: "black", fontSize:"1.2em"}} noWrap> {params.colDef.headerName} </Typography>
+        ),
+        headerAlign:"center",
         sortable: true,
         width: 200,
-        align:"center",// align content to center
+        align:"center",
         valueGetter: (params: GridValueGetterParams) =>
             `${params.row.firstName || ""} ${params.row.lastName || ""}`
     },
     {
         field: "boxesOrdered",
-        headerClassName:"tableHeader",
-        align: "center",// align content to center
+        renderHeader: (params)  =>( 
+            <Typography style={{color: "black", fontSize:"1.2em"}} noWrap> {params.colDef.headerName} </Typography>
+        ),        align: "center",
         headerName: " Boxes Order",
         type: "number",
 
@@ -83,18 +85,20 @@ const columns: GridColDef[] = [
     },
     {
         field: "totalAmount",
-        headerClassName:"tableHeader",
-        align: "center", // align content to center
+        renderHeader: (params)  =>( 
+            <Typography style={{color: "black", fontSize:"1.2em"}} noWrap> {params.colDef.headerName} </Typography>
+        ),        align: "center",
         headerName: " Total Amount ($)",
         type: "number",
         width: 160
     },
     {
         field: "paid",
-        headerClassName:"tableHeader",
-        headerAlign:"center", // align header text to center
+        renderHeader: (params)  =>( 
+            <Typography style={{color: "black", fontSize:"1.2em"}} noWrap> {params.colDef.headerName} </Typography>
+        ),        headerAlign:"center",
         headerName: "Paid",
-        align:"center", // align content to center
+        align:"center",
         sortable: true,
         width: 150,
         renderCell: (params) => {
@@ -103,10 +107,11 @@ const columns: GridColDef[] = [
     },
     {
         field: "status",
-        headerClassName:"tableHeader",
-        align:"center",
+        renderHeader: (params)  =>( 
+            <Typography style={{color: "black", fontSize:"1.2em"}} noWrap> {params.colDef.headerName} </Typography>
+        ),        align:"center",
         headerName: "Status",
-        headerAlign:"center", // align header text to center
+        headerAlign:"center",
         sortable: true,
         width: 150,
         renderCell: (params) => {
@@ -116,24 +121,12 @@ const columns: GridColDef[] = [
     {
         field: "action",
         headerName: "Action",
-        headerClassName:"tableHeader",
-        sortable: false,
-      
+        renderHeader: (params)  =>( 
+            <Typography style={{color: "black", fontSize:"1.2em"}} noWrap> {params.colDef.headerName} </Typography>
+        ),        sortable: false,
         renderCell: (params) => {
             const onClick = (e: { stopPropagation: () => void; }) => {
-                e.stopPropagation(); // don't select this row after clicking
-  
-                const api: GridApi = params.api;
-                const thisRow: Record<string, GridKeyValue> = {};
-  
-                api
-                    .getAllColumns()
-                    .filter((c) => c.field !== "__check__" && !!c)
-                    .forEach(
-                        (c) => (thisRow[c.field] = params.row[c.field])
-                    );
-  
-                return alert(JSON.stringify(thisRow, null, 4));
+                e.stopPropagation();
             };
   
             return <Button onClick={onClick}>Click</Button>;
@@ -141,7 +134,6 @@ const columns: GridColDef[] = [
     }
 ];
   
-// Generate Order Data
 /**
  * function RowData returns an object with properties representing an order data
  * @param id 

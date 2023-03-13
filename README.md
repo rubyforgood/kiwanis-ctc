@@ -27,7 +27,6 @@
     <li><a href="#react-style-guide">React Style Guide</a></li>
     <li><a href="#commit-style-guide">Commit Style Guide</a></li>
 
-    Updates
   </ol>
 </details>
 

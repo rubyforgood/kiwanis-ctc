@@ -5,15 +5,14 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import DashboardChart from "./CustomPieChart";
 import Typography from "@mui/material/Typography";
-import "../style/styling.css";
-
+import NewStrong from "./customStrongTag";
+"";
+// create a custom style to be be used by the strong tag
 //using a custom object Item.
 /**
  * Item is used to display typography 
  */ 
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
     padding: theme.spacing(2),
     textAlign: "center",
     minHeight: "90px",
@@ -21,10 +20,9 @@ const Item = styled(Paper)(({ theme }) => ({
     border: "1px solid lightgray",
     borderRadius: "11%",
     display: "flex",
-    alignItems: "center", // align content in the center vertically
-    justifyContent: "center", // align content in the center horizontally
+    alignItems: "center",
+    justifyContent: "center",
 }));
-
 
 /***
  * This function displays the 4 mini grids and the PieChart (from the CustomPieChart.tsx)
@@ -39,7 +37,7 @@ export default function Dashboard() {
             <Typography sx={{fontSize:"1.5em", fontWeight:"bold",marginBottom:"1em"}} >
                 2023 Blueberry Fundraiser - Dashboard
             </Typography>
-            <Box sx={{ flexGrow: 1, height: "100%"}} >
+            <Box sx={{ flexGrow: 1, height: "100%", marginBottom:"3%"}} >
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <Box sx={{ height: "100%" }}>
@@ -51,7 +49,7 @@ export default function Dashboard() {
                                 <Grid item xs={4} sm={5} md={3.5}>
                                     <Item sx={{minHeight:"13vh"}}>
                                         <Typography noWrap>
-                                            <strong>159</strong>
+                                            <NewStrong>159</NewStrong>
                                             <br /> Total Order
                                         </Typography>
                                     </Item>
@@ -59,7 +57,7 @@ export default function Dashboard() {
                                 <Grid item xs={4} sm={5} md={3.5}>
                                     <Item sx={{minHeight:"13vh"}}>
                                         <Typography noWrap>
-                                            <strong>100</strong>
+                                            <NewStrong>100</NewStrong>
                                             <br /> Total Donor
                                         </Typography>
                                     </Item>
@@ -75,7 +73,7 @@ export default function Dashboard() {
                                 <Grid item xs={4} sm={5} md={3.5}>
                                     <Item sx={{minHeight:"13vh"}}> 
                                         <Typography noWrap>
-                                            <strong>125</strong>
+                                            <NewStrong>125</NewStrong>
                                             <br /> Total Boxes for AFAC
                                         </Typography>
                                     </Item>

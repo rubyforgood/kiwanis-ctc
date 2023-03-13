@@ -86,7 +86,7 @@ function DashboardContent() {
                 <AppBar position="absolute" open={open}>
                     <Toolbar
                         sx={{
-                            pr: "24px", // keep right padding when drawer closed
+                            pr: "24px",
                         }}
                     >
                         <IconButton
@@ -135,7 +135,6 @@ function DashboardContent() {
                         {mainListItems}
                     </List>
                 </Drawer>
-                {/**Swapped out the use of theme for background color for white background */}
                 <Box
                     component="main"
                     sx={{
