@@ -1,110 +1,114 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import SearchBar from "material-ui-search-bar";
-import Box from "@mui/material/Box";
+import React, { useState }  from "react";
+import { green, red, grey } from "@mui/material/colors";
 
-interface pickups {
-   no: number;
-	name: string;
-  self: number;
-  afac: number;
-  total: number;
-  method: string;
-  paid: string;
-  pickup: string;
-}
 
-const useStyles = makeStyles({
-	table: {
-		minWidth: 40,
-	}
-});
+import {
+	DataGrid,
+	GridCellParams,
+	GridToolbarColumnsButton,
+	GridToolbarContainer
+} from "@material-ui/data-grid";
+import SearchBar, { SearchBarProps } from "material-ui-search-bar";
 
-const originalRows: pickups[] = [
-	{ no: 1, name: " Ava Miller", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready" },
-	{ no: 1, name: "Ava",  self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready" },
-	{ no: 1, name: "Ava",  self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"},
-	{no: 1, name: "Ava",  self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready" },
-	{ no: 1, name: "Ava",  self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready" },
-	{ no: 1, name: "Ava",  self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready" },
+			
+const CustomToolbar = (props: JSX.IntrinsicAttributes & SearchBarProps) => (
+	<div>
+		<GridToolbarContainer>
+			<GridToolbarColumnsButton />
+		</GridToolbarContainer>
+		<SearchBar {...props} />
+	</div>
+);
+		
+
+
+
+const DATASET = [
+			
+	{ id: 1, no: 1, name: "Ava Miller", self: 1, afac: 4, total: 5 , method: "Credit Card", paid: "Yes" , pickup: "Ready" },
+	{ id: 2, no: 2, name: "James Cole", self: 1, afac: 0, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
+	{ id: 3, no: 3, name: "Vivian Eggers", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
+	{ id: 4, no: 4, name: "Ellijiah Sandis", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
+	{ id: 5, no: 5, name: "Anjali Sharma", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
+	{ id: 6, no: 6, name: "Sarah Smith", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
+	{ id: 7, no: 7, name: "Noah Davis", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
+	{ id: 8, no: 8, name: " Mary Brown", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
+	{ id: 9, no: 9, name: " Miller", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
+	{ id: 10, no: 10, name: " Miller", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
+	{ id: 11, no: 11, name: " Miller", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
+	{ id: 12, no: 12, name: " Miller", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  }
+
+
+
 ];
 
-export default function BasicTable() {
-	const [rows, setRows] = useState<pickups[]>(originalRows);
-	const [searched, setSearched] = useState<string>("");
-	const classes = useStyles();
-
-	const requestSearch = (searchedVal: string) => {
-		const filteredRows = originalRows.filter((row) => {
-			return row.name.toLowerCase().includes(searchedVal.toLowerCase());
-		});
-		setRows(filteredRows);
-	};
-
-	const cancelSearch = () => {
-		setSearched("");
-		requestSearch(searched);
-	};
-
-	return (
-		<>
-			<Box sx={{
 			
-
-            
-			}}>
-
-       
-				<Paper>
-					<SearchBar
-						value={searched}
-						onChange={(searchVal) => requestSearch(searchVal)}
-						onCancelSearch={() => cancelSearch()}
-					/>
-					<TableContainer>
-						<Table className={classes.table} aria-label="simple table">
-							<TableHead>
-								<TableRow>
-									<TableCell>No.</TableCell>
-									<TableCell align="center">Name</TableCell>
-									<TableCell align="center">Self</TableCell>
-									<TableCell align="center">AFAC</TableCell>
-									<TableCell align="center">Total</TableCell>
-									<TableCell align="center">Method</TableCell>
-									<TableCell align="center">Paid</TableCell>
-									<TableCell align="center">Pick up</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{rows.map((row) => (
-									<TableRow key={row.name}>
-										<TableCell component="th" scope="row">
-											{row.no}
-										</TableCell>
-										<TableCell align="center">{row.name}</TableCell>
-							
-										<TableCell align="center">{row.self}</TableCell>
-										<TableCell align="center">{row.afac}</TableCell>
-										<TableCell align="center">{row.total}</TableCell>
-										<TableCell align="center">{row.method}</TableCell>
-										<TableCell align="center">{row.paid}</TableCell>
-										<TableCell align="center">{row.pickup}</TableCell>
-									</TableRow>
-								))}
-							</TableBody>
-						</Table>
-					</TableContainer>
-				</Paper>
-			</Box>
-			<br />
-		
-		</>
+export default function Readyforpickup() {
+	const [searchText, setSearchText] = useState("");
+	const [tableData, setTableData] = useState<any[]>(DATASET);
+	const [columns] = useState<any[]>([
+		{ headerName: "No.", field: "no" },
+		{ headerName: "Name", field: "name", width: 130 },
+		{ headerName: "Self", field: "self", width: 120 },
+		{ headerName: "AFAC", field: "afac", width: 130 },
+		{ headerName: "Total", field: "total", width: 120 },
+		{ headerName: "Method", field: "method", width: 130 },
+		{ headerName: "Paid", field: "paid", width: 130,
+			rowStyle: (paid: { value: any; }) => {
+				let color = "";
+				switch (paid.value) {
+				case "Yes":
+					color = "#00C853"; // Green
+					break;
+				case "partial":
+					color = "#BDBDBD"; // Grey
+					break;
+				case "no":
+					color = "#F44336"; // Red
+					break;
+				default:
+					color = "";
+					break;
+				}
+				return {
+					backgroundColor: color,
+					color: "#ffffff",
+				};
+			},
+		},
+		{ headerName: "Pickup", field: "pickup", width: 130 },
+	]);
+			
+	const requestSearch = (searchValue: string) => {
+		const searchRegex = new RegExp(`.*${searchValue}.*`, "ig");
+		const filteredRows = DATASET.filter((o: any) => {
+			return Object.keys(o).some((k: any) => {
+				return searchRegex.test(o[k].toString());
+			});
+		});
+		setTableData(filteredRows);
+	};
+			
+	const cancelSearch = () => {
+		setSearchText("");
+		requestSearch(searchText);
+	};
+			
+	return (
+		<div style={{ height: 500, width: "100%", backgroundColor: "white" }}>
+			<DataGrid
+				components={{ Toolbar: CustomToolbar }}
+				rows={tableData}
+				columns={columns}
+				componentsProps={{
+					toolbar: {
+						value: searchText,
+						onChange: (searchVal: string) => requestSearch(searchVal),
+						onCancelSearch: () => cancelSearch()
+					}
+				}}
+			/>
+		</div>
 	);
 }
+
