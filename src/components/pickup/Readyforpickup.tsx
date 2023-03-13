@@ -1,5 +1,5 @@
 import React, { useState }  from "react";
-import { green, red, grey } from "@mui/material/colors";
+
 
 
 import {
@@ -10,7 +10,7 @@ import {
 } from "@material-ui/data-grid";
 import SearchBar, { SearchBarProps } from "material-ui-search-bar";
 
-			
+				
 const CustomToolbar = (props: JSX.IntrinsicAttributes & SearchBarProps) => (
 	<div>
 		<GridToolbarContainer>
@@ -19,12 +19,12 @@ const CustomToolbar = (props: JSX.IntrinsicAttributes & SearchBarProps) => (
 		<SearchBar {...props} />
 	</div>
 );
-		
+			
 
 
 
 const DATASET = [
-			
+				
 	{ id: 1, no: 1, name: "Ava Miller", self: 1, afac: 4, total: 5 , method: "Credit Card", paid: "Yes" , pickup: "Ready" },
 	{ id: 2, no: 2, name: "James Cole", self: 1, afac: 0, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
 	{ id: 3, no: 3, name: "Vivian Eggers", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
@@ -42,7 +42,7 @@ const DATASET = [
 
 ];
 
-			
+				
 export default function Readyforpickup() {
 	const [searchText, setSearchText] = useState("");
 	const [tableData, setTableData] = useState<any[]>(DATASET);
@@ -54,31 +54,18 @@ export default function Readyforpickup() {
 		{ headerName: "Total", field: "total", width: 120 },
 		{ headerName: "Method", field: "method", width: 130 },
 		{ headerName: "Paid", field: "paid", width: 130,
-			rowStyle: (paid: { value: any; }) => {
-				let color = "";
-				switch (paid.value) {
-				case "Yes":
-					color = "#00C853"; // Green
-					break;
-				case "partial":
-					color = "#BDBDBD"; // Grey
-					break;
-				case "no":
-					color = "#F44336"; // Red
-					break;
-				default:
-					color = "";
-					break;
-				}
-				return {
-					backgroundColor: color,
-					color: "#ffffff",
-				};
-			},
-		},
+			renderCell: (params: { value: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal; }) => (
+						
+				<span style={{ 
+					padding:"1px 5px" ,
+					backgroundColor:"#FFF0CB" }}>
+					{params.value}
+				</span>
+			)},
+			
 		{ headerName: "Pickup", field: "pickup", width: 130 },
 	]);
-			
+				
 	const requestSearch = (searchValue: string) => {
 		const searchRegex = new RegExp(`.*${searchValue}.*`, "ig");
 		const filteredRows = DATASET.filter((o: any) => {
@@ -88,12 +75,12 @@ export default function Readyforpickup() {
 		});
 		setTableData(filteredRows);
 	};
-			
+				
 	const cancelSearch = () => {
 		setSearchText("");
 		requestSearch(searchText);
 	};
-			
+				
 	return (
 		<div style={{ height: 500, width: "100%", backgroundColor: "white" }}>
 			<DataGrid
