@@ -29,7 +29,7 @@ const DATASET = [
 	{ id: 2, no: 2, name: "James Cole", self: 1, afac: 0, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
 	{ id: 3, no: 3, name: "Vivian Eggers", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
 	{ id: 4, no: 4, name: "Ellijiah Sandis", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
-	{ id: 5, no: 5, name: "Anjali Sharma", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
+	{ id: 5, no: 5, name: "Anjali Sharma", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "No", pickup: "Ready"  },
 	{ id: 6, no: 6, name: "Sarah Smith", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
 	{ id: 7, no: 7, name: "Noah Davis", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
 	{ id: 8, no: 8, name: " Mary Brown", self: 1, afac: 4, total: 4, method: "Credit Card", paid: "Yes", pickup: "Ready"  },
@@ -48,22 +48,24 @@ export default function Readyforpickup() {
 	const [tableData, setTableData] = useState<any[]>(DATASET);
 	const [columns] = useState<any[]>([
 		{ headerName: "No.", field: "no" },
-		{ headerName: "Name", field: "name", width: 130 },
-		{ headerName: "Self", field: "self", width: 120 },
-		{ headerName: "AFAC", field: "afac", width: 130 },
-		{ headerName: "Total", field: "total", width: 120 },
-		{ headerName: "Method", field: "method", width: 130 },
-		{ headerName: "Paid", field: "paid", width: 130,
-			renderCell: (params: { value: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal; }) => (
-						
-				<span style={{ 
+		{ headerName: "Name", field: "name", width: 150, align: "center" },
+		{ headerName: "Self", field: "self", width: 120, align: "center" },
+		{ headerName: "AFAC", field: "afac", width: 130 , align: "center"},
+		{ headerName: "Total", field: "total", width: 120, align: "center" },
+		{ headerName: "Method", field: "method", width: 130, align: "center" },
+		{ headerName: "Paid", field: "paid", width: 130, align: "center",
+			renderCell: (params) => (
+				<span style={params.value==="Yes" || params.value==="yes"?{ 
 					padding:"1px 5px" ,
-					backgroundColor:"#FFF0CB" }}>
+		
+					backgroundColor:"#E3EECB" }:{padding:"1px 5px" ,
+					backgroundColor:"#FFD0CA"}}>
 					{params.value}
 				</span>
-			)},
+			),
+		},
 			
-		{ headerName: "Pickup", field: "pickup", width: 130 },
+		{ headerName: "Pickup", field: "pickup", width: 130, align: "center"  },
 	]);
 				
 	const requestSearch = (searchValue: string) => {
