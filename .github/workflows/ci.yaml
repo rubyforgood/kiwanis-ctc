@@ -1,7 +1,8 @@
 name: CI
 on: pull_request
 jobs:
-  test:
+  ci:
+    name: Continuous Integration
     runs-on: ubuntu-latest
     strategy:
       matrix:
