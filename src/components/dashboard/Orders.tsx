@@ -1,8 +1,7 @@
 import * as React from "react";
 import {Button } from "@material-ui/core";
-import { DataGrid, GridApi, GridKeyValue, GridColDef, GridValueGetterParams,GridRenderCellParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridValueGetterParams,GridRenderCellParams } from "@mui/x-data-grid";
 import Chip, { ChipProps } from "@material-ui/core/Chip";
-import { red, green } from "@material-ui/core/colors";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 
@@ -124,7 +123,7 @@ const columns: GridColDef[] = [
         renderHeader: (params)  =>( 
             <Typography style={{color: "black", fontSize:"1.2em"}} noWrap> {params.colDef.headerName} </Typography>
         ),        sortable: false,
-        renderCell: (params) => {
+        renderCell: () => {
             const onClick = (e: { stopPropagation: () => void; }) => {
                 e.stopPropagation();
             };
