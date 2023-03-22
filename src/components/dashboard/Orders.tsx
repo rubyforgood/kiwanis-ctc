@@ -1,8 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -18,12 +16,11 @@ import {
 } from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
+import Steps from "../stepper/Steps";
+import Modal from "@mui/material/Modal";
+import Stack from "@mui/material/Stack";
 
 
-
-
-
-//! Helper function for custom Pagination 
 function CustomPagination() {
     const apiRef = useGridApiContext();
     const page = useGridSelector(apiRef, gridPageSelector);
@@ -45,34 +42,37 @@ function CustomPagination() {
     );
 }
 
-type SearchResultState =(string|number)[]
-type rowState = (string|number)[] 
+
+type Rows ={
+    id:string,
+    fullName:string,
+    totalBoxes:number,
+    totalAmount:number,
+    isPaid:string,
+    status:string
+}
 
 export default function Orders() {
 
     const [searchField, setSearchField] = useState<string>("");
-    const [searchResults, setSearchResults] = useState<SearchResultState>([]);
+    const [searchResults, setSearchResults] = useState<Rows[]>([]);
 
     const [isFilePicked, setIsFilePicked] = useState(false);
 
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
 
     //* Datagrid Table
-    const [rows, setRows] = useState<rowState>([]);
+    const [rows, setRows] = useState<Rows[] >([]);
     const [columns, setColumns] = useState<GridColDef[]>([]);
 
     //* Search area
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchField((e.target.value).toLowerCase());
-        console.log(searchField);
     };
 
-    //!Helper function to get header (for Dynamic Header)
-    // function getSheetHeaders(sheet: XLSX.WorkSheet) {
-    //     const headerRegex = new RegExp("^([A-Za-z]+)1='(.*)$");
-
-    //     const cells = XLSX.utils.sheet_to_formulae(sheet);
-    //     return cells.filter(item => headerRegex.test(item)).map(item => item.split("='")[1]);
-    // }
 
     //* upload file
     const changeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -95,25 +95,11 @@ export default function Orders() {
 
         const rows = XLSX.utils.sheet_to_json(ws);
      
-        if(Array.isArray(rows)){
-            setRows(rows);
-
-            //! in case of using dynamic Header
-            // setRows(rows.slice(1))
+        if(rows && Array.isArray(rows)){
+            setRows(rows as Rows[]);
         }
 
- 
 
-        //! Dynamic Header
-        // const range = XLSX.utils.decode_range(ws["!ref"] || "A1");
-        // const columns = Array.from({ length: range.e.c + 1 }, (_, i) => ({
-        //     field: String(i), // MUIDG will access row["0"], row["1"], etc
-        //     headerName: getSheetHeaders(ws)[i], // the column labels
-        //     editable: true, // enable cell editing
-        //     headerClassName: "super-app-theme--header",
-        // }));
-
-        //static Header
         const columns: GridColDef[] = [
             { field: "id", headerName: "No.", width: 90 , align:"center",},
             {
@@ -143,13 +129,15 @@ export default function Orders() {
                 width: 150,
                 align:"center",
                 renderCell: (params) => (
-                    <span style={params.value==="Yes" || params.value==="yes"?{ 
+                    <Box  sx={(params.value==="Yes" || params.value==="yes") ? { 
                         padding:"1px 5px" ,
-                
-                        backgroundColor:"#E3EECB" }:{padding:"1px 5px" ,
-                        backgroundColor:"#FFD0CA"}}>
-                        {params.value}
-                    </span>
+                        backgroundColor:"success.main" }:{padding:"1px 5px" ,
+                        backgroundColor:"error.main"}}>
+
+                        <span>
+                            {params.value}
+                        </span>
+                    </Box>
                 ),
             },
             {
@@ -158,13 +146,16 @@ export default function Orders() {
                 width: 150,
                 align:"center",
                 renderCell: (params) => (
-                    
-                    <span style={{ 
+                    <Box  sx={{ 
                         padding:"1px 5px" ,
-                        backgroundColor:"#FFF0CB" }}>
-                        {params.value}
-                    </span>
+                        backgroundColor:"info.main" }}>
+                        <span>
+                            {params.value}
+                        </span>
+              
+                    </Box>
                 ),
+
             },{
                 field: "action",
                 headerName: "Details",
@@ -181,7 +172,6 @@ export default function Orders() {
             const sheetDataCp = [...rows];
             const result = sheetDataCp.filter(t => t["fullName"].toLowerCase().startsWith(searchField));
             setSearchResults(result);
-            console.log(rows);
         }
     }, [searchField]);
 
@@ -212,68 +202,97 @@ export default function Orders() {
 					Dashboard / Orders
                     </Typography>
 
-                    <Typography  fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.dark", mb: 2, width: "100%" }}>Orders</Typography>
-          
-                    <Divider
-                        role='presentation'
-                        variant='middle'
-                        sx={{ borderBottomWidth: 1, borderColor: "primary", mb: 2 }}
-                    />
-         
-                    <Stack spacing={2} direction='row' sx={{ mb: 2 }}>
-                        <FormControl sx={{ width: "75%" }}>
-                            <TextField
-                                onChange={handleChange}
-                                sx={{ m: 0, p: 0 }}
-                                InputProps={{
-                                    placeholder: "Start typing name",
-                                    startAdornment: (
-                                        <InputAdornment position='start'>
-                                            <SearchOutlinedIcon />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
+                    <Typography  fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 6, width: "100%" }}>Orders</Typography>
+           
+                    {/* <Box sx={{display:"flex", alignItems:"center",justifyContent:"space-between",mb:2,flexWrap: "wrap" }}> */}
+                    <Stack   direction={{ xs: "column", sm: "row" }}
+                        spacing={{ xs: 1, sm: 2, md: 4 }}>
+                        <FormControl       
+                        >
+                            <Box sx={{mr:10,pb:2}}>
+                                <TextField 
+                                    onChange={handleChange}
+                                    sx={{ p: 0,width:{xs:250,sm:300,md:550,lg:600} }}
+                                    InputProps={{
+                                        placeholder: "Start typing name",
+                                        startAdornment: (
+                                            <InputAdornment position='start'>
+                                                <SearchOutlinedIcon />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </Box>
                         </FormControl>
                         <FormControl>
-                            <Button
-                                sx={{ width: 175, height: 38, borderRadius: 2, p: 2 }}
-                                variant='contained'
-                                color='secondary'
-                            >
+                            <Box sx={{mx:2}}>
+                                <Button
+                                    sx={{width:{xs:100,sm:150,md:170,lg:190},  borderRadius: 2 }}
+                                    variant='contained'
+                                    color='secondary'
+                                >
 
-                                <label htmlFor="upload">
-                                    <input
-                                        id="upload"
-                                        accept='*.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,xls,xlsx'
-                                        style={{ display: "none" }}
-                                        type='file'
-                                        onChange={changeHandler}
-                                    /><Typography variant='button' aria-hidden='true'> Import CSV</Typography>
-                                </label>
-                            </Button>
+                                    <label htmlFor="upload">
+                                        <input
+                                            id="upload"
+                                            accept='*.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,xls,xlsx'
+                                            style={{ display: "none" }}
+                                            type='file'
+                                            onChange={changeHandler}
+                                        /><Typography variant='button' aria-hidden='true'> Import CSV</Typography>
+                                    </label>
+                                </Button>
 
+                            </Box>
                         </FormControl>
-                        <Button
-                            sx={{ width: 175, height: 38, borderRadius: 2, p: 2 }}
-                            variant='contained'
-                            color='secondary'
-                            onClick={() => alert("Test for now:)")}
-                        >
-                            <Typography variant='button'>Add New Order</Typography>
-                        </Button>
+                        <FormControl>
+                            <Box sx={{mx:2}}>
+                                <Button
+                                    sx={{width:{xs:100,sm:150,md:160,lg:190}, borderRadius: 2,}}
+                                    variant='contained'
+                                    color='secondary'
+                                    onClick={handleOpen}
+                                >
+                                    <Typography variant='button'>Add New Order</Typography>
+                                </Button>
+                            </Box>
+                        </FormControl>
                     </Stack>
+                    {/* </Box> */}
+                 
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box sx={{	position: "absolute",
+                            top: "50%",
+                            left: "50%",
+              
+                            transform: "translate(-50%, -50%)",
+                            width: "50vw",
+                            height: "90vh",
+                            bgcolor: "background.paper",
+                            borderRadius: "30px",
+                            m:1,
+                            boxShadow: 24,
+                        }}>
+
+                            <Steps />
+                        </Box>
+                    </Modal>
+                
                     <Box sx={{
                         "& .super-app-theme--header": {
                             backgroundColor: "#F0F0F0",
                         },                     
                     }}>
-                        {isFilePicked ? <div style={{ height: 570, width: "100%" }}><DataGrid  getRowId={(row) => row.id} rows={searchResults.length > 0 ? searchResults : rows} columns={columns} pageSize={9} rowsPerPageOptions={[9]}  components={{
+                        {isFilePicked ? <Box sx={{ height: 570, width: "100%" }}><DataGrid  getRowId={(row) =>row["id"]} rows={searchResults.length > 0 ? searchResults : rows} columns={columns} pageSize={9} rowsPerPageOptions={[9]}  components={{
                             Pagination: CustomPagination,
-                            //! Toolbar: GridToolbar, //It's not required in our ptojec(I think It would be better if we add this feature)
                         }}
 
-                        /></div> : <h3> Upload your excel file</h3>}
+                        /></Box> : <h3> Upload your excel file</h3>}
                     </Box>
 
                 </Paper>
