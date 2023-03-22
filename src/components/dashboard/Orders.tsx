@@ -101,33 +101,37 @@ export default function Orders() {
 
 
         const columns: GridColDef[] = [
-            { field: "id", headerName: "No.", width: 90 , align:"center",},
+            { field: "id", headerName: "No.", width: 50 , align:"center",headerAlign:"center"},
             {
                 field: "fullName",
                 headerName: "Name",
                 width: 200,
                 align:"center",
+                headerAlign:"center"
 
             },
             {
                 field: "totalBoxes",
                 headerName: "Boxes Ordered",
-                width: 150,
+                width: 120,
                 align:"center",
+                headerAlign:"center"
 
             },
             {
                 field: "totalAmount",
                 headerName: "Total Amount",
                 type: "number",
-                width: 150,
+                width: 120,
                 align:"center",
+                headerAlign:"center"
             },
             {
                 field: "isPaid",
                 headerName: "Paid",
-                width: 150,
+                width: 120,
                 align:"center",
+                headerAlign:"center",
                 renderCell: (params) => (
                     <Box  sx={(params.value==="Yes" || params.value==="yes") ? { 
                         padding:"1px 5px" ,
@@ -143,7 +147,7 @@ export default function Orders() {
             {
                 field: "status",
                 headerName: "Status",
-                width: 150,
+                width: 130,
                 align:"center",
                 renderCell: (params) => (
                     <Box  sx={{ 
@@ -209,10 +213,10 @@ export default function Orders() {
                         spacing={{ xs: 1, sm: 2, md: 4 }}>
                         <FormControl       
                         >
-                            <Box sx={{mr:10,pb:2}}>
+                            <Box sx={{mr:6,pb:2}}>
                                 <TextField 
                                     onChange={handleChange}
-                                    sx={{ p: 0,width:{xs:250,sm:300,md:550,lg:600} }}
+                                    sx={{ p: 0,width:{xs:250,sm:350,md:450,lg:500} }}
                                     InputProps={{
                                         placeholder: "Start typing name",
                                         startAdornment: (
@@ -227,7 +231,7 @@ export default function Orders() {
                         <FormControl>
                             <Box sx={{mx:2}}>
                                 <Button
-                                    sx={{width:{xs:100,sm:150,md:170,lg:190},  borderRadius: 2 }}
+                                    sx={{width:{xs:100,sm:140,md:150,lg:170},  borderRadius: 2 }}
                                     variant='contained'
                                     color='secondary'
                                 >
@@ -248,7 +252,7 @@ export default function Orders() {
                         <FormControl>
                             <Box sx={{mx:2}}>
                                 <Button
-                                    sx={{width:{xs:100,sm:150,md:160,lg:190}, borderRadius: 2,}}
+                                    sx={{width:{xs:100,sm:140,md:150,lg:170}, borderRadius: 2,}}
                                     variant='contained'
                                     color='secondary'
                                     onClick={handleOpen}
