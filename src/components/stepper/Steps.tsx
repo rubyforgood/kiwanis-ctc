@@ -91,7 +91,7 @@ const Steps = () => {
                                 
                                         sx={{
                                    
-                                
+                                            mr:1,
                                             "& .MuiStepLabel-root .Mui-completed": {
                                                 color: "success.light", // circle color (COMPLETED)
                                             },

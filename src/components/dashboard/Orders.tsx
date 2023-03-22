@@ -208,7 +208,6 @@ export default function Orders() {
 
                     <Typography  fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 6, width: "100%" }}>Orders</Typography>
            
-                    {/* <Box sx={{display:"flex", alignItems:"center",justifyContent:"space-between",mb:2,flexWrap: "wrap" }}> */}
                     <Stack   direction={{ xs: "column", sm: "row" }}
                         spacing={{ xs: 1, sm: 2, md: 4 }}>
                         <FormControl       
@@ -262,7 +261,6 @@ export default function Orders() {
                             </Box>
                         </FormControl>
                     </Stack>
-                    {/* </Box> */}
                  
                     <Modal
                         open={open}

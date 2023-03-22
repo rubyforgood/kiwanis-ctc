@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,ChangeEvent} from "react";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -6,6 +6,9 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import TextField from "@mui/material/TextField";
 
 const StepThree = () => {
+    const [self, setSelf] = useState(0);
+    const [AFAC, setAFAC] = useState(0);
+    const [cash, setCash] = useState(0);
     return (
         <React.Fragment>
             <Box >
@@ -15,31 +18,31 @@ const StepThree = () => {
                     </Typography>
                 </Box>
 
-                <Box sx={{borderBottom: "solid",  borderTop: "solid",borderWidth: 2, borderColor: "primary.main", py:2 ,alignItems: "center" }} >
+                <Box sx={{borderBottom: "solid",  borderTop: "solid",borderWidth: 2, borderColor: "primary.main", pt:2 ,alignItems: "center",width:250 }} >
                     <Box sx={{ display: "flex", flexDirection: "row",  justifyContent: "space-between", py:2 }}>
-                        <Typography sx ={{pr:2}}>
+                        <Typography >
 					Self
                         </Typography>
-                        <ButtonGroup>
-                            <Button  >+</Button>
-                            <Button >0</Button>
-                            <Button  >-</Button>
+                        <ButtonGroup sx ={{px:2}}>
+                            <Button onClick={() => setSelf(self + 1)} >+</Button>
+                            <Button >{self}</Button>
+                            <Button  onClick={() => setSelf(self - 1)}>-</Button>
                         </ButtonGroup>
-                        <Typography sx ={{pl:2,fontWeight:"bold"}}>
-					$0
+                        <Typography sx ={{fontWeight:"bold"}}>
+                            {`$ ${self * 40}`}
                         </Typography>
                     </Box>
                     <Box  sx={{ display: "flex", flexDirection: "row",  justifyContent: "space-between",pt:2, pb:6, alignItems: "center"  }}>
-                        <Typography sx ={{pr:2}}>
+                        <Typography >
 					AFAC
                         </Typography>
-                        <ButtonGroup>
-                            <Button  >+</Button>
-                            <Button >0</Button>
-                            <Button  >-</Button>
+                        <ButtonGroup sx ={{px:2}}>
+                            <Button  onClick={() => setAFAC(AFAC + 1)}>+</Button>
+                            <Button >{AFAC}</Button>
+                            <Button onClick={() => setAFAC(AFAC - 1)} >-</Button>
                         </ButtonGroup>
-                        <Typography sx ={{pl:2, fontWeight:"bold"}}>
-					$0
+                        <Typography sx ={{ fontWeight:"bold"}}>
+                            {`$ ${AFAC * 40}`}
                         </Typography>
                     </Box>
                   
@@ -48,22 +51,32 @@ const StepThree = () => {
                     </Typography>
 
                 </Box>
-                <Box sx={{ display: "flex" ,flexDirection: "row",  justifyContent: "space-between",py:2, alignItems: "center" }}>
-                    <Typography>
+                <Box sx={{ display: "flex" ,flexDirection: "row",  justifyContent: "space-between",pt:2, alignItems: "center" ,alignContent:"center"}}>
+                    <Box>
+                        <Typography sx={{px:0}}>
 					Cash
-                    </Typography>
+                        </Typography>
+                    </Box>
                     <Box sx={{width: "13ch"}}>
                         <TextField
-                        
+                            onChange={(e: ChangeEvent<HTMLInputElement>)=> {
+                                const re = /^[0-9\b]+$/;
+                                if (e.target.value === "" || re.test(e.target.value)) {
+                                    const formattedCash = Math.abs(parseFloat(parseFloat(e.target.value).toFixed(2)));
+                                    setCash(formattedCash);
+                                }
+                            }}
                             placeholder="$0"
                             margin="normal"
                             variant="outlined"
-                            size="small" >
-          
+                            size="small" 
+                            inputProps={{ maxLength: 6 }}
+                        >
+
                         </TextField>
                     </Box>
                     <Typography sx={{fontWeight: "bold"}}>
-					$0
+                        {Number.isNaN(cash) ? "$0":`$ ${cash}`}
                     </Typography>
                 </Box>
             </Box>
