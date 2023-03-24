@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent,useContext } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -16,9 +16,13 @@ import {
 } from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-import Steps from "../stepper/Steps";
 import Modal from "@mui/material/Modal";
 import Stack from "@mui/material/Stack";
+
+import Steps from "../stepper/Steps";
+import { stepperContext } from "../../providers/SteperProvider";
+
+
 
 
 function CustomPagination() {
@@ -59,9 +63,17 @@ export default function Orders() {
 
     const [isFilePicked, setIsFilePicked] = useState(false);
 
+    //* steps of add new order stepper
+    const {activeStep,setActiveStep} = useContext(stepperContext);
+
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
+    
+    const handleOpen = () => {
+        if(activeStep === 6) setActiveStep(0);
+        setOpen(true); };
     const handleClose = () => setOpen(false);
+
+
 
 
     //* Datagrid Table
@@ -76,7 +88,7 @@ export default function Orders() {
 
     //* upload file
     const changeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-
+        console.log("test");
         setIsFilePicked(true);
 
         if (!e.target.files) {
@@ -202,101 +214,103 @@ export default function Orders() {
                         p: 2,
                     }}
                 >
-                    <Typography fontSize={15}  variant="subtitle1" sx={{ mb: 1}}>
+                    <Box sx={{mx:2}}>
+                        <Typography fontSize={15}  variant="subtitle1" sx={{ mb: 1}}>
 					Dashboard / Orders
-                    </Typography>
+                        </Typography>
 
-                    <Typography  fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 6, width: "100%" }}>Orders</Typography>
+                        <Typography  fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 6, width: "100%" }}>Orders</Typography>
            
-                    <Stack   direction={{ xs: "column", sm: "row" }}
-                        spacing={{ xs: 1, sm: 2, md: 4 }}>
-                        <FormControl       
+                        <Stack   direction={{ xs: "column", sm: "column",md:"row" }}
+                        // spacing={{ xs: 1, sm: 2, md: 4 }}
                         >
-                            <Box sx={{mr:6,pb:2}}>
-                                <TextField 
-                                    onChange={handleChange}
-                                    sx={{ p: 0,width:{xs:250,sm:350,md:450,lg:500} }}
-                                    InputProps={{
-                                        placeholder: "Start typing name",
-                                        startAdornment: (
-                                            <InputAdornment position='start'>
-                                                <SearchOutlinedIcon />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </Box>
-                        </FormControl>
-                        <FormControl>
-                            <Box sx={{mx:2}}>
-                                <Button
-                                    sx={{width:{xs:100,sm:140,md:150,lg:170},  borderRadius: 2 }}
-                                    variant='contained'
-                                    color='secondary'
-                                >
+                            <FormControl       
+                            >
+                                <Box sx={{mr:6,pb:2}}>
+                                    <TextField 
+                                        onChange={handleChange}
+                                        sx={{ p: 0,width:{xs:150,sm:300,md:450,lg:500}, }}
+                                        InputProps={{
+                                            placeholder: "Start typing name",
+                                            startAdornment: (
+                                                <InputAdornment position='start'>
+                                                    <SearchOutlinedIcon />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                </Box>
+                            </FormControl>
+                            <FormControl>
+                                <Box sx={{mx:2}}>
+                                    <Button
+                                        sx={{width:{xs:100,sm:140,md:150,lg:170},  borderRadius: 2,mx:1,mb:1 }}
+                                        variant='contained'
+                                        color='secondary'
+                                    >
 
-                                    <label htmlFor="upload">
-                                        <input
-                                            id="upload"
-                                            accept='*.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,xls,xlsx'
-                                            style={{ display: "none" }}
-                                            type='file'
-                                            onChange={changeHandler}
-                                        /><Typography variant='button' aria-hidden='true'> Import CSV</Typography>
-                                    </label>
-                                </Button>
+                                        <label htmlFor="upload">
+                                            <input
+                                                id="upload"
+                                                accept='*.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,xls,xlsx'
+                                                style={{ display: "none" }}
+                                                type='file'
+                                                onChange={changeHandler}
+                                            /><Typography variant='button' aria-hidden='true'> Import CSV</Typography>
+                                        </label>
+                                    </Button>
 
-                            </Box>
-                        </FormControl>
-                        <FormControl>
-                            <Box sx={{mx:2}}>
-                                <Button
-                                    sx={{width:{xs:100,sm:140,md:150,lg:170}, borderRadius: 2,}}
-                                    variant='contained'
-                                    color='secondary'
-                                    onClick={handleOpen}
-                                >
-                                    <Typography variant='button'>Add New Order</Typography>
-                                </Button>
-                            </Box>
-                        </FormControl>
-                    </Stack>
+                                </Box>
+                            </FormControl>
+                            <FormControl>
+                                <Box sx={{mx:2}}>
+                                    <Button
+                                        sx={{width:{xs:100,sm:140,md:150,lg:170}, borderRadius: 2,mb:1}}
+                                        variant='contained'
+                                        color='secondary'
+                                        onClick={handleOpen}
+                                    >
+                                        <Typography variant='button'>Add New Order</Typography>
+                                    </Button>
+                                </Box>
+                            </FormControl>
+                        </Stack>
                  
-                    <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                    >
-                        <Box sx={{	position: "absolute",
-                            top: "50%",
-                            left: "50%",
+                        <Modal
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Box sx={{	position: "absolute",
+                                top: "50%",
+                                left: "50%",
               
-                            transform: "translate(-50%, -50%)",
-                            width: "50vw",
-                            height: "90vh",
-                            bgcolor: "background.paper",
-                            borderRadius: "30px",
-                            m:1,
-                            boxShadow: 24,
-                        }}>
+                                transform: "translate(-50%, -50%)",
+                                width: "50vw",
+                                height: "90vh",
+                                bgcolor: "background.paper",
+                                borderRadius: "30px",
+                                m:1,
+                                boxShadow: 24,
+                            }}>
 
-                            <Steps />
-                        </Box>
-                    </Modal>
+                                <Steps setOpen={setOpen}/>
+                            </Box>
+                        </Modal>
                 
-                    <Box sx={{
-                        "& .super-app-theme--header": {
-                            backgroundColor: "#F0F0F0",
-                        },                     
-                    }}>
-                        {isFilePicked ? <Box sx={{ height: 570, width: "100%" }}><DataGrid  getRowId={(row) =>row["id"]} rows={searchResults.length > 0 ? searchResults : rows} columns={columns} pageSize={9} rowsPerPageOptions={[9]}  components={{
-                            Pagination: CustomPagination,
-                        }}
+                        <Box sx={{
+                            "& .super-app-theme--header": {
+                                backgroundColor: "#F0F0F0",
+                            },                     
+                        }}>
+                            {isFilePicked ? <Box sx={{ height: 570, width: "100%" }}><DataGrid  getRowId={(row) =>row["id"]} rows={searchResults.length > 0 ? searchResults : rows} columns={columns} pageSize={9} rowsPerPageOptions={[9]}  components={{
+                                Pagination: CustomPagination,
+                            }}
 
-                        /></Box> : <h3> Upload your excel file</h3>}
+                            /></Box> : <h3> Upload your excel file</h3>}
+                        </Box>
                     </Box>
-
                 </Paper>
             </Box>
         </React.Fragment>

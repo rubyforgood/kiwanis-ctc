@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -9,12 +9,18 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
+import PropTypes from "prop-types";
 
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
 import StepFour from "./StepFour";
+import StepPickup from "./StepPickup";
+import StepPickupConfirmation from "./StepPickupConfirmation";
+import {stepperContext} from "../../providers/SteperProvider";
 import StepFinal from "./StepFinal";
+
+
 
 
 const steps = [
@@ -48,13 +54,16 @@ const QontoConnector = styled(StepConnector)(() => ({
 
 }));
 
-const Steps = () => {
+const Steps = ({setOpen}) => {
 
-    const [activeStep, setActiveStep] = React.useState(0);
+    const {activeStep, setActiveStep} = useContext(stepperContext);
+   
 
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    const handleSetActiveStep = (prevActiveStep: number) => {
+        return prevActiveStep + 1;
     };
+
+    const handleNext = () =>setActiveStep(handleSetActiveStep(activeStep));
 
     return (
         <React.Fragment>
@@ -71,7 +80,7 @@ const Steps = () => {
                     <Typography fontSize={15}  variant="subtitle1" sx={{ mb: 1}}>
                     Pick Up Confirmation for: 
                     </Typography>
-                    <CloseIcon />
+                    <CloseIcon onClick={()=>setOpen(false)}/>
                 </Box>
                 <Typography  fontSize={25} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 2, width: "100%" }}>Add New Order</Typography>
                 <Box sx={{display: "flex" , flexDirection: "row", justifyContent: "space-between",borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 4, width: "100%" }}>
@@ -79,7 +88,8 @@ const Steps = () => {
                     <Typography  fontSize={15} sx={{ mb:2  }}>Box for AFAC: 0</Typography>
                     <Typography  fontSize={15} sx={{ mb:2  }}>Balance Amount: $0</Typography>
                 </Box>
-                {activeStep < 4 ? <Box>
+                {/* {console.log(activeStep)} */}
+                {activeStep < 4 && <Box>
                     <Box sx={{display: "flex" , flexDirection: "row", justifyContent: "space-between"}}>
                        
                         <Box>
@@ -158,6 +168,7 @@ const Steps = () => {
                         {activeStep === 1 && <StepTwo />} 
                         {activeStep === 2 && <StepThree />}
                         {activeStep === 3 && <StepFour />}
+                   
                     </Box>
              
                     <Box  display="flex"
@@ -174,10 +185,17 @@ const Steps = () => {
                             <Typography variant='button'>Next</Typography>
                         </Button>
                     </Box>
-                </Box> :<StepFinal />}
+                </Box>}
+                {activeStep === 4 && <StepPickup />}
+                {activeStep === 5 && <StepPickupConfirmation />}
+                {activeStep === 6 && <StepFinal />}
+             
             </Paper>
         </React.Fragment>
     );
 };
 
+Steps.propTypes = {
+    setOpen: PropTypes.func.isRequired
+};
 export default Steps;
