@@ -48,6 +48,7 @@ const QontoConnector = styled(StepConnector)(() => ({
      
         borderColor: "#C4C4C4",
         borderLeft:"2px dotted",
+        height:60
     
     },
 
@@ -84,7 +85,7 @@ const Steps = ({setOpen}) => {
                 <Box sx={{display: "flex" , flexDirection: "row", justifyContent: "space-between"}}>
                        
                     <Box>
-                        <Stepper  orientation="vertical" activeStep={activeStep} connector={<QontoConnector />}>
+                        <Stepper  orientation="vertical" activeStep={activeStep} connector={<QontoConnector />} >
                           
                           
                             {steps.map((step) => (
