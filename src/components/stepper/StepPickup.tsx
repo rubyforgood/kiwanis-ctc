@@ -33,7 +33,7 @@ const StepPickup = () => {
                 <Box  display="flex"
                     justifyContent="center"
                     alignItems="center"
-                    sx={{pt:4}}
+                    sx={{pt:4,mt:4}}
                 >
                     <Button
                         sx={{ width: 175, height: 38, borderRadius: 2, p: 1 }}

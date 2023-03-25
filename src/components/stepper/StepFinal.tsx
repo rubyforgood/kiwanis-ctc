@@ -29,7 +29,7 @@ const StepFinal = () => {
                     alignItems="center"
                     sx={{pt:4}}
                 >
-                    <Typography sx={{pb:4}}>
+                    <Typography sx={{pb:4,m2:4}}>
                     Pickup Complete!
                     </Typography>
 

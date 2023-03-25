@@ -222,7 +222,7 @@ export default function Orders() {
                         <Typography  fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 6, width: "100%" }}>Orders</Typography>
            
                         <Stack   direction={{ xs: "column", sm: "column",md:"row" }}
-                        // spacing={{ xs: 1, sm: 2, md: 4 }}
+     
                         >
                             <FormControl       
                             >
@@ -256,7 +256,7 @@ export default function Orders() {
                                                 style={{ display: "none" }}
                                                 type='file'
                                                 onChange={changeHandler}
-                                            /><Typography variant='button' aria-hidden='true'> Import CSV</Typography>
+                                            /><Typography variant='button' aria-hidden='true' fontWeight={600}> Import CSV</Typography>
                                         </label>
                                     </Button>
 
@@ -270,7 +270,7 @@ export default function Orders() {
                                         color='secondary'
                                         onClick={handleOpen}
                                     >
-                                        <Typography variant='button'>Add New Order</Typography>
+                                        <Typography variant='button' fontWeight={600}>Add New Order</Typography>
                                     </Button>
                                 </Box>
                             </FormControl>
@@ -290,7 +290,7 @@ export default function Orders() {
                                 width: "50vw",
                                 height: "auto",
                                 bgcolor: "background.paper",
-                                borderRadius: "30px",
+                                borderRadius: "20px",
                                 boxShadow: 24,
                             }}>
 
