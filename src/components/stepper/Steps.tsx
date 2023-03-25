@@ -1,7 +1,6 @@
 import React,{useContext } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
@@ -67,130 +66,122 @@ const Steps = ({setOpen}) => {
 
     return (
         <React.Fragment>
-
-            <Paper
-  
-                sx={{
-                    p: 4,
-                    height: "90vh",
-                }}
-            >
             
-                <Box sx={{display: "flex" , flexDirection: "row", justifyContent: "space-between",flexWrap: "wrap"}}>
-                    <Typography fontSize={15}  variant="subtitle1" sx={{ mb: 1}}>
+            <Box sx={{display: "flex" , flexDirection: "row", justifyContent: "space-between",flexWrap: "wrap"}}>
+                <Typography fontSize={15}  variant="subtitle1" sx={{ mb: 1}}>
                     Pick Up Confirmation for: 
-                    </Typography>
-                    <CloseIcon onClick={()=>setOpen(false)}/>
-                </Box>
-                <Typography  fontSize={25} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 2, width: "100%" }}>Add New Order</Typography>
-                <Box sx={{display: "flex" , flexDirection: "row", justifyContent: "space-between",borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 4, width: "100%" }}>
-                    <Typography  fontSize={15} sx={{mb:2  }}>Box for Self: 0</Typography>
-                    <Typography  fontSize={15} sx={{ mb:2  }}>Box for AFAC: 0</Typography>
-                    <Typography  fontSize={15} sx={{ mb:2  }}>Balance Amount: $0</Typography>
-                </Box>
-                {/* {console.log(activeStep)} */}
-                {activeStep < 4 && <Box>
-                    <Box sx={{display: "flex" , flexDirection: "row", justifyContent: "space-between"}}>
+                </Typography>
+                <CloseIcon onClick={()=>setOpen(false)}/>
+            </Box>
+            <Typography  fontSize={25} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 2, width: "100%" }}>Add New Order</Typography>
+            <Box sx={{display: "flex" , flexDirection: "row", justifyContent: "space-between",borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 4, width: "100%" }}>
+                <Typography  fontSize={15} sx={{mb:2  }}>Box for Self: 0</Typography>
+                <Typography  fontSize={15} sx={{ mb:2  }}>Box for AFAC: 0</Typography>
+                <Typography  fontSize={15} sx={{ mb:2  }}>Balance Amount: $0</Typography>
+            </Box>
+
+            {activeStep < 4 && <Box>
+                <Box sx={{display: "flex" , flexDirection: "row", justifyContent: "space-between"}}>
                        
-                        <Box>
-                            <Stepper  orientation="vertical" activeStep={activeStep} connector={<QontoConnector />}>
+                    <Box>
+                        <Stepper  orientation="vertical" activeStep={activeStep} connector={<QontoConnector />}>
                           
                           
-                                {steps.map((step) => (
-                                    <Step key={step.label}
+                            {steps.map((step) => (
+                                <Step key={step.label}
                                 
-                                        sx={{
+                                    sx={{
                                    
-                                            mr:1,
-                                            "& .MuiStepLabel-root .Mui-completed": {
-                                                color: "success.light", // circle color (COMPLETED)
-                                            },
+                                        mr:1,
+                                        "& .MuiStepLabel-root .Mui-completed": {
+                                            color: "success.light", // circle color (COMPLETED)
+                                        },
                                             
-                                            "& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel":
+                                        "& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel":
                                       {
                                           color: "black", // Just text label (COMPLETED)
                                       },
-                                            "& .MuiStepLabel-root .Mui-active": {
-                                                color: "secondary.dark", // circle color (ACTIVE)
-                                                fontWeight:"regular",
+                                        "& .MuiStepLabel-root .Mui-active": {
+                                            color: "secondary.dark", // circle color (ACTIVE)
+                                            fontWeight:"regular",
                     
                                        
-                                            },
-                                            "& .MuiStepLabel-label.Mui-active":
+                                        },
+                                        "& .MuiStepLabel-label.Mui-active":
                                       {
                                           color: "black", // Just text label (ACTIVE)
                                           fontWeight:"regular"
                                       },
-                                            "& .MuiStepLabel-label.Mui-completed":
+                                        "& .MuiStepLabel-label.Mui-completed":
                                       {
                                           color: "black", // Just text label (COMPLETED)
                                           fontWeight:"regular"
                                       },
-                                            "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text ": {
-                                                fill: "#82692E", // circle's number (ACTIVE)
-                                                fontWeight:"bold",
-                                                fontSize:"1rem",
+                                        "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text ": {
+                                            fill: "#82692E", // circle's number (ACTIVE)
+                                            fontWeight:"bold",
+                                            fontSize:"1rem",
                                   
-                                            },
+                                        },
                                             
-                                            "&  .Mui-active .MuiStepIcon-root": {
-                                                border:"solid 3px #82692E",
-                                                borderRadius:"50%",
-                                                color:"white" // circle's number (ACTIVE)
-                                            },
+                                        "&  .Mui-active .MuiStepIcon-root": {
+                                            border:"solid 3px #82692E",
+                                            borderRadius:"50%",
+                                            color:"white" // circle's number (ACTIVE)
+                                        },
                                                                                         
-                                            "& .Mui-disabled .MuiStepIcon-root": {
-                                                border:"solid 3px #E8C887",
-                                                borderRadius:"50%",
-                                                color:"white" // circle's number (INACTIVE)
-                                            },
+                                        "& .Mui-disabled .MuiStepIcon-root": {
+                                            border:"solid 3px #E8C887",
+                                            borderRadius:"50%",
+                                            color:"white" // circle's number (INACTIVE)
+                                        },
                         
-                                            "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-text ": {
-                                                fill: "#E8C887", // circle's number (ACTIVE)
-                                                fontWeight:"bold",
-                                                fontSize:"1rem",
+                                        "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-text ": {
+                                            fill: "#E8C887", // circle's number (ACTIVE)
+                                            fontWeight:"bold",
+                                            fontSize:"1rem",
                                   
-                                            },
+                                        },
                                             
                             
-                                        }}>
+                                    }}>
                                 
                                 
-                                        <StepLabel
+                                    <StepLabel
                                       
-                                        >
-                                            {step.label}
-                                        </StepLabel>
-                                    </Step>
-                                ))}
-                            </Stepper></Box>
-                        {activeStep === 0 && <StepOne />} 
-                        {activeStep === 1 && <StepTwo />} 
-                        {activeStep === 2 && <StepThree />}
-                        {activeStep === 3 && <StepFour />}
+                                    >
+                                        {step.label}
+                                    </StepLabel>
+                                </Step>
+                            ))}
+                        </Stepper></Box>
+                    {activeStep === 0 && <StepOne />} 
+                    {activeStep === 1 && <StepTwo />} 
+                    {activeStep === 2 && <StepThree />}
+                    {activeStep === 3 && <StepFour />}
                    
-                    </Box>
+                </Box>
              
-                    <Box  display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        sx={{pt:4}}
+                <Box  display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    sx={{pt:4}}
+                >
+                    <Button
+                        sx={{ width: 175, height: 38, borderRadius: 2, p: 1 }}
+                        variant='contained'
+                        color='secondary'
+                        onClick={handleNext}
                     >
-                        <Button
-                            sx={{ width: 175, height: 38, borderRadius: 2, p: 1 }}
-                            variant='contained'
-                            color='secondary'
-                            onClick={handleNext}
-                        >
-                            <Typography variant='button'>Next</Typography>
-                        </Button>
-                    </Box>
-                </Box>}
-                {activeStep === 4 && <StepPickup />}
-                {activeStep === 5 && <StepPickupConfirmation />}
-                {activeStep === 6 && <StepFinal />}
+                        <Typography variant='button'>Next</Typography>
+                    </Button>
+                </Box>
+            </Box>}
+            {activeStep === 4 && <StepPickup />}
+            {activeStep === 5 && <StepPickupConfirmation />}
+            {activeStep === 6 && <StepFinal />}
              
-            </Paper>
+         
         </React.Fragment>
     );
 };

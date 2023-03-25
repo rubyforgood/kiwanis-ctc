@@ -285,13 +285,12 @@ export default function Orders() {
                             <Box sx={{	position: "absolute",
                                 top: "50%",
                                 left: "50%",
-              
+                                p:4,
                                 transform: "translate(-50%, -50%)",
                                 width: "50vw",
-                                height: "90vh",
+                                height: "auto",
                                 bgcolor: "background.paper",
                                 borderRadius: "30px",
-                                m:1,
                                 boxShadow: 24,
                             }}>
 
