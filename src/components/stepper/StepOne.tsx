@@ -25,6 +25,8 @@ const [orderDetails, setOrderDetails] = useState<OrderDetails>({
     email: "",
 });
 
+//just for now in order to avoid error
+console.log(orderDetails);
 
 const formik = useFormik({
     initialValues: {
