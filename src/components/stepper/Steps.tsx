@@ -1,7 +1,7 @@
 import React,{useContext } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import Stepper from "@mui/material/Stepper";
@@ -57,7 +57,10 @@ const QontoConnector = styled(StepConnector)(() => ({
 const Steps = ({setOpen}) => {
 
     const {activeStep, setActiveStep} = useContext(stepperContext);
-   
+    const {AFAC,self,cash} = useContext(stepperContext);
+
+    const theme = useTheme();
+
 
     const handleSetActiveStep = (prevActiveStep: number) => {
         return prevActiveStep + 1;
@@ -76,9 +79,9 @@ const Steps = ({setOpen}) => {
             </Box>
             <Typography  fontSize={25} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 2, width: "100%" }}>Add New Order</Typography>
             <Box sx={{display: "flex" , flexDirection: "row", justifyContent: "space-between",borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 4, width: "100%" }}>
-                <Typography  fontSize={15} sx={{mb:2  }}>Box for Self: 0</Typography>
-                <Typography  fontSize={15} sx={{ mb:2  }}>Box for AFAC: 0</Typography>
-                <Typography  fontSize={15} sx={{ mb:2  }}>Balance Amount: $0</Typography>
+                <Typography  fontSize={15} sx={{mb:2  }}>Box for Self: {self}</Typography>
+                <Typography  fontSize={15} sx={{ mb:2  }}>Box for AFAC: {AFAC}</Typography>
+                <Typography  fontSize={15} sx={{ mb:2  }}>Balance Amount: ${cash}</Typography>
             </Box>
 
             {activeStep < 4 && <Box>
@@ -119,26 +122,25 @@ const Steps = ({setOpen}) => {
                                           fontWeight:"regular"
                                       },
                                         "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text ": {
-                                            fill: "#82692E", // circle's number (ACTIVE)
+                                            fill: theme.palette.secondary.dark, // circle's number (ACTIVE)
                                             fontWeight:"bold",
                                             fontSize:"1rem",
                                   
                                         },
                                             
                                         "&  .Mui-active .MuiStepIcon-root": {
-                                            border:"solid 3px #82692E",
+                                            border:`solid 3px ${theme.palette.secondary.dark}`,
                                             borderRadius:"50%",
                                             color:"white" // circle's number (ACTIVE)
                                         },
                                                                                         
                                         "& .Mui-disabled .MuiStepIcon-root": {
-                                            border:"solid 3px #E8C887",
+                                            border:`solid 3px ${theme.palette.secondary.main}`,
                                             borderRadius:"50%",
                                             color:"white" // circle's number (INACTIVE)
                                         },
-                        
                                         "& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-text ": {
-                                            fill: "#E8C887", // circle's number (ACTIVE)
+                                            fill: theme.palette.secondary.main, // circle's number (ACTIVE)
                                             fontWeight:"bold",
                                             fontSize:"1rem",
                                   
@@ -173,6 +175,7 @@ const Steps = ({setOpen}) => {
                         variant='contained'
                         color='secondary'
                         onClick={handleNext}
+                        type={"submit"}
                     >
                         <Typography variant='button'>Next</Typography>
                     </Button>
