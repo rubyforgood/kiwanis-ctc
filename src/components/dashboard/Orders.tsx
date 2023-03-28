@@ -88,7 +88,6 @@ export default function Orders() {
 
     //* upload file
     const changeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-        console.log("test");
         setIsFilePicked(true);
 
         if (!e.target.files) {

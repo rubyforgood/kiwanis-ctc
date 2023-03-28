@@ -1,18 +1,18 @@
-import React,{useState,ChangeEvent} from "react";
+import React,{useContext ,ChangeEvent} from "react";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import TextField from "@mui/material/TextField";
 
+import {stepperContext} from "../../providers/SteperProvider";
+
 const StepThree = () => {
-    const [self, setSelf] = useState(0);
-    const [AFAC, setAFAC] = useState(0);
-    const [cash, setCash] = useState(0);
+    const {self,setSelf,AFAC,setAFAC,cash,setCash} = useContext(stepperContext);
     return (
         <React.Fragment>
             <Box >
-                <Box>
+                <Box sx={{display: "flex",justifyContent:"center"}}>
                     <Typography >
 				Add blueberry boxes
                     </Typography>
@@ -33,6 +33,7 @@ const StepThree = () => {
                         </Typography>
                     </Box>
                     <Box  sx={{ display: "flex", flexDirection: "row",  justifyContent: "space-between",pt:2, pb:6, alignItems: "center"  }}>
+                        
                         <Typography >
 					AFAC
                         </Typography>
@@ -45,11 +46,11 @@ const StepThree = () => {
                             {`$ ${AFAC * 40}`}
                         </Typography>
                     </Box>
-                  
-                    <Typography >
+                    <Box sx={{display: "flex",justifyContent:"center"}}>
+                        <Typography >
 				Add cash donation
-                    </Typography>
-
+                        </Typography>
+                    </Box>
                 </Box>
                 <Box sx={{ display: "flex" ,flexDirection: "row",  justifyContent: "space-between",pt:2, alignItems: "center" ,alignContent:"center"}}>
                     <Box>

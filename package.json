@@ -8,6 +8,7 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.8",
     "@mui/x-data-grid": "^5.17.25",
+    "formik": "^2.2.9",
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "^7.43.1",
