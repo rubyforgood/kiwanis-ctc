@@ -6,7 +6,6 @@ import { Link } from "@mui/material";
 
 import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
-import Sidebar from "./Sidebar";
 import Pickuppage from "./Pickuppage";
 export default function Header() {
   return (

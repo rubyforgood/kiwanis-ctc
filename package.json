@@ -5,10 +5,9 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@material-ui/data-grid": "^4.0.0-alpha.37",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.9",
-    "material-ui-search-bar": "^1.0.0",
+    "@mui/x-data-grid": "^6.0.4",
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "^7.43.1",

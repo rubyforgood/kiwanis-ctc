@@ -4,13 +4,12 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Readyforpickup from "./Readyforpickup";
-import Sidebar from "./Sidebar";
 import Pickedup from "./Pickedup";
 
 interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
+    children?: React.ReactNode;
+    index: number;
+    value: number;
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -49,26 +48,26 @@ export default function BasicTabs() {
 
     return (
         <Box sx={{ width: "100%" }}>
-            <Box sx={{ borderBottom: 1, borderColor: "black", color:"black", fontFamily: "Avenir Next",}}>
+            <Box sx={{ borderBottom: 1, borderColor: "black", color: "black", fontFamily: "Avenir Next", }}>
                 <Tabs
                     value={value}
                     onChange={handleChange}
-					
+
                 >
                     <Tab label="Ready for Pick-up" {...a11yProps(0)} />
                     <Tab label="Picked" {...a11yProps(1)} />
-					
+
                 </Tabs>
             </Box>
-            <Box sx={{textAlign: "center", fontFamily:  "Avenir Next"}}>
+            <Box sx={{ textAlign: "center", fontFamily: "Avenir Next" }}>
                 <TabPanel value={value} index={0}>
-					
-			
-                    <Readyforpickup/>
-					
+
+
+                    <Readyforpickup />
+
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <Pickedup/>
+                    <Pickedup />
                 </TabPanel>
             </Box>
 

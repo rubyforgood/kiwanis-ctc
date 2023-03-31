@@ -1,10 +1,9 @@
 import Box from "@mui/system/Box";
 import React from "react";
 import Tabs from "./Tabs";
-import Overview from "./Tabs";
 
 function Pickuppage() {
-    return(
+    return (
         <><Box
             sx={{
                 paddingLeft: "20px",
@@ -12,15 +11,15 @@ function Pickuppage() {
                 display: "flex",
                 flexDirection: "column",
                 flex: "1",
-				
+
                 height: "100vh",
                 fontFamily: "Avenir Next",
 
-				
-			
+
+
             }}
         >
-                Dashboard / Pickups
+            Dashboard / Pickups
             <h2>Order Pick-ups</h2>
             <Box
                 sx={{
@@ -29,10 +28,11 @@ function Pickuppage() {
             >
                 Available for Sale:<strong> 100</strong>
 
-				
+
             </Box>
-            <Tabs/>
+            <Tabs />
         </Box></>
-    );}
+    );
+}
 
 export default Pickuppage;
