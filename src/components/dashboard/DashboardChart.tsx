@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { ChartData } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Theme, useTheme } from "@mui/material/styles";
 import { Box, Typography } from "@mui/material";
 
@@ -11,6 +12,7 @@ import { Box, Typography } from "@mui/material";
  */
 export default function DashboardChart() {
     const theme = useTheme();
+    ChartJS.register(ArcElement, Tooltip, Legend);
 
     /**
      * 
