@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import DashboardChart from "./DashboardChart";
 import Typography from "@mui/material/Typography";
-import NewStrong from "./customStrongTag";
+import StrongText from "../common/StrongText";
 "";
 // create a custom style to be be used by the strong tag
 //using a custom object Item.
@@ -31,7 +31,7 @@ const Item = styled(Paper)(({ theme }) => ({
  * The second one is used to display the PieChart
  * @returns returns the Admin Dashboard component
  */
-export default function Dashboard() {
+export default function Admin() {
     return (
         <React.Fragment>
             <Typography sx={{fontSize:"1.5em", fontWeight:"bold",marginBottom:"1em"}} >
@@ -49,7 +49,7 @@ export default function Dashboard() {
                                 <Grid item xs={4} sm={5} md={3.5}>
                                     <Item sx={{minHeight:"13vh"}}>
                                         <Typography noWrap>
-                                            <NewStrong>159</NewStrong>
+                                            <StrongText>159</StrongText>
                                             <br /> Total Order
                                         </Typography>
                                     </Item>
@@ -57,7 +57,7 @@ export default function Dashboard() {
                                 <Grid item xs={4} sm={5} md={3.5}>
                                     <Item sx={{minHeight:"13vh"}}>
                                         <Typography noWrap>
-                                            <NewStrong>100</NewStrong>
+                                            <StrongText>100</StrongText>
                                             <br /> Total Donor
                                         </Typography>
                                     </Item>
@@ -73,7 +73,7 @@ export default function Dashboard() {
                                 <Grid item xs={4} sm={5} md={3.5}>
                                     <Item sx={{minHeight:"13vh"}}> 
                                         <Typography noWrap>
-                                            <NewStrong>125</NewStrong>
+                                            <StrongText>125</StrongText>
                                             <br /> Total Boxes for AFAC
                                         </Typography>
                                     </Item>

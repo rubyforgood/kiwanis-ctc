@@ -19,7 +19,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems } from "./listItems";
 import Orders from "./Orders";
 import { Copyright } from "../common/Copyright";
-import AdminContent from "./customAdminPage";
+import AdminContent from "./Admin";
 
 const drawerWidth = 240;
 

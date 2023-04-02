@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 /**
- * NewStrong is a reusable component that adds a new style to the strong tag
+ * StrongText is a reusable component that adds a new style to the strong tag
  * @returns returns the strong tag with the new style
  */
-const NewStrong = ({ children }) => {
+const StrongText = ({ children }: { children: React.ReactNode }) => {
     return (
         <strong  style={{ color:"black", fontSize: "1.2em", fontWeight: "bold"}}>
             {children}
@@ -13,8 +13,4 @@ const NewStrong = ({ children }) => {
     );
 };
 
-NewStrong.propTypes = {
-    children: PropTypes.node.isRequired
-};
-
-export default NewStrong;
+export default StrongText;
