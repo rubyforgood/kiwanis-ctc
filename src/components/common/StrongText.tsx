@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 /**
  * StrongText is a reusable component that adds a new style to the strong tag

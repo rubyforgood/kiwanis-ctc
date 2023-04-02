@@ -24,7 +24,7 @@ import AdminContent from "./Admin";
 const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
-	open?: boolean;
+    open?: boolean;
 }
 
 const AppBar = styled(MuiAppBar, {
@@ -108,7 +108,7 @@ function DashboardContent() {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
-                          2023 Blueberry Fundraiser
+                            2023 Blueberry Fundraiser
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
@@ -138,7 +138,7 @@ function DashboardContent() {
                 <Box
                     component="main"
                     sx={{
-                        backgroundColor:"white",
+                        backgroundColor: "white",
                         flexGrow: 1,
                         height: "100vh",
                         overflow: "auto",
@@ -155,12 +155,12 @@ function DashboardContent() {
 
                             {/*List of Orders */}
                             <Grid item xs={12}>
-                                <Paper sx={{ p: 2, display: "flex", flexDirection: "column", border:"1px solid lightgray",borderRadius:"2%" }}>
+                                <Paper sx={{ p: 2, display: "flex", flexDirection: "column", border: "1px solid lightgray", borderRadius: "8px" }}>
                                     <Orders />
                                 </Paper>
                             </Grid>
                         </Grid>
-                        <Copyright/>
+                        <Copyright />
                     </Container>
                 </Box>
             </Box>

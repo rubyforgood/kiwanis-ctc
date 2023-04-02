@@ -1,14 +1,12 @@
 import * as React from "react";
-import { experimentalStyled as styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import DashboardChart from "./DashboardChart";
 import Typography from "@mui/material/Typography";
 import StrongText from "../common/StrongText";
-"";
-// create a custom style to be be used by the strong tag
-//using a custom object Item.
+
 /**
  * Item is used to display typography 
  */ 
@@ -18,7 +16,7 @@ const Item = styled(Paper)(({ theme }) => ({
     minHeight: "90px",
     color: theme.palette.text.secondary,
     border: "1px solid lightgray",
-    borderRadius: "11%",
+    borderRadius: "8px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -65,7 +63,7 @@ export default function Admin() {
                                 <Grid item xs={4} sm={5} md={3.5}>
                                     <Item sx={{minHeight:"13vh"}}>
                                         <Typography noWrap>
-                                            <strong>250</strong>
+                                            <StrongText>250</StrongText>
                                             <br /> Total Boxes Order
                                         </Typography>
                                     </Item>
@@ -82,7 +80,7 @@ export default function Admin() {
                         </Box>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Box sx={{height: "98%",border:"2px solid lightgray",borderRadius:"5%" }}>
+                        <Box sx={{height: "100%",border:"2px solid lightgray", borderRadius:"8px" }}>
                             <DashboardChart />
                         </Box>
                     </Grid>
