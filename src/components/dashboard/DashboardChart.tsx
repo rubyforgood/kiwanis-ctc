@@ -3,7 +3,7 @@ import { Doughnut } from "react-chartjs-2";
 import { ChartData } from "chart.js";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Theme, useTheme } from "@mui/material/styles";
-import { Box, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 
 
 /**
@@ -42,12 +42,13 @@ export default function DashboardChart() {
             <Typography
                 sx={{
                     fontWeight: "bold",
-                    marginBottom: "2%",
-                    paddingLeft: "0.6250em",
+                    paddingTop: "2%",
+                    paddingLeft: 2,
                     textAlign: "left",
-                    fontSize: "1.0em"
-                }} >
-                Big Pick Up Status <a href="/orders">orders</a>
+                }}
+                variant="h5"
+            >
+                Pick Up Status
             </Typography>
             <Box sx={{ height: "21.5vh", marginTop: "0", paddingBottom: "0.6250em" }}>
                 <Doughnut
@@ -60,18 +61,32 @@ export default function DashboardChart() {
                         },
                         plugins: {
                             legend: {
-                                position: "right",
+                                position: "left",
                                 labels: {
                                     color: "black",
                                     font: {
-                                        size: 10,
-                                    }
-                                }
-                            }
+                                        size: 14,
+                                    },
+                                    padding: 20,
+                                    usePointStyle: true
+                                },
+                            },
                         }
                     }}
+
                 />
             </Box>
+            <Link
+                sx={{
+                    fontWeight: "bold",
+                    paddingLeft: 2,
+                    textAlign: "left",
+                    variant: "body1",
+                    href: "/orders"
+                }}
+            >
+                Go to Pick Ups
+            </Link>
         </React.Fragment>
     );
 }
