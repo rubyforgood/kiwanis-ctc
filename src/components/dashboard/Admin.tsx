@@ -8,19 +8,25 @@ import Typography from "@mui/material/Typography";
 import StrongText from "../common/StrongText";
 
 /**
- * Item is used to display typography 
- */ 
-const Item = styled(Paper)(({ theme }) => ({
-    padding: theme.spacing(2),
-    textAlign: "center",
-    minHeight: "90px",
-    color: theme.palette.text.secondary,
-    border: "1px solid lightgray",
-    borderRadius: "8px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-}));
+ * Item is used to display typography
+ */
+const Item = ({ children }: { children: React.ReactNode }) => (
+    <Paper
+        sx={{
+            padding: 2,
+            textAlign: "center",
+            minHeight: "13vh",
+            color: "text.secondary",
+            borderRadius: "8px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+        }}
+        elevation={2}
+    >
+        { children }
+    </Paper>
+);
 
 /***
  * This function displays the 4 mini grids and the PieChart (from the CustomPieChart.tsx)
@@ -32,20 +38,20 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function Admin() {
     return (
         <React.Fragment>
-            <Typography sx={{fontSize:"1.5em", fontWeight:"bold",marginBottom:"1em"}} >
+            <Typography sx={{ fontSize: "1.5em", fontWeight: "bold", marginBottom: "1em" }} >
                 2023 Blueberry Fundraiser - Dashboard
             </Typography>
-            <Box sx={{ flexGrow: 1, height: "100%", marginBottom:"3%"}} >
+            <Box sx={{ flexGrow: 1, height: "100%", marginBottom: "3%" }} >
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <Box sx={{ height: "100%" }}>
                             <Grid
                                 container
-                                spacing={{ xs: 3, sm:3, md: 3 }}
+                                spacing={{ xs: 3, sm: 3, md: 3 }}
                                 columns={{ xs: 8, sm: 10, md: 7.5 }}
                             >
                                 <Grid item xs={4} sm={5} md={3.5}>
-                                    <Item sx={{minHeight:"13vh"}}>
+                                    <Item>
                                         <Typography noWrap>
                                             <StrongText>159</StrongText>
                                             <br /> Total Order
@@ -53,7 +59,7 @@ export default function Admin() {
                                     </Item>
                                 </Grid>
                                 <Grid item xs={4} sm={5} md={3.5}>
-                                    <Item sx={{minHeight:"13vh"}}>
+                                    <Item>
                                         <Typography noWrap>
                                             <StrongText>100</StrongText>
                                             <br /> Total Donor
@@ -61,7 +67,7 @@ export default function Admin() {
                                     </Item>
                                 </Grid>
                                 <Grid item xs={4} sm={5} md={3.5}>
-                                    <Item sx={{minHeight:"13vh"}}>
+                                    <Item>
                                         <Typography noWrap>
                                             <StrongText>250</StrongText>
                                             <br /> Total Boxes Order
@@ -69,7 +75,7 @@ export default function Admin() {
                                     </Item>
                                 </Grid>
                                 <Grid item xs={4} sm={5} md={3.5}>
-                                    <Item sx={{minHeight:"13vh"}}> 
+                                    <Item>
                                         <Typography noWrap>
                                             <StrongText>125</StrongText>
                                             <br /> Total Boxes for AFAC
@@ -80,9 +86,9 @@ export default function Admin() {
                         </Box>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Box sx={{height: "100%",border:"2px solid lightgray", borderRadius:"8px" }}>
+                        <Paper sx={{ height: "98%", width: "80%", borderRadius: "8px" }} elevation={2} >
                             <DashboardChart />
-                        </Box>
+                        </Paper>
                     </Grid>
                 </Grid>
             </Box>
