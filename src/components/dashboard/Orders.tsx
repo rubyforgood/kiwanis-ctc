@@ -4,6 +4,10 @@ import { DataGrid, GridColDef, GridValueGetterParams,GridRenderCellParams } from
 import Chip, { ChipProps } from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
+import { Avatar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, TextField } from "@mui/material";
+import {useState} from "react";
+import OrderPopupForm from "./OrderPopupForm";
+
 
 /**
  * paidChipProps is used to render a green or red chip around the paid column
@@ -28,7 +32,7 @@ function paidChipProps(params: GridRenderCellParams): ChipProps {
         };
     }
 }
-
+  
 /**
  * statusChipProps is used to render a green or red chip around the status column
  * @param params Takes in the params of the GridRenderCellParams
@@ -124,11 +128,46 @@ const columns: GridColDef[] = [
             <Typography style={{color: "black", fontSize:"1.2em"}} noWrap> {params.colDef.headerName} </Typography>
         ),        sortable: false,
         renderCell: () => {
-            const onClick = (e: { stopPropagation: () => void; }) => {
-                e.stopPropagation();
+
+            const [open, setOpen] = React.useState(false);
+
+            const handleClickOpen = () => {
+                setOpen(true);
             };
-  
-            return <Button onClick={onClick}>Click</Button>;
+          
+            const handleClose = () => {
+                setOpen(false);
+            };
+
+            return (
+                <>
+                    <Button onClick={handleClickOpen}>Dialog</Button>
+                    <Dialog open={open} onClose={handleClose} maxWidth='lg'>
+                        <DialogTitle>Customer name goes here</DialogTitle>
+                        <DialogContent dividers>
+                            {/* <DialogContentText>
+                        To subscribe to this website, please enter your email address here. We
+                        will send updates occasionally.
+                            </DialogContentText>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                id="name"
+                                label="Email Address"
+                                type="email"
+                                fullWidth
+                                variant="standard"
+                            /> */}
+                            <OrderPopupForm />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose}>Cancel</Button>
+                            <Button onClick={handleClose}>Subscribe</Button>
+                        </DialogActions>
+                    </Dialog>
+                </>
+            );
+            
         }
     }
 ];
@@ -245,6 +284,11 @@ const rows = [
     )
 ];
 
+export interface SimpleDialogProps {
+    open: boolean;
+    selectedValue: string;
+    onClose: (value: string) => void;
+  }
 
 /**
  * Displays the orders in a Table. Almost alll columns are sortable.
@@ -267,7 +311,12 @@ export default function Orders() {
                     pageSizeOptions={[5, 10, 25]}
                     disableRowSelectionOnClick
                 />
+                {/**Dialog */}
+                {/* <Dialog onClose={handleClose} open={open}>
+                    <DialogTitle>Set backup account</DialogTitle>
+                </Dialog> */}
             </div>
         </React.Fragment>
     );
 }
+
