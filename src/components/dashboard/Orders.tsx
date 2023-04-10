@@ -1,82 +1,54 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
-import { DataGrid, GridColDef, GridValueGetterParams,GridRenderCellParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridValueGetterParams, GridRenderCellParams } from "@mui/x-data-grid";
 import Chip, { ChipProps } from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 
 /**
- * paidChipProps is used to render a green or red chip around the paid column
+ * getChipProps is used to get the correct chip color
  * @param params Takes in the params of the GridRenderCellParams
- * @returns returns the ChipProps
+ * @returns returns the chip color
  */
-function paidChipProps(params: GridRenderCellParams): ChipProps {
-    const them = useTheme();
-    if (params.value === "Yes") {
+function getChipColor(predicate: boolean): ChipProps {
+    const theme = useTheme();
+    if (predicate) {
         return {
-            label: params.value,
             style: {
-                backgroundColor: them.palette.success.light
-            }
-        };
-    } else {
-        return {
-            label: params.value,
-            style: {
-                backgroundColor: them.palette.error.light
+                backgroundColor: theme.palette.success.light
             }
         };
     }
-}
-
-/**
- * statusChipProps is used to render a green or red chip around the status column
- * @param params Takes in the params of the GridRenderCellParams
- * @returns returns the ChipProps
- */
-function statusChipProps(params: GridRenderCellParams): ChipProps {
-    const them = useTheme();
-
-    if (params.value === "Ready") {
-        return {
-            label: params.value,
-            style: {
-                backgroundColor: them.palette.success.light
-            }
-        };
-    } else {
-        return {
-            label: params.value,
-            style: {
-                backgroundColor: them.palette.error.light
-            }
-        };
-    }
+    return {
+        style: {
+            backgroundColor: theme.palette.error.light
+        }
+    };
 }
 
 /**
  * defines an array of objects representing the header columns in the table
  */
 const columns: GridColDef[] = [
-    { field: "id", headerName: "No.", width: 80, headerClassName: "super-app-theme--header"},
+    { field: "id", headerName: "No.", width: 80, headerClassName: "super-app-theme--header" },
     {
         field: "fullName",
         headerName: "Full name",
-        renderHeader: (params)  =>( 
-            <Typography style={{color: "black", fontSize:"1.2em"}} noWrap> {params.colDef.headerName} </Typography>
+        renderHeader: (params) => (
+            <Typography style={{ color: "black", fontSize: "1.2em" }} noWrap> {params.colDef.headerName} </Typography>
         ),
-        headerAlign:"center",
+        headerAlign: "center",
         sortable: true,
         width: 200,
-        align:"center",
+        align: "center",
         valueGetter: (params: GridValueGetterParams) =>
             `${params.row.firstName || ""} ${params.row.lastName || ""}`
     },
     {
         field: "boxesOrdered",
-        renderHeader: (params)  =>( 
-            <Typography style={{color: "black", fontSize:"1.2em"}} noWrap> {params.colDef.headerName} </Typography>
-        ),        align: "center",
+        renderHeader: (params) => (
+            <Typography style={{ color: "black", fontSize: "1.2em" }} noWrap> {params.colDef.headerName} </Typography>
+        ), align: "center",
         headerName: " Boxes Order",
         type: "number",
 
@@ -84,55 +56,55 @@ const columns: GridColDef[] = [
     },
     {
         field: "totalAmount",
-        renderHeader: (params)  =>( 
-            <Typography style={{color: "black", fontSize:"1.2em"}} noWrap> {params.colDef.headerName} </Typography>
-        ),        align: "center",
+        renderHeader: (params) => (
+            <Typography style={{ color: "black", fontSize: "1.2em" }} noWrap> {params.colDef.headerName} </Typography>
+        ), align: "center",
         headerName: " Total Amount ($)",
         type: "number",
         width: 160
     },
     {
         field: "paid",
-        renderHeader: (params)  =>( 
-            <Typography style={{color: "black", fontSize:"1.2em"}} noWrap> {params.colDef.headerName} </Typography>
-        ),        headerAlign:"center",
+        renderHeader: (params) => (
+            <Typography style={{ color: "black", fontSize: "1.2em" }} noWrap> {params.colDef.headerName} </Typography>
+        ), headerAlign: "center",
         headerName: "Paid",
-        align:"center",
+        align: "center",
         sortable: true,
         width: 150,
         renderCell: (params) => {
-            return <Chip variant="outlined" size="medium" {...paidChipProps(params)} />;
+            return <Chip variant="outlined" size="medium" label={params.value} {...getChipColor(params.value === "Yes")} />;
         }
     },
     {
         field: "status",
-        renderHeader: (params)  =>( 
-            <Typography style={{color: "black", fontSize:"1.2em"}} noWrap> {params.colDef.headerName} </Typography>
-        ),        align:"center",
+        renderHeader: (params) => (
+            <Typography style={{ color: "black", fontSize: "1.2em" }} noWrap> {params.colDef.headerName} </Typography>
+        ), align: "center",
         headerName: "Status",
-        headerAlign:"center",
+        headerAlign: "center",
         sortable: true,
         width: 150,
         renderCell: (params) => {
-            return <Chip variant="outlined" size="medium" {...statusChipProps(params)} />;
+            return <Chip variant="outlined" size="medium" label={params.value} {...getChipColor(params.value === "Ready")} />;
         }
     },
     {
         field: "action",
         headerName: "Action",
-        renderHeader: (params)  =>( 
-            <Typography style={{color: "black", fontSize:"1.2em"}} noWrap> {params.colDef.headerName} </Typography>
-        ),        sortable: false,
+        renderHeader: (params) => (
+            <Typography style={{ color: "black", fontSize: "1.2em" }} noWrap> {params.colDef.headerName} </Typography>
+        ), sortable: false,
         renderCell: () => {
             const onClick = (e: { stopPropagation: () => void; }) => {
                 e.stopPropagation();
             };
-  
+
             return <Button onClick={onClick}>Click</Button>;
         }
     }
 ];
-  
+
 /**
  * function RowData returns an object with properties representing an order data
  * @param id 
@@ -144,7 +116,7 @@ const columns: GridColDef[] = [
  * @param status 
  * @returns returns an object of an order
  */
-function RowData (
+function RowData(
     id: number,
     lastName: string,
     firstName: string,
@@ -152,8 +124,8 @@ function RowData (
     totalAmount: string,
     paid: string,
     status: string,
-){
-    return { id, lastName, firstName, boxesOrdered, totalAmount, paid,status };
+) {
+    return { id, lastName, firstName, boxesOrdered, totalAmount, paid, status };
 }
 
 /**Mock data */
@@ -254,7 +226,7 @@ const rows = [
 export default function Orders() {
     return (
         <React.Fragment >
-            <Typography sx={{fontSize:"1.5em", fontWeight:"bold",marginBottom:"1em"}} >
+            <Typography sx={{ fontSize: "1.5em", fontWeight: "bold", marginBottom: "1em" }} >
                 Orders
             </Typography>
             <div style={{ height: 400, width: "100%" }}>
