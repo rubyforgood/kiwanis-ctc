@@ -1,6 +1,6 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
-import { DataGrid, GridColDef, GridValueGetterParams, GridRenderCellParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import Chip, { ChipProps } from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
