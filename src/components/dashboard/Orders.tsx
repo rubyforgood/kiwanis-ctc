@@ -161,8 +161,8 @@ const columns: GridColDef[] = [
                             <OrderPopupForm />
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleClose}>Cancel</Button>
-                            <Button onClick={handleClose}>Subscribe</Button>
+                            <Button sx={{backgroundColor:"red"}} onClick={handleClose}>Cancel</Button>
+                            <Button sx={{backgroundColor:"lightGreen"}} onClick={handleClose}>Save</Button>
                         </DialogActions>
                     </Dialog>
                 </>
@@ -311,10 +311,6 @@ export default function Orders() {
                     pageSizeOptions={[5, 10, 25]}
                     disableRowSelectionOnClick
                 />
-                {/**Dialog */}
-                {/* <Dialog onClose={handleClose} open={open}>
-                    <DialogTitle>Set backup account</DialogTitle>
-                </Dialog> */}
             </div>
         </React.Fragment>
     );
