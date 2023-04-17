@@ -3,7 +3,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Readyforpickup from "./Readyforpickup";
+import Grid from "./Grid";
 import Pickedup from "./Pickedup";
 
 interface TabPanelProps {
@@ -59,7 +59,7 @@ export default function BasicTabs() {
             </Box>
             <Box sx={{ textAlign: "center", fontFamily: "Avenir Next" }}>
                 <TabPanel value={value} index={0}>
-                    <Readyforpickup />
+                    <Grid />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <Pickedup />

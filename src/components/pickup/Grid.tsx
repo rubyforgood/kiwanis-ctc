@@ -46,7 +46,7 @@ const columns = [
     { headerName: "Pickup", field: "pickup", width: 130, align: "center" },
 ];
 
-export default function Readyforpickup() {
+export default function Grid() {
     return (
         <div style={{ height: 500, width: "100%", backgroundColor: "white" }}>
             <DataGrid
