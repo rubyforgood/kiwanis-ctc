@@ -4,19 +4,15 @@ import Tabs from "./Tabs";
 
 function Pickuppage() {
     return (
-        <><Box
+        <Box
             sx={{
                 paddingLeft: "20px",
                 paddingRight: "20px",
                 display: "flex",
                 flexDirection: "column",
                 flex: "1",
-
                 height: "100vh",
                 fontFamily: "Avenir Next",
-
-
-
             }}
         >
             Dashboard / Pickups
@@ -27,11 +23,9 @@ function Pickuppage() {
                 }}
             >
                 Available for Sale:<strong> 100</strong>
-
-
             </Box>
             <Tabs />
-        </Box></>
+        </Box>
     );
 }
 

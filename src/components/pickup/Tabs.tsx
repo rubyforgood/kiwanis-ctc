@@ -52,25 +52,19 @@ export default function BasicTabs() {
                 <Tabs
                     value={value}
                     onChange={handleChange}
-
                 >
                     <Tab label="Ready for Pick-up" {...a11yProps(0)} />
                     <Tab label="Picked" {...a11yProps(1)} />
-
                 </Tabs>
             </Box>
             <Box sx={{ textAlign: "center", fontFamily: "Avenir Next" }}>
                 <TabPanel value={value} index={0}>
-
-
                     <Readyforpickup />
-
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <Pickedup />
                 </TabPanel>
             </Box>
-
         </Box>
     );
 }

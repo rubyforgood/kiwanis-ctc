@@ -12,63 +12,63 @@ import Pickuppage from "./Pickuppage";
 
 function Sidebar() {
     return (
-        <><Box
-            sx={{
-                paddingLeft: "10px",
-                display: "flex",
-                flexDirection: "column",
-                flex: ".17",
-                backgroundColor: "#21315C",
-                position: "absolute",
-                height: "100vh",
-			
-				
-            }}>
-
+        <>
             <Box
                 sx={{
-				
-                    fontFamily: "Avenir Next",
-                    color: "white",
-					
+                    paddingLeft: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    flex: ".17",
+                    backgroundColor: "#21315C",
+                    position: "absolute",
+                    height: "100vh",
+
+
                 }}>
-                <React.Fragment>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <DashboardIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Dashboard" />
-                    </ListItemButton>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <ShoppingBagIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Orders" />
-                    </ListItemButton>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <AirlineStopsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Pickups" />
-                    </ListItemButton>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <PeopleIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Donors" />
-                    </ListItemButton>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <ForumIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Communications" />
-                    </ListItemButton>
-                </React.Fragment>
+
+                <Box
+                    sx={{
+
+                        fontFamily: "Avenir Next",
+                        color: "white",
+
+                    }}>
+                    <React.Fragment>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <DashboardIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Dashboard" />
+                        </ListItemButton>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <ShoppingBagIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Orders" />
+                        </ListItemButton>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <AirlineStopsIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Pickups" />
+                        </ListItemButton>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <PeopleIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Donors" />
+                        </ListItemButton>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <ForumIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Communications" />
+                        </ListItemButton>
+                    </React.Fragment>
+                </Box>
             </Box>
-			
-        </Box><Pickuppage /></>
-
-
+            <Pickuppage />
+        </>
     );
 }
 
