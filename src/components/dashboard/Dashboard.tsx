@@ -19,7 +19,7 @@ import { Copyright } from "../common/Copyright";
 const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
-	open?: boolean;
+    open?: boolean;
 }
 
 const AppBar = styled(MuiAppBar, {
