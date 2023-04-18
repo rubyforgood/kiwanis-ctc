@@ -1,5 +1,4 @@
-import { Box, Chip, ChipProps, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, useTheme } from "@mui/material";
-import { GridRenderCellParams } from "@mui/x-data-grid";
+import { Box, Chip, ChipProps, Input, InputAdornment, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useTheme } from "@mui/material";
 import React from "react";
 
 /**
@@ -90,20 +89,20 @@ export default function OrderPopupForm() {
     );
 
     return (
-        <Box component={Paper} >
+        <Box sx={{mx: 2}}>
             <Typography sx={{fontWeight:"bold"}}>Customer detail</Typography>
             <Typography sx={{fontSize:"small"}}>Customer email</Typography>
             <Typography sx={{fontSize:"small"}}>Customer phone</Typography>
             <br/>
             <Typography sx={{fontWeight:"bold"}}>Order Details</Typography>
 
-            <TableContainer component={Paper}>
+            <TableContainer>
                 <Table sx={{ minWidth: 300 }} aria-label="simple table">
                     <TableHead sx={{fontWeight:"bold"}}>
                         <TableRow>
                             <TableCell>Category</TableCell>
-                            <TableCell align="right">Boxes</TableCell>
-                            <TableCell align="right">Amount&nbsp;($)</TableCell>
+                            <TableCell align="center">Boxes</TableCell>
+                            <TableCell align="center">Amount&nbsp;($)</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -118,12 +117,11 @@ export default function OrderPopupForm() {
                                 <TableCell align="right">
                                     {index === rows.length - 1 && <React.Fragment></React.Fragment>}
                                     {index !== rows.length - 1 && (
-                                        <TextField
-                                            size="small"
-                                            style={{ width: "100px", margin: "1px" }}
-                                            id="outlined-basic"
+                                        <Input
+                                            size="medium"
+                                            sx={{ width: "70px", margin: "1px", border: "1px solid #ced4da", borderRadius: "4px", fontSize:"14px" }}
                                             type="number"
-                                            variant="outlined"
+                                            id="outlined-basic"
                                             defaultValue={row.boxes}
                                             onChange={(event) => {
                                                 const newValue = parseInt(event.target.value);
@@ -138,13 +136,14 @@ export default function OrderPopupForm() {
                                         />
                                     )}
                                 </TableCell>
+
                                 <TableCell align="right">
-                                    <TextField
-                                        size="small"
-                                        style={{ width: "100px", margin: "1px" }}
-                                        id="outlined-basic"
+                                    <Input
+                                        id="standard-adornment-amount"
+                                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                                        size="medium"
+                                        sx={{ width: "70px", margin: "1px", border: "1px solid #ced4da", borderRadius: "4px", fontSize:"14px" }}
                                         type="number"
-                                        variant="outlined"
                                         defaultValue={row.amount}
                                         onChange={(event) => {
                                             const newValue = parseInt(event.target.value);
@@ -163,29 +162,27 @@ export default function OrderPopupForm() {
                         <TableRow>
                             <TableCell>Total</TableCell>
                             <TableCell align="right">
-                                <TextField
-                                    InputProps={{
+                                <Input
+                                    sx={{ width: "70px", margin: "1px", border: "1px solid #ced4da", borderRadius: "4px", fontSize:"14px" }}
+                                    inputProps={{
                                         readOnly: true,
                                     }}
-                                    size="small"
                                     id="outlined-basic"
                                     type="number"
-                                    style={{ width: "100px", margin: "1px" }}
-                                    variant="outlined"
                                     value={totalBoxes}
                                 />
                             </TableCell>
 
                             <TableCell align="right">
-                                <TextField
-                                    InputProps={{
+                                <Input
+                                    sx={{ width: "70px", margin: "1px", border: "1px solid #ced4da", borderRadius: "4px", fontSize:"14px" }}
+                                    inputProps={{
                                         readOnly: true,
                                     }}
                                     size="small"
-                                    id="outlined-basic"
+                                    id="standard-adornment-amount"
+                                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
                                     type="number"
-                                    style={{ width: "100px", margin: "1px" }}
-                                    variant="outlined"
                                     value={totalAmount}
                                 />
                             </TableCell>
@@ -195,9 +192,9 @@ export default function OrderPopupForm() {
             </TableContainer>
             <br/>
 
-
             <Typography sx={{fontWeight:"bold"}}>Payment Details</Typography>
-            <TableContainer component={Paper}>
+
+            <TableContainer>
                 <Table sx={{ minWidth: 300 }} aria-label="simple table">
                     <TableBody>
                         <TableRow key="paid" sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
@@ -205,27 +202,29 @@ export default function OrderPopupForm() {
                                 <>
                                     <TableCell component="th">
                                         {row.name}
-                                    </TableCell><TableCell>
+                                    </TableCell>
+                                    <TableCell>
                                         <Chip variant="outlined" size="medium" {...paidChipProps(row.status)} />
                                     </TableCell>
                                 </>
                             )}
                         </TableRow>
+
                         {rows2.map((line) => 
                             <TableRow key={line.name} sx={{ "&:last-child td, &:last-child th": { border: 0 } }} >
                                 <TableCell component="th" scope="line">
                                     {line.name}
                                 </TableCell>
                                 <TableCell align="left">
-                                    <TextField
-                                        InputProps={{
+                                    <Input
+                                        inputProps={{
                                             readOnly: true,
                                         }}
-                                        size="small"
-                                        id="outlined-basic"
+                                        id="standard-adornment-amount"
+                                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                                        size="medium"
+                                        sx={{ width: "70px", margin: "1px", border: "1px solid #ced4da", borderRadius: "4px", fontSize:"14px" }}
                                         type="number"
-                                        style={{ width: "100px", margin: "1px" }}
-                                        variant="outlined"
                                         value={line.amount}
                                     />
                                 </TableCell>
@@ -237,7 +236,7 @@ export default function OrderPopupForm() {
             <br/>
             
             <Typography sx={{fontWeight:"bold"}}>Order Status</Typography>
-            <TableContainer component={Paper}>
+            <TableContainer>
                 <Table sx={{ minWidth: 300 }} aria-label="simple table">
                     <TableBody>
                         <TableRow key="paid2" sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
