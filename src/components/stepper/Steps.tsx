@@ -1,7 +1,8 @@
 import React,{useContext } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import { Typography, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import Stepper from "@mui/material/Stepper";
