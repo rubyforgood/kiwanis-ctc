@@ -11,13 +11,11 @@ export default function Header() {
             <Box
                 sx={{
                     display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    padding: "10px",
+                    height: "10vh"
                 }}
             >
                 <Link href="#">
-                    <img src={logo} />
+                    <img src={logo} width="100%" height="100%" />
                 </Link>
             </Box>
         </Box>
