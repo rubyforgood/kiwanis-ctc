@@ -25,8 +25,7 @@ export default function App() {
             <Router basename="/">
                 <Routes>
                     <Route path="/" element={<Login />} />
-                    {/* <Route path="/dashboard" element={<AuthRoute><AdminDashboard /></AuthRoute>} /> */}
-                    <Route path="/dashboard" element={<AdminDashboard />} />
+                    <Route path="/dashboard" element={<AuthRoute><AdminDashboard /></AuthRoute>} />
                 </Routes>
             </Router>
         </ThemeProvider>
