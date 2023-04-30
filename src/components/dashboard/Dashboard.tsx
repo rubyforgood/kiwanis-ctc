@@ -20,7 +20,7 @@ import { getAuth } from "firebase/auth";
 const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
-	open?: boolean;
+    open?: boolean;
 }
 
 const AppBar = styled(MuiAppBar, {
