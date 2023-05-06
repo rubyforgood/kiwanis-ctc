@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 import * as React from "react";
 import Admin from "../components/dashboard/Admin";
 import { Dashboard } from "../components/dashboard/Dashboard";
-import Orders from "../components/dashboard/Orders";
+import Orders from "../components/dashboard/DashboardOrders";
 
 export default function App() {
     return (

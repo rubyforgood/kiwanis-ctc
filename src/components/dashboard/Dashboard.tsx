@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { mainListItems } from "./listItems";
+import { listItems } from "./listItems";
 import { Copyright } from "../common/Copyright";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ import { getAuth } from "firebase/auth";
 const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
-	open?: boolean;
+    open?: boolean;
 }
 
 const AppBar = styled(MuiAppBar, {
@@ -133,7 +133,7 @@ export function Dashboard({ children }: { children: React.ReactNode }) {
                 </Toolbar>
                 <Divider />
                 <List component="nav">
-                    {mainListItems}
+                    {listItems({ navigate })}
                 </List>
             </Drawer>
             <Box

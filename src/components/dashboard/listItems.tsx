@@ -7,38 +7,41 @@ import PeopleIcon from "@mui/icons-material/People";
 import ForumIcon from "@mui/icons-material/Forum";
 import AirlineStopsIcon from "@mui/icons-material/AirlineStops";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
-export const mainListItems = (
-    <React.Fragment>
-        <ListItemButton>
-            <ListItemIcon>
-                <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <ShoppingBagIcon />
-            </ListItemIcon>
-            <ListItemText primary="Orders" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <AirlineStopsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Pickups" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Donors" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <ForumIcon />
-            </ListItemIcon>
-            <ListItemText primary="Communications" />
-        </ListItemButton>
-    </React.Fragment>
-);
+export const listItems = ({ navigate }: { navigate: NavigateFunction }) => {
+    return (
+        <React.Fragment>
+            <ListItemButton>
+                <ListItemIcon>
+                    <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+            </ListItemButton>
+            <ListItemButton>
+                <ListItemIcon>
+                    <ShoppingBagIcon />
+                </ListItemIcon>
+                <ListItemText primary="Orders" />
+            </ListItemButton>
+            <ListItemButton>
+                <ListItemIcon>
+                    <AirlineStopsIcon />
+                </ListItemIcon>
+                <ListItemText primary="Pickups" />
+            </ListItemButton>
+            <ListItemButton>
+                <ListItemIcon>
+                    <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Donors" />
+            </ListItemButton>
+            <ListItemButton>
+                <ListItemIcon>
+                    <ForumIcon />
+                </ListItemIcon>
+                <ListItemText primary="Communications" />
+            </ListItemButton>
+        </React.Fragment>
+    );
+};
