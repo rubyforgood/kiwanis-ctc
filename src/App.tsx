@@ -16,6 +16,7 @@ import AuthRoute from "./components/common/AuthRoute";
 
 import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./components/login/Login";
+import PickupPage from "./pages/PickupPage";
 
 initializeApp(config.firebaseConfig);
 
@@ -26,6 +27,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/dashboard" element={<AuthRoute><AdminDashboard /></AuthRoute>} />
+                    <Route path="/pickup" element={<AuthRoute><PickupPage /></AuthRoute>} />
                 </Routes>
             </Router>
         </ThemeProvider>
