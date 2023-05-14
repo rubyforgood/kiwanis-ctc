@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
-import { stepperContext } from "../../providers/StepperProvider";
+import { stepperContext } from "../../../providers/StepperProvider";
 
-const StepPickupConirmation = () => {
+const StepPickup = () => {
     const { activeStep, setActiveStep } = useContext(stepperContext);
     const handleSetActiveStep = (prevActiveStep: number) => {
         return prevActiveStep + 1;
@@ -16,13 +16,13 @@ const StepPickupConirmation = () => {
             <Box>
                 <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", pt: 10 }} >
                     <Typography sx={{ pb: 4 }} >
-                        Hand off:
+                        New Order Added for:
                     </Typography>
                     <Typography sx={{ pb: 4 }}>
-                        John Doe : 3 boxes
+                        John Doe
                     </Typography>
                     <Typography sx={{ pb: 4 }}>
-                        AFAC: 3 boxes
+                        Order No:
                     </Typography>
                 </Box>
                 <Box display="flex"
@@ -36,8 +36,7 @@ const StepPickupConirmation = () => {
                         color='secondary'
                         onClick={handlePickup}
                     >
-                        <Typography variant='button'>Mark as picked up
-                        </Typography>
+                        <Typography variant='button'>Proceed To Pick Up</Typography>
                     </Button>
                 </Box>
             </Box>
@@ -45,4 +44,4 @@ const StepPickupConirmation = () => {
     );
 };
 
-export default StepPickupConirmation;
+export default StepPickup;

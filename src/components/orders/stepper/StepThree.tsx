@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import TextField from "@mui/material/TextField";
-import { stepperContext } from "../../providers/StepperProvider";
+import { stepperContext } from "../../../providers/StepperProvider";
 
 const StepThree = () => {
     const { self, setSelf, AFAC, setAFAC, cash, setCash } = useContext(stepperContext);

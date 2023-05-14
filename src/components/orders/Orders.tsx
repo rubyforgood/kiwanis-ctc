@@ -18,7 +18,7 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import Modal from "@mui/material/Modal";
 import Stack from "@mui/material/Stack";
-import Steps from "../stepper/Steps";
+import Steps from "./stepper/Steps";
 import { stepperContext } from "../../providers/StepperProvider";
 
 function CustomPagination() {
