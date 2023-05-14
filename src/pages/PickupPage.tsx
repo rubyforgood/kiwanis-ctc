@@ -2,32 +2,35 @@ import Box from "@mui/system/Box";
 import { Dashboard } from "../components/dashboard/Dashboard";
 import React from "react";
 import Tabs from "../components/pickup/Tabs";
+import StepperProvider from "../providers/StepperProvider";
 
 function PickupPage() {
     return (
         <Dashboard>
-            <Box
-                sx={{
-                    paddingLeft: "20px",
-                    paddingRight: "20px",
-                    display: "flex",
-                    flexDirection: "column",
-                    flex: "1",
-                    height: "100vh",
-                    fontFamily: "Avenir Next",
-                }}
-            >
-                Dashboard / Pickups
-                <h2>Order Pick-ups</h2>
+            <StepperProvider>
                 <Box
                     sx={{
-                        color: "#82692E",
+                        paddingLeft: "20px",
+                        paddingRight: "20px",
+                        display: "flex",
+                        flexDirection: "column",
+                        flex: "1",
+                        height: "100vh",
+                        fontFamily: "Avenir Next",
                     }}
                 >
-                    Available for Sale:<strong> 100</strong>
+                    Dashboard / Pickups
+                    <h2>Order Pick-ups</h2>
+                    <Box
+                        sx={{
+                            color: "#82692E",
+                        }}
+                    >
+                        Available for Sale:<strong> 100</strong>
+                    </Box>
+                    <Tabs />
                 </Box>
-                <Tabs />
-            </Box>
+            </StepperProvider>
         </Dashboard>
     );
 }
