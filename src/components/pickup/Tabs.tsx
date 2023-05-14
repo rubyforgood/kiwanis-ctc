@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "./Grid";
 import Pickedup from "./Pickedup";
+import Pickup from "./Pickup";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -59,7 +60,7 @@ export default function BasicTabs() {
             </Box>
             <Box sx={{ textAlign: "center", fontFamily: "Avenir Next" }}>
                 <TabPanel value={value} index={0}>
-                    <Grid />
+                    <Pickup/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <Pickedup />

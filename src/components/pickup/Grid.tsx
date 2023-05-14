@@ -1,6 +1,6 @@
-import React from "react";
-import { DataGrid } from "@mui/x-data-grid";
-
+import React, { useContext, useState } from "react";
+import { DataGrid, GridRowParams, MuiEvent, GridCallbackDetails } from "@mui/x-data-grid";
+import { stepperContext } from "../../providers/StepperProvider";
 
 function createData(id: number, no: number, name: string, self: number, afac: number, total: number, method: string, paid: string, pickup: string) {
     return { id: id, no: no, name: name, self: self, afac: afac, total: total, method: method, paid: paid, pickup: pickup };
@@ -46,7 +46,16 @@ const columns = [
     { headerName: "Pickup", field: "pickup", width: 130, align: "center" },
 ];
 
-export default function Grid() {
+
+export default function Grid(props: {onRowClick: (number) => void}) {
+
+    function onRowClick(params: GridRowParams, _: MuiEvent<React.MouseEvent>, _2: GridCallbackDetails): void {
+        if (activeStep === 6) {
+            setActiveStep(0);
+        }
+        props.onRowClick(params.id);
+    }
+    const { activeStep, setActiveStep } = useContext(stepperContext);
     return (
         <div style={{ height: 500, width: "100%", backgroundColor: "white" }}>
             <DataGrid
@@ -54,7 +63,9 @@ export default function Grid() {
                 columns={columns}
                 componentsProps={{
                 }}
+                onRowClick={onRowClick}
             />
+            
         </div>
     );
 }
