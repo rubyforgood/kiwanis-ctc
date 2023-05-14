@@ -1,18 +1,33 @@
 import * as React from "react";
-import { Dashboard } from "./components/dashboard/Dashboard";
-import Orders from "./components/dashboard/Orders";
-import StepperProvider from "./providers/SteperProvider";
-import Pickup from "./components/pickup/Pickup";
+
+import { ThemeProvider } from "@mui/material/styles";
+
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+} from "react-router-dom";
+import theme from "./theme";
+import { initializeApp } from "firebase/app";
+import { config } from "./Firebase";
+import { getAuth } from "firebase/auth";
+
+import AuthRoute from "./components/common/AuthRoute";
+
+import AdminDashboard from "./pages/AdminDashboard";
+import Login from "./components/login/Login";
+
+initializeApp(config.firebaseConfig);
 
 export default function App() {
     return (
-        <>
-            <Dashboard>
-                <StepperProvider>
-                    <Orders />
-                </StepperProvider>
-            </Dashboard>
-            <Pickup />
-        </>
+        <ThemeProvider theme={theme}>
+            <Router basename="/">
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/dashboard" element={<AuthRoute><AdminDashboard /></AuthRoute>} />
+                </Routes>
+            </Router>
+        </ThemeProvider>
     );
 }

@@ -15,9 +15,6 @@ const theme = createTheme({
             light:"#AFC382",
 
         },
-        error: {
-            main: "#FFD0CA",
-        },
         info: {
             main: "#FFF0CB",
         },

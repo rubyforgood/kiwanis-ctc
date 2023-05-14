@@ -8,13 +8,14 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems } from "./listItems";
+import { listItems } from "./listItems";
 import { Copyright } from "../common/Copyright";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 
 const drawerWidth = 240;
 
@@ -68,8 +69,15 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 
 export function Dashboard({ children }: { children: React.ReactNode }) {
     const [open, setOpen] = React.useState(true);
+    const navigate = useNavigate();
+    const auth = getAuth();
     const toggleDrawer = () => {
         setOpen(!open);
+    };
+
+    const onLogout = () => {
+        auth.signOut();
+        navigate("/");
     };
 
     return (
@@ -101,11 +109,13 @@ export function Dashboard({ children }: { children: React.ReactNode }) {
                     >
                         Dashboard
                     </Typography>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={onLogout}
+                    >
+                        Log Out
+                    </Button>
                 </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>
@@ -123,7 +133,7 @@ export function Dashboard({ children }: { children: React.ReactNode }) {
                 </Toolbar>
                 <Divider />
                 <List component="nav">
-                    {mainListItems}
+                    {listItems({ navigate })}
                 </List>
             </Drawer>
             <Box
