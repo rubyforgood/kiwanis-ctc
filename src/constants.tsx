@@ -1,0 +1,1 @@
+export const COST_PER_ORDER = 40;
