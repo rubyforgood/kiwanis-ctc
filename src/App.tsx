@@ -8,26 +8,33 @@ import {
     Route,
 } from "react-router-dom";
 import theme from "./theme";
-import { initializeApp } from "firebase/app";
-import { config } from "./Firebase";
-import { getAuth } from "firebase/auth";
 
 import AuthRoute from "./components/common/AuthRoute";
 
 import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./components/login/Login";
+import OrdersPage from "./pages/OrdersPage";
 
-initializeApp(config.firebaseConfig);
+import {
+    QueryClient,
+    QueryClientProvider,
+} from "@tanstack/react-query";
+
+
+const queryClient = new QueryClient();
 
 export default function App() {
     return (
-        <ThemeProvider theme={theme}>
-            <Router basename="/">
-                <Routes>
-                    <Route path="/" element={<Login />} />
-                    <Route path="/dashboard" element={<AuthRoute><AdminDashboard /></AuthRoute>} />
-                </Routes>
-            </Router>
-        </ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider theme={theme}>
+                <Router basename="/">
+                    <Routes>
+                        <Route path="/" element={<Login />} />
+                        <Route path="/dashboard" element={<AuthRoute><AdminDashboard /></AuthRoute>} />
+                        <Route path="/orders" element={<AuthRoute><OrdersPage /></AuthRoute>} />
+                    </Routes>
+                </Router>
+            </ThemeProvider>
+        </QueryClientProvider>
     );
 }
