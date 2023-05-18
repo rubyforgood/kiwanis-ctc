@@ -8,17 +8,18 @@ const theme = createTheme({
         },
         secondary: {
             main: "#E8C887",
+            dark:"#82692E"
         },
         success: {
             main: "#E3EECB",
-        },
-        error: {
-            main: "#FFD0CA",
+            light:"#AFC382",
+
         },
         info: {
             main: "#FFF0CB",
         },
     },
+
 });
 
 export default theme;
