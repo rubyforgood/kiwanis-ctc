@@ -20,6 +20,8 @@ import Modal from "@mui/material/Modal";
 import Stack from "@mui/material/Stack";
 import Steps from "../stepper/Steps";
 import { stepperContext } from "../../providers/StepperProvider";
+import OrdersTable from "./OrdersTable";
+import { Order } from "../../types/Order";
 
 function CustomPagination() {
     const apiRef = useGridApiContext();
@@ -51,7 +53,7 @@ type Rows = {
     status: string
 }
 
-export default function Orders() {
+export default function Orders({ orders }: { orders: Order[] }) {
 
     const [searchField, setSearchField] = useState<string>("");
     const [searchResults, setSearchResults] = useState<Rows[]>([]);
@@ -298,12 +300,7 @@ export default function Orders() {
                             },
                         }}>
                             <Box sx={{ height: 570, width: "100%" }}>
-                                <DataGrid
-                                    getRowId={(row) => row["id"]}
-                                    rows={searchResults.length > 0 ? searchResults : rows}
-                                    columns={columns}
-                                    components={{ Pagination: CustomPagination, }}
-                                />
+                                <OrdersTable rows={orders} />
                             </Box>
                         </Box>
                     </Box>
