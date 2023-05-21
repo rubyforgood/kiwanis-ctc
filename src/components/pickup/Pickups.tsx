@@ -1,8 +1,10 @@
 import React from "react";
 import Tabs from "./Tabs";
 import Box from "@mui/system/Box";
+import { Order } from "../../types/Order";
 
-export default function Pickups() {
+
+export default function Pickups({ orders }: { orders: Order[] }) {
     return (
         <Box
             sx={{
@@ -24,7 +26,7 @@ export default function Pickups() {
             >
                 Available for Sale:<strong> 100</strong>
             </Box>
-            <Tabs />
+            <Tabs orders={orders}/>
         </Box>
     );
 }

@@ -3,9 +3,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Grid from "./Grid";
 import Pickedup from "./Pickedup";
 import Pickup from "./Pickup";
+import { Order } from "../../types/Order";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -40,7 +40,7 @@ function a11yProps(index: number) {
     };
 }
 
-export default function BasicTabs() {
+export default function BasicTabs({ orders }: { orders: Order[] }) {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -60,7 +60,7 @@ export default function BasicTabs() {
             </Box>
             <Box sx={{ textAlign: "center", fontFamily: "Avenir Next" }}>
                 <TabPanel value={value} index={0}>
-                    <Pickup/>
+                    <Pickup orders={orders}/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <Pickedup />
