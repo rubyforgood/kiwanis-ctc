@@ -13,16 +13,13 @@ interface TabPanelProps {
     value: number;
 }
 
-function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-
+function TabPanel({children, value, index}: TabPanelProps) {
     return (
         <div
             role="tabpanel"
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
-            {...other}
         >
             {value === index && (
                 <Box sx={{ p: 2 }}>
