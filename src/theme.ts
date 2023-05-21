@@ -23,7 +23,9 @@ const theme = createTheme({
             light: red[100]
         }
     },
-
+    typography: {
+        fontSize: 16
+    }
 });
 
 export default theme;

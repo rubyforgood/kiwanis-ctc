@@ -5,12 +5,11 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Theme, useTheme } from "@mui/material/styles";
 import { Box, Link, Typography } from "@mui/material";
 
-
 /**
  * DashboardChart is used to render a pie chart that shows the pickup status of the orders
  * @returns returns a pie chart that shows the pickup status of the orders
  */
-export default function DashboardChart({ pickedUp, readyForPickup }: { pickedUp: number, readyForPickup: number}) {
+export default function DashboardChart({ pickedUp, readyForPickup }: { pickedUp: number, readyForPickup: number }) {
     const theme = useTheme();
     ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -48,7 +47,7 @@ export default function DashboardChart({ pickedUp, readyForPickup }: { pickedUp:
                 }}
                 variant="h5"
             >
-        Pick Up Status
+                Pick Up Status
             </Typography>
             <Box sx={{ height: "21.5vh", marginTop: "0", paddingBottom: "0.6250em" }}>
                 <Doughnut
@@ -90,7 +89,7 @@ export default function DashboardChart({ pickedUp, readyForPickup }: { pickedUp:
                         href: "/orders"
                     }}
                 >
-          Go to Pick Ups
+                    Go to Pick Ups
                 </Link>
             </Box>
         </React.Fragment>

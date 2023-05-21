@@ -1,77 +1,16 @@
 import * as React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import Chip, { ChipProps } from "@mui/material/Chip";
-import { useTheme } from "@mui/material/styles";
+import Chip from "@mui/material/Chip";
 import { Order } from "../../types/Order";
-import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
 import { COST_PER_ORDER } from "../../constants";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import OrderPopupForm from "../dashboard/OrderPopupForm";
-import Button from "@mui/material/Button";
-import DialogActions from "@mui/material/DialogActions";
-
-/**
- * getChipProps is used to get the correct chip color
- * @param params Takes in the params of the GridRenderCellParams
- * @returns returns the chip color
- */
-function getChipColor(predicate: boolean): ChipProps {
-    const theme = useTheme();
-    if (predicate) {
-        return {
-            style: {
-                backgroundColor: theme.palette.success.light
-            }
-        };
-    }
-    return {
-        style: {
-            backgroundColor: theme.palette.error.light
-        }
-    };
-}
-
-const EditOrderButton = ({ order }: { order: Order }) => {
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    return (
-        <>
-            <IconButton onClick={handleOpen}><EditIcon /></IconButton>
-            <Dialog open={open} onClose={handleClose} maxWidth='sm' fullWidth>
-                <DialogTitle>{`${order.firstName} ${order.lastName}`}</DialogTitle>
-                <DialogContent dividers>
-                    <OrderPopupForm />
-                </DialogContent>
-                <DialogActions>
-                    <Button sx={{ backgroundColor: theme.palette.error.main }} onClick={handleClose}>Cancel</Button>
-                    <Button sx={{ backgroundColor: theme.palette.success.main }} onClick={handleClose}>Save</Button>
-                </DialogActions>
-            </Dialog>
-        </>
-    );
-};
+import EditOrder from "./EditOrder";
+import { getChipColor } from "../../utils/getChipColor";
 
 interface OrdersTableProps {
     rows: Order[];
 }
 
 export default function OrdersTable({ rows }: OrdersTableProps) {
-
-    /**
-     * defines an array of objects representing the header columns in the table
-     */
     const columns: GridColDef[] = [
         {
             field: "id",
@@ -131,7 +70,7 @@ export default function OrdersTable({ rows }: OrdersTableProps) {
             field: "action",
             headerName: "Action",
             sortable: false,
-            renderCell: ({ row }) => <EditOrderButton order={row} />,
+            renderCell: ({ row }) => <EditOrder order={row} />,
             headerAlign: "right",
             align: "right",
         }
