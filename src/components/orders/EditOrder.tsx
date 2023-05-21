@@ -17,16 +17,24 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
-import { ButtonGroup, TextField, Theme, useTheme } from "@mui/material";
 import SmartphoneIcon from "@mui/icons-material/Smartphone";
 import HomeIcon from "@mui/icons-material/Home";
 import IconText from "../common/IconText";
 import EmailIcon from "@mui/icons-material/Email";
 import { COST_PER_ORDER } from "../../constants";
 import { SxProps } from "@mui/system";
+import IconTextField from "../common/IconTextField";
+import CampaignIcon from "@mui/icons-material/Campaign";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import { InputLabel, Theme, useTheme } from "@mui/material";
 
-function SubsectionTitle({ title, sx }: { title: string, sx?: SxProps }) {
-    return (<Typography variant="h6" sx={{ ...sx, fontWeight: "bold" }}>{title}</Typography>);
+function SubsectionTitle({ title, sx, button }: { title: string, sx?: SxProps, button?: React.ReactNode }) {
+    return (<Typography variant="h6" sx={{ ...sx, fontWeight: "bold" }}>{title}{button}</Typography>);
 }
 
 function ToggleButton({ value, handleToggle, label, theme }:
@@ -57,9 +65,22 @@ function ToggleButton({ value, handleToggle, label, theme }:
 }
 
 export default function EditOrder({ order }: { order: Order }) {
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    // TODO: Add additional donation to object
+    // TODO: Use less use states
 
+    const theme = useTheme();
+    const [open, setOpen] = React.useState(true);
+    const [isEditing, setIsEditing] = React.useState(false);
+
+    const [firstName, setFirstName] = React.useState(order.firstName);
+    const [lastName, setLastName] = React.useState(order.lastName);
+
+    const [email, setEmail] = React.useState(order.email);
+    const [cellPhone, setCellPhone] = React.useState(order.cellPhone);
+    const [homePhone, setHomePhone] = React.useState(order.homePhone);
+    const [referral, setReferral] = React.useState(order.howDidYouHearAboutUs);
+
+    const [paymentMethod, setPaymentMethod] = React.useState(order.method);
     const [forAFAC, setForAFAC] = React.useState(0);
     const [forCustomer, setForCustomer] = React.useState(0);
     const [donation, setDonation] = React.useState(0);
@@ -96,21 +117,108 @@ export default function EditOrder({ order }: { order: Order }) {
     }, [forCustomer, forAFAC, setTotal]);
 
     React.useEffect(() => {
-        setBalance(((forCustomer + forAFAC) * COST_PER_ORDER) - amountPaid);
+        const calculateBalance = ((forCustomer + forAFAC) * COST_PER_ORDER) - amountPaid;
+        if (isNaN(calculateBalance)) {
+            setBalance(0);
+        } else {
+            setBalance(((forCustomer + forAFAC) * COST_PER_ORDER) - amountPaid);
+        }
     }, [forCustomer, forAFAC, amountPaid, setBalance]);
+
+    const customerDetails = [
+        {
+            value: email,
+            handleChange: (e) => setEmail(e.target.value),
+            icon: <EmailIcon fontSize="small" color="secondary" />,
+            label: "Email"
+        },
+        {
+            value: cellPhone,
+            handleChange: (e) => setCellPhone(e.target.value),
+            icon: <SmartphoneIcon fontSize="small" color="secondary" />,
+            label: "Cell Phone"
+        },
+        {
+            value: homePhone,
+            handleChange: (e) => setHomePhone(e.target.value),
+            icon: <HomeIcon fontSize="small" color="secondary" />,
+            label: "Home Phone"
+        },
+        {
+            value: referral,
+            handleChange: (e) => setReferral(e.target.value),
+            icon: <CampaignIcon fontSize="small" color="secondary" />,
+            label: "Referred By"
+        },
+    ];
 
     return (
         <>
             <IconButton onClick={handleOpen}><EditIcon /></IconButton>
             <Dialog open={open} onClose={handleClose} maxWidth='sm' fullWidth>
-                <DialogTitle>{`${order.firstName} ${order.lastName}`}</DialogTitle>
+                {isEditing
+                    ?
+                    <Stack my={2} direction="row" justifyContent="space-around">
+                        <TextField
+                            size="small"
+                            type="text"
+                            value={firstName}
+                            label="First Name"
+                            onChange={(e) => setFirstName(e.target.value)}
+                        />
+                        <TextField
+                            size="small"
+                            type="text"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            label="Last Name"
+                            sx={{
+                                ml: 1
+                            }}
+                        />
+                    </Stack>
+                    : <DialogTitle> {`${firstName} ${lastName}`}</DialogTitle>
+                }
                 <Divider sx={{ backgroundColor: theme.palette.primary.main, height: "3px" }} />
                 <DialogContent>
                     <Box sx={{ mx: 2 }}>
-                        <SubsectionTitle title={"Customer Details"} />
-                        <IconText icon={<EmailIcon fontSize="small" color="secondary" />} variant="body2">{order.email}</IconText>
-                        <IconText icon={<SmartphoneIcon fontSize="small" color="secondary" />} variant="body2">{order.cellPhone}</IconText>
-                        <IconText icon={<HomeIcon fontSize="small" color="secondary" />} variant="body2">{order.homePhone}</IconText>
+                        <SubsectionTitle
+                            title={"Customer Details"}
+                            button={
+                                <IconButton onClick={() => setIsEditing(!isEditing)}>
+                                    <EditIcon sx={{ ml: 0.5, fontSize: "20px" }} />
+                                </IconButton>
+                            }
+                        />
+                        {isEditing
+                            ?
+                            <Stack>
+                                {
+                                    customerDetails.map((details) => (
+                                        <IconTextField
+                                            key={details.label}
+                                            icon={details.icon}
+                                            value={details.value}
+                                            onChange={details.handleChange}
+                                            label={details.label}
+                                        />
+                                    ))
+                                }
+                            </Stack>
+                            : <>
+                                {
+                                    customerDetails.map((details) => (
+                                        <IconText
+                                            key={details.label}
+                                            icon={details.icon}
+                                            variant="body2"
+                                        >
+                                            {details.value}
+                                        </IconText>
+                                    ))
+                                }
+                            </>
+                        }
                         <Divider sx={{ my: 1, backgroundColor: theme.palette.primary.main, height: "1px" }} />
                         <SubsectionTitle title={"Order Details"} />
                         <Table sx={{
@@ -167,7 +275,26 @@ export default function EditOrder({ order }: { order: Order }) {
                                 mb: 2
                             }} >
                                 <TableBody>
-                                    <TableRow key="paid" sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                                    <TableRow>
+                                        <TableCell component="th">
+                                            <Typography>Payment Method</Typography>
+                                        </TableCell>
+                                        <TableCell >
+                                            <Box sx={{ minWidth: 120 }}>
+                                                <FormControl fullWidth>
+                                                    <Select
+                                                        value={paymentMethod}
+                                                        onChange={(e) => setPaymentMethod(e.target.value)}
+                                                    >
+                                                        <MenuItem value="Cash">Cash</MenuItem>
+                                                        <MenuItem value="Credit Card">Credit Card</MenuItem>
+                                                        <MenuItem value="Check">Check</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                            </Box>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
                                         <TableCell component="th">
                                             <Typography>Paid</Typography>
                                         </TableCell>
@@ -191,8 +318,7 @@ export default function EditOrder({ order }: { order: Order }) {
                                                     step: 1
                                                 }}
                                                 onChange={(e) => setAmountPaid(parseFloat(e.target.value))}
-                                            >
-                                            </TextField>
+                                            />
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
@@ -219,15 +345,11 @@ export default function EditOrder({ order }: { order: Order }) {
                                                     step: 1
                                                 }}
                                                 onChange={(e) => setDonation(parseFloat(e.target.value))}
-                                            >
-                                            </TextField>
+                                            />
                                         </TableCell>
                                     </TableRow>
-
-
-
                                     <SubsectionTitle title="Order Status" sx={{ mt: 2 }} />
-                                    <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                                    <TableRow>
                                         <TableCell component="th">
                                             <Typography>Picked Up</Typography>
                                         </TableCell>
@@ -244,7 +366,7 @@ export default function EditOrder({ order }: { order: Order }) {
                     <Button sx={{ backgroundColor: theme.palette.error.main }} onClick={handleClose}>Cancel</Button>
                     <Button sx={{ backgroundColor: theme.palette.success.main }} onClick={handleClose}>Save</Button>
                 </DialogActions>
-            </Dialog>
+            </Dialog >
         </>
     );
 }
