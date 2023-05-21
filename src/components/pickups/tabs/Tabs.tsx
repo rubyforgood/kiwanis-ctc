@@ -3,9 +3,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Pickedup from "./Pickedup";
+import PickedUp from "./PickedUp";
 import Pickup from "./Pickup";
-import { Order } from "../../types/Order";
+import { Order } from "../../../types/Order";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -63,7 +63,7 @@ export default function BasicTabs({ orders }: { orders: Order[] }) {
                     <Pickup orders={orders}/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <Pickedup orders={orders}/>
+                    <PickedUp orders={orders}/>
                 </TabPanel>
             </Box>
         </Box>

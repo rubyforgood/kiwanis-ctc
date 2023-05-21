@@ -1,5 +1,5 @@
 import React from "react";
-import Tabs from "./Tabs";
+import Tabs from "./tabs/Tabs";
 import Box from "@mui/system/Box";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";

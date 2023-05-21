@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import PickupTable from "./PickupTable";
-import { Order } from "../../types/Order";
+import React from "react";
+import PickupTable from "../PickupTable";
+import { Order } from "../../../types/Order";
 
 function Pickup({ orders }: { orders: Order[] }) {
 

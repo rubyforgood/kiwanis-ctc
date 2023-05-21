@@ -1,7 +1,6 @@
 import { Dashboard } from "../components/dashboard/Dashboard";
 import React from "react";
-import StepperProvider from "../providers/StepperProvider";
-import Pickups from "../components/pickup/Pickups";
+import Pickups from "../components/pickups/Pickups";
 import useOrders from "../hooks/useOrders";
 
 function PickupPage() {
