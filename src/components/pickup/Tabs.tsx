@@ -63,7 +63,7 @@ export default function BasicTabs({ orders }: { orders: Order[] }) {
                     <Pickup orders={orders}/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <Pickedup />
+                    <Pickedup orders={orders}/>
                 </TabPanel>
             </Box>
         </Box>

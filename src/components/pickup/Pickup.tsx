@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PickupModal from "./PickupModal";
 import PickupTable from "./PickupTable";
 import { Order } from "../../types/Order";
 

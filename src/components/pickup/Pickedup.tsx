@@ -1,8 +1,14 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import PickupTable from "./PickupTable";
+import { Order } from "../../types/Order";
 
-function Pickedup() {
+function Pickedup({ orders }: { orders: Order[] }) {
+    const pickedUpOrders = orders.filter( order => order.pickedUp );
+
     return (
-        <div>Pickedup</div>
+        <>
+            <PickupTable rows={pickedUpOrders}></PickupTable>
+        </>
     );
 }
 
