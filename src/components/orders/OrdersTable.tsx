@@ -3,7 +3,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Chip from "@mui/material/Chip";
 import { Order } from "../../types/Order";
 import { COST_PER_ORDER } from "../../constants";
-import EditOrder from "./EditOrder";
+import EditOrder from "../common/EditOrder";
 import { getChipColor } from "../../utils/getChipColor";
 
 interface OrdersTableProps {
