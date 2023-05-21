@@ -30,7 +30,7 @@ export default function Pickups({ orders }: { orders: Order[] }) {
                     <Typography fontSize={15} variant="subtitle1" sx={{ mb: 1 }}>
                     Dashboard / Pickups
                     </Typography>
-                    <Typography fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 6, width: "100%" }}>Order Pick-ups</Typography>
+                    <Typography fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 6, width: "100%" }}>Order Pickups</Typography>
                     <Box
                         sx={{
                             color: "#82692E",
