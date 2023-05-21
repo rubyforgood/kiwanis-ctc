@@ -17,19 +17,7 @@ const StepThree = () => {
                     </Typography>
                 </Box>
                 <Box sx={{ borderBottom: "solid", borderTop: "solid", borderWidth: 2, borderColor: "primary.main", pt: 2, alignItems: "center", width: 250 }} >
-                    <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", py: 2 }}>
-                        <Typography >
-                            Self
-                        </Typography>
-                        <ButtonGroup sx={{ px: 2 }}>
-                            <Button onClick={() => setSelf(self + 1)} >+</Button>
-                            <Button >{self}</Button>
-                            <Button onClick={() => setSelf(self - 1)}>-</Button>
-                        </ButtonGroup>
-                        <Typography sx={{ fontWeight: "bold" }}>
-                            {`$ ${self * 40}`}
-                        </Typography>
-                    </Box>
+                    {CounterButton()}
                     <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", pt: 2, pb: 6, alignItems: "center" }}>
                         <Typography >
                             AFAC
@@ -79,6 +67,22 @@ const StepThree = () => {
             </Box>
         </React.Fragment>
     );
+
+    function CounterButton() {
+        return <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", py: 2 }}>
+            <Typography>
+                Self
+            </Typography>
+            <ButtonGroup sx={{ px: 2 }}>
+                <Button onClick={() => setSelf(self + 1)}>+</Button>
+                <Button>{self}</Button>
+                <Button onClick={() => setSelf(self - 1)}>-</Button>
+            </ButtonGroup>
+            <Typography sx={{ fontWeight: "bold" }}>
+                {`$ ${self * 40}`}
+            </Typography>
+        </Box>;
+    }
 };
 
 export default StepThree;
