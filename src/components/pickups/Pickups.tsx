@@ -2,11 +2,13 @@ import React from "react";
 import Tabs from "./tabs/Tabs";
 import Box from "@mui/system/Box";
 import Paper from "@mui/material/Paper";
-import { Typography } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import { Order } from "../../types/Order";
 
 
 export default function Pickups({ orders }: { orders: Order[] }) {
+    const theme = useTheme();
+
     return (
         <Box
             component='main'
@@ -31,12 +33,8 @@ export default function Pickups({ orders }: { orders: Order[] }) {
                     Dashboard / Pickups
                     </Typography>
                     <Typography fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 6, width: "100%" }}>Order Pickups</Typography>
-                    <Box
-                        sx={{
-                            color: "#82692E",
-                        }}
-                    >
-                Available for Sale:<strong> 100</strong>
+                    <Box sx={{color: theme.palette.secondary.dark,}}>
+                        <Typography>Available for Sale:<strong> 100</strong></Typography>
                     </Box>
                     <Tabs orders={orders}/>
                 </Box>
