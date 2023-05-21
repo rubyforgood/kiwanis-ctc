@@ -5,6 +5,8 @@ import Grid from "@mui/material/Grid";
 import DashboardChart from "./DashboardChart";
 import Typography from "@mui/material/Typography";
 import StrongText from "../common/StrongText";
+import { Order } from "../../types/Order";
+import { COST_PER_ORDER } from "../../constants";
 
 /**
  * Item is used to display typography
@@ -34,7 +36,12 @@ const Item = ({ children }: { children: React.ReactNode }) => (
  * The second one is used to display the PieChart
  * @returns returns the Admin Dashboard component
  */
-export default function Admin() {
+export default function Admin({ orders }: { orders: Order[] }) {
+    const totalOrders = orders.length;
+    const totalBoxesForAFAC = orders.reduce((prev, curr) => (prev + curr.boxesForAFAC), 0);
+    const totalBoxesOrdered = orders.reduce((prev, curr) => (prev + curr.boxesForCustomer), 0) + totalBoxesForAFAC;
+    const totalDonations = totalBoxesOrdered * COST_PER_ORDER; // TODO: Should change to only include those for picked up boxes
+
     return (
         <React.Fragment>
             <Typography sx={{ fontSize: "1.5em", fontWeight: "bold", marginBottom: "1em" }} >
@@ -52,31 +59,31 @@ export default function Admin() {
                                 <Grid item xs={4} sm={5} md={3.5}>
                                     <Item>
                                         <Typography noWrap>
-                                            <StrongText>159</StrongText>
-                                            <br /> Total Order
+                                            <StrongText>{totalOrders}</StrongText>
+                                            <br /> Total Orders
                                         </Typography>
                                     </Item>
                                 </Grid>
                                 <Grid item xs={4} sm={5} md={3.5}>
                                     <Item>
                                         <Typography noWrap>
-                                            <StrongText>100</StrongText>
-                                            <br /> Total Donor
+                                            <StrongText>${totalDonations}</StrongText>
+                                            <br /> Total Donations
                                         </Typography>
                                     </Item>
                                 </Grid>
                                 <Grid item xs={4} sm={5} md={3.5}>
                                     <Item>
                                         <Typography noWrap>
-                                            <StrongText>250</StrongText>
-                                            <br /> Total Boxes Order
+                                            <StrongText>{totalBoxesOrdered}</StrongText>
+                                            <br /> Total Boxes Ordered
                                         </Typography>
                                     </Item>
                                 </Grid>
                                 <Grid item xs={4} sm={5} md={3.5}>
                                     <Item>
                                         <Typography noWrap>
-                                            <StrongText>125</StrongText>
+                                            <StrongText>{totalBoxesForAFAC}</StrongText>
                                             <br /> Total Boxes for AFAC
                                         </Typography>
                                     </Item>
@@ -84,9 +91,9 @@ export default function Admin() {
                             </Grid>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <Paper sx={{ height: "98%", width: "80%", borderRadius: "8px" }} elevation={2} >
-                            <DashboardChart />
+                    <Grid item xs={12} sm={6} >
+                        <Paper sx={{ height: "98%", borderRadius: "8px" }} elevation={2} >
+                            <DashboardChart pickedUp={50} readyForPickup={100} />
                         </Paper>
                     </Grid>
                 </Grid>

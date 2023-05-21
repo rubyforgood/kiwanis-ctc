@@ -1,3 +1,4 @@
+import { amber, green, lightGreen, red } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
 
 // A custom theme for this app
@@ -11,15 +12,20 @@ const theme = createTheme({
             dark:"#82692E"
         },
         success: {
-            main: "#E3EECB",
-            light:"#AFC382",
-
+            main: green[300],
+            light: lightGreen[100]
         },
         info: {
-            main: "#FFF0CB",
+            main: amber[100]
         },
+        error: {
+            main: red[300],
+            light: red[100]
+        }
     },
-
+    typography: {
+        fontSize: 16
+    }
 });
 
 export default theme;

@@ -68,7 +68,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 );
 
 export function Dashboard({ children }: { children: React.ReactNode }) {
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
     const auth = getAuth();
     const toggleDrawer = () => {
