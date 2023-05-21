@@ -9,9 +9,7 @@ function PickupPage() {
 
     return (
         <Dashboard>
-            <StepperProvider>
-                <Pickups orders={data}></Pickups>
-            </StepperProvider>
+            <Pickups orders={data}></Pickups>
         </Dashboard>
     );
 }
