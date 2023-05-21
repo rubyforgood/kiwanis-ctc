@@ -15,12 +15,7 @@ interface TabPanelProps {
 
 function TabPanel({children, value, index}: TabPanelProps) {
     return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-        >
+        <div hidden={value !== index}>
             {value === index && (
                 <Box sx={{ p: 2 }}>
                     <Typography>{children}</Typography>
@@ -30,32 +25,25 @@ function TabPanel({children, value, index}: TabPanelProps) {
     );
 }
 
-function a11yProps(index: number) {
-    return {
-        id: `simple-tab-${index}`,
-        "aria-controls": `simple-tabpanel-${index}`
-    };
-}
-
 export default function BasicTabs({ orders }: { orders: Order[] }) {
     const [value, setValue] = React.useState(0);
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    const handleChange = (_: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
 
     return (
         <Box sx={{ width: "100%" }}>
-            <Box sx={{ borderBottom: 1, borderColor: "black", color: "black", fontFamily: "Avenir Next", }}>
+            <Box sx={{ borderBottom: 1,}}>
                 <Tabs
                     value={value}
                     onChange={handleChange}
                 >
-                    <Tab label="Ready for Pick-up" {...a11yProps(0)} />
-                    <Tab label="Picked" {...a11yProps(1)} />
+                    <Tab label="Ready for Pick Up"/>
+                    <Tab label="Picked Up"/>
                 </Tabs>
             </Box>
-            <Box sx={{ textAlign: "center", fontFamily: "Avenir Next" }}>
+            <Box sx={{ textAlign: "center", }}>
                 <TabPanel value={value} index={0}>
                     <Pickup orders={orders}/>
                 </TabPanel>
