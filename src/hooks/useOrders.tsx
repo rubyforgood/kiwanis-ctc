@@ -5,11 +5,10 @@ import { collection, DocumentData, getDocs, limit, query } from "firebase/firest
 import { useQuery } from "@tanstack/react-query";
 
 const docToOrder = (id: string, data: DocumentData): Order => {
-
     return {
         id,
-        boxesForAFAC: Number((data["Boxes for AFAC"] || 0)),
-        boxesForCustomer: Number((data["Boxes for Customer"] || 0)),
+        boxesForAFAC: Number(data["Boxes for AFAC"] || 0),
+        boxesForCustomer: Number(data["Boxes for Customer"] || 0),
         cellPhone: data["Cell Phone"] || null,
         customerComments: data["Customer Comments"] || null,
         email: data["E-mail"] || "",
@@ -22,6 +21,7 @@ const docToOrder = (id: string, data: DocumentData): Order => {
         paid: ((data["Paid"] as string).toLowerCase() === "yes"),
         pickedUp: !((data["Pick Up"] as string).toLowerCase() === "not ready"), //TODO: Decide on values. This needs to be changed
         submissionDate: data["Submission Date"] || null,
+        additionalDonation: Number(data["Submission Date"] || 0)
     };
 };
 
