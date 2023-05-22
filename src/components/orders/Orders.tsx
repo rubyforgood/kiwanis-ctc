@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import * as XLSX from "xlsx";
 import {
-    DataGrid, GridColDef, gridPageCountSelector,
+    GridColDef, gridPageCountSelector,
     gridPageSelector,
     useGridApiContext,
     useGridSelector,
@@ -69,7 +69,7 @@ export default function Orders({ orders }: { orders: Order[] }) {
         if (activeStep === 6) setActiveStep(0);
         setOpen(true);
     };
-    const handleClose = () => setOpen(false);
+    const handleClose = () => { setOpen(false); };
 
     //* Datagrid Table
     const [rows, setRows] = useState<Rows[]>([]);

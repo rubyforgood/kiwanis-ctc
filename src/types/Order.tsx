@@ -15,4 +15,5 @@ export interface Order {
     pickedUp: boolean;
     submissionDate: string;
     additionalDonation: number;
+    amountPaid: number;
 }

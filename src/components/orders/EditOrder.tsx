@@ -31,7 +31,9 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import { InputLabel, Theme, useTheme } from "@mui/material";
+import { Theme, useTheme } from "@mui/material";
+import useEditOrder from "../../hooks/useEditOrder";
+import { useQueryClient } from "@tanstack/react-query";
 
 function SubsectionTitle({ title, sx, button }: { title: string, sx?: SxProps, button?: React.ReactNode }) {
     return (<Typography variant="h6" sx={{ ...sx, fontWeight: "bold" }}>{title}{button}</Typography>);
@@ -64,89 +66,105 @@ function ToggleButton({ value, handleToggle, label, theme }:
     );
 }
 
-export default function EditOrder({ order }: { order: Order }) {
+export default function EditOrder(
+    {
+        order,
+        setOpenSnackbar,
+        setSnackbarMessage
+    }: {
+        order: Order,
+        setOpenSnackbar(boolean): void,
+        setSnackbarMessage(string): void
+    }) {
     // TODO: Add additional donation to object
     // TODO: Use less use states
 
     const theme = useTheme();
-    const [open, setOpen] = React.useState(true);
+    const queryClient = useQueryClient();
+    const editOrderMutation = useEditOrder(queryClient);
+
+    const [open, setOpen] = React.useState(false);
     const [isEditing, setIsEditing] = React.useState(false);
 
-    const [firstName, setFirstName] = React.useState(order.firstName);
-    const [lastName, setLastName] = React.useState(order.lastName);
+    const [newOrder, setNewOrder] = React.useState<Order>({ ...order });
 
-    const [email, setEmail] = React.useState(order.email);
-    const [cellPhone, setCellPhone] = React.useState(order.cellPhone);
-    const [homePhone, setHomePhone] = React.useState(order.homePhone);
-    const [referral, setReferral] = React.useState(order.howDidYouHearAboutUs);
+    const [total, setTotal] = React.useState(0);
+    const [balance, setBalance] = React.useState(0);
 
-    const [paymentMethod, setPaymentMethod] = React.useState(order.method);
-    const [forAFAC, setForAFAC] = React.useState(0);
-    const [forCustomer, setForCustomer] = React.useState(0);
-    const [donation, setDonation] = React.useState(0);
+    React.useEffect(() => {
+        setTotal((newOrder.boxesForCustomer + newOrder.boxesForAFAC) * COST_PER_ORDER);
+    }, [newOrder.boxesForCustomer, newOrder.boxesForAFAC, setTotal]);
 
-    const [paid, setPaid] = React.useState(order.paid);
-    const [pickedUp, setPickedUp] = React.useState(order.pickedUp);
+    React.useEffect(() => {
+        const calculateBalance = ((newOrder.boxesForCustomer + newOrder.boxesForAFAC) * COST_PER_ORDER) - newOrder.amountPaid;
+        if (isNaN(calculateBalance)) {
+            setBalance(0);
+        } else {
+            setBalance(((newOrder.boxesForCustomer + newOrder.boxesForCustomer) * COST_PER_ORDER) - newOrder.amountPaid);
+        }
+    }, [newOrder.boxesForCustomer, newOrder.boxesForAFAC, newOrder.amountPaid, setBalance]);
 
     const handleOpen = () => {
         setOpen(true);
     };
 
-    const handleClose = () => {
+    const handleCancel = () => {
         setOpen(false);
+        setIsEditing(false);
+        setNewOrder({ ...order });
+    };
+
+    const handleSave = async () => {
+        try {
+            await editOrderMutation.mutateAsync(newOrder);
+            setSnackbarMessage("Edit Successful");
+            setOpenSnackbar(true);
+            setOpen(false);
+            setIsEditing(false);
+        } catch {
+            setSnackbarMessage("Something went wrong. Please contact an administrator");
+            setOpenSnackbar(true);
+            setOpen(false);
+        }
     };
 
     const orderDetailsRows = [
         {
             name: "Self",
-            setValue: setForCustomer,
-            value: forCustomer,
+            increment: () => setNewOrder(newOrder => ({ ...newOrder, boxesForCustomer: newOrder.boxesForCustomer + 1 })),
+            decrement: () => setNewOrder(newOrder => ({ ...newOrder, boxesForCustomer: Math.max(0, newOrder.boxesForCustomer - 1) })),
+            value: newOrder.boxesForCustomer,
         },
         {
             name: "AFAC",
-            setValue: setForAFAC,
-            value: forAFAC,
+            increment: () => setNewOrder(newOrder => ({ ...newOrder, boxesForAFAC: newOrder.boxesForAFAC + 1 })),
+            decrement: () => setNewOrder(newOrder => ({ ...newOrder, boxesForAFAC: Math.max(0, newOrder.boxesForAFAC - 1) })),
+            value: newOrder.boxesForAFAC,
         }
     ];
-    const [amountPaid, setAmountPaid] = React.useState(0);
-    const [total, setTotal] = React.useState(0);
-    const [balance, setBalance] = React.useState(0);
-
-    React.useEffect(() => {
-        setTotal((forCustomer + forAFAC) * COST_PER_ORDER);
-    }, [forCustomer, forAFAC, setTotal]);
-
-    React.useEffect(() => {
-        const calculateBalance = ((forCustomer + forAFAC) * COST_PER_ORDER) - amountPaid;
-        if (isNaN(calculateBalance)) {
-            setBalance(0);
-        } else {
-            setBalance(((forCustomer + forAFAC) * COST_PER_ORDER) - amountPaid);
-        }
-    }, [forCustomer, forAFAC, amountPaid, setBalance]);
 
     const customerDetails = [
         {
-            value: email,
-            handleChange: (e) => setEmail(e.target.value),
+            value: newOrder.email,
+            handleChange: (e) => setNewOrder(newOrder => ({ ...newOrder, email: e.target.value })),
             icon: <EmailIcon fontSize="small" color="secondary" />,
             label: "Email"
         },
         {
-            value: cellPhone,
-            handleChange: (e) => setCellPhone(e.target.value),
+            value: newOrder.cellPhone,
+            handleChange: (e) => setNewOrder(newOrder => ({ ...newOrder, cellPhone: e.target.value })),
             icon: <SmartphoneIcon fontSize="small" color="secondary" />,
             label: "Cell Phone"
         },
         {
-            value: homePhone,
-            handleChange: (e) => setHomePhone(e.target.value),
+            value: newOrder.homePhone,
+            handleChange: (e) => setNewOrder(newOrder => ({ ...newOrder, homePhone: e.target.value })),
             icon: <HomeIcon fontSize="small" color="secondary" />,
             label: "Home Phone"
         },
         {
-            value: referral,
-            handleChange: (e) => setReferral(e.target.value),
+            value: newOrder.howDidYouHearAboutUs,
+            handleChange: (e) => setNewOrder(newOrder => ({ ...newOrder, howDidYouHearAboutUs: e.target.value })),
             icon: <CampaignIcon fontSize="small" color="secondary" />,
             label: "Referred By"
         },
@@ -155,29 +173,29 @@ export default function EditOrder({ order }: { order: Order }) {
     return (
         <>
             <IconButton onClick={handleOpen}><EditIcon /></IconButton>
-            <Dialog open={open} onClose={handleClose} maxWidth='sm' fullWidth>
+            <Dialog open={open} onClose={handleCancel} maxWidth='sm' fullWidth>
                 {isEditing
                     ?
                     <Stack my={2} direction="row" justifyContent="space-around">
                         <TextField
                             size="small"
                             type="text"
-                            value={firstName}
+                            value={newOrder.firstName}
                             label="First Name"
-                            onChange={(e) => setFirstName(e.target.value)}
+                            onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, firstName: e.target.value }))}
                         />
                         <TextField
                             size="small"
                             type="text"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
+                            value={newOrder.lastName}
+                            onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, lastName: e.target.value }))}
                             label="Last Name"
                             sx={{
                                 ml: 1
                             }}
                         />
                     </Stack>
-                    : <DialogTitle> {`${firstName} ${lastName}`}</DialogTitle>
+                    : <DialogTitle> {`${newOrder.firstName} ${newOrder.lastName}`}</DialogTitle>
                 }
                 <Divider sx={{ backgroundColor: theme.palette.primary.main, height: "3px" }} />
                 <DialogContent>
@@ -244,9 +262,9 @@ export default function EditOrder({ order }: { order: Order }) {
                                         </TableCell>
                                         <TableCell align="center" >
                                             <ButtonGroup >
-                                                <Button onClick={() => row.setValue(value => value + 1)}>+</Button>
+                                                <Button onClick={row.increment}>+</Button>
                                                 <Button disableRipple>{row.value}</Button>
-                                                <Button onClick={() => row!.setValue(value => Math.max(0, value - 1))} >-</Button>
+                                                <Button onClick={row.decrement} >-</Button>
                                             </ButtonGroup>
                                         </TableCell>
 
@@ -283,8 +301,8 @@ export default function EditOrder({ order }: { order: Order }) {
                                             <Box sx={{ minWidth: 120 }}>
                                                 <FormControl fullWidth>
                                                     <Select
-                                                        value={paymentMethod}
-                                                        onChange={(e) => setPaymentMethod(e.target.value)}
+                                                        value={newOrder.method}
+                                                        onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, method: e.target.value }))}
                                                     >
                                                         <MenuItem value="Cash">Cash</MenuItem>
                                                         <MenuItem value="Credit Card">Credit Card</MenuItem>
@@ -298,8 +316,12 @@ export default function EditOrder({ order }: { order: Order }) {
                                         <TableCell component="th">
                                             <Typography>Paid</Typography>
                                         </TableCell>
-                                        <TableCell >
-                                            <ToggleButton theme={theme} value={paid} handleToggle={() => setPaid(!paid)} label={paid ? "Yes" : "No"} />
+                                        <TableCell>
+                                            <ToggleButton
+                                                theme={theme}
+                                                value={newOrder.paid}
+                                                handleToggle={() => setNewOrder(newOrder => ({ ...newOrder, paid: !newOrder.paid }))}
+                                                label={newOrder.paid ? "Yes" : "No"} />
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
@@ -313,11 +335,11 @@ export default function EditOrder({ order }: { order: Order }) {
                                                     startAdornment: <InputAdornment position="start">$</InputAdornment>,
                                                 }}
                                                 type="number"
-                                                value={amountPaid}
+                                                value={newOrder.amountPaid}
                                                 inputProps={{
                                                     step: 1
                                                 }}
-                                                onChange={(e) => setAmountPaid(parseFloat(e.target.value))}
+                                                onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, amountPaid: parseFloat(e.target.value) }))}
                                             />
                                         </TableCell>
                                     </TableRow>
@@ -340,11 +362,11 @@ export default function EditOrder({ order }: { order: Order }) {
                                                     startAdornment: <InputAdornment position="start">$</InputAdornment>,
                                                 }}
                                                 type="number"
-                                                value={donation}
+                                                value={newOrder.additionalDonation}
                                                 inputProps={{
                                                     step: 1
                                                 }}
-                                                onChange={(e) => setDonation(parseFloat(e.target.value))}
+                                                onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, additionalDonation: parseFloat(e.target.value) }))}
                                             />
                                         </TableCell>
                                     </TableRow>
@@ -354,7 +376,12 @@ export default function EditOrder({ order }: { order: Order }) {
                                             <Typography>Picked Up</Typography>
                                         </TableCell>
                                         <TableCell align="left">
-                                            <ToggleButton theme={theme} value={pickedUp} handleToggle={() => setPickedUp(!pickedUp)} label={pickedUp ? "Yes" : "No"} />
+                                            <ToggleButton
+                                                theme={theme}
+                                                value={newOrder.pickedUp}
+                                                handleToggle={() => setNewOrder(newOrder => ({ ...newOrder, pickedUp: !newOrder.pickedUp }))}
+                                                label={newOrder.pickedUp ? "Yes" : "No"}
+                                            />
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -363,8 +390,8 @@ export default function EditOrder({ order }: { order: Order }) {
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button sx={{ backgroundColor: theme.palette.error.main }} onClick={handleClose}>Cancel</Button>
-                    <Button sx={{ backgroundColor: theme.palette.success.main }} onClick={handleClose}>Save</Button>
+                    <Button sx={{ backgroundColor: theme.palette.error.main }} onClick={handleCancel}>Cancel</Button>
+                    <Button sx={{ backgroundColor: theme.palette.success.main }} onClick={handleSave}>Save</Button>
                 </DialogActions>
             </Dialog >
         </>

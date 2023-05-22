@@ -17,12 +17,29 @@ const docToOrder = (id: string, data: DocumentData): Order => {
         howDidYouHearAboutUs: data["How did you hear about us?"] || null,
         kiwanisMember: Boolean(data["Kiwanis Member"]),
         lastName: data["Last Name"] || "",
-        method: data["Method"] || null,
-        paid: ((data["Paid"] as string).toLowerCase() === "yes"),
-        pickedUp: !((data["Pick Up"] as string).toLowerCase() === "not ready"), //TODO: Decide on values. This needs to be changed
+        method: data["Method"] || "",
+        paid: getPaid(data["Paid"]),
+        pickedUp: getPickedUp(data["Pick Up"]), //TODO: Decide on values. This needs to be changed
         submissionDate: data["Submission Date"] || null,
-        additionalDonation: Number(data["Submission Date"] || 0)
+        additionalDonation: Number(data["Additional Donation"] || 0),
+        amountPaid: Number(data["Amount Paid"] || 0),
     };
+};
+
+const getPaid = (data: unknown): boolean => {
+    if (typeof data === "string" || data instanceof String) {
+        return data.toLowerCase() === "yes";
+    }
+
+    return Boolean(data);
+};
+
+const getPickedUp = (data: unknown): boolean => {
+    if (typeof data === "string" || data instanceof String) {
+        return !(data.toLowerCase() === "not ready");
+    }
+
+    return Boolean(data);
 };
 
 const useOrders = () => {
@@ -30,7 +47,7 @@ const useOrders = () => {
         queryKey: ["orders"],
         queryFn: async () => {
             const clientsRef = collection(db, "clients");
-            const snapshot = await getDocs(query(clientsRef, limit(20)));
+            const snapshot = await getDocs(query(clientsRef, limit(3)));
             const orderObjects = snapshot.docs.map((doc) => docToOrder(doc.id, doc.data()));
             console.log(orderObjects);
             return orderObjects;

@@ -5,12 +5,18 @@ import { Order } from "../../types/Order";
 import { COST_PER_ORDER } from "../../constants";
 import EditOrder from "./EditOrder";
 import { getChipColor } from "../../utils/getChipColor";
+import Snackbar from "@mui/material/Snackbar";
 
 interface OrdersTableProps {
     rows: Order[];
 }
 
 export default function OrdersTable({ rows }: OrdersTableProps) {
+    const [openSnackbar, setOpenSnackbar] = React.useState(false);
+    const [snackbarMessage, setSnackbarMessage] = React.useState("");
+
+    const handleCloseSnackbar = () => { setOpenSnackbar(false); };
+
     const columns: GridColDef[] = [
         {
             field: "id",
@@ -70,26 +76,39 @@ export default function OrdersTable({ rows }: OrdersTableProps) {
             field: "action",
             headerName: "Action",
             sortable: false,
-            renderCell: ({ row }) => <EditOrder order={row} />,
+            renderCell: ({ row }) => <EditOrder
+                order={row}
+                setOpenSnackbar={setOpenSnackbar}
+                setSnackbarMessage={setSnackbarMessage}
+            />,
             headerAlign: "right",
             align: "right",
         }
     ].map((col) => ({ headerClassName: "super-app-theme--header", ...col }) as GridColDef);
 
     return (
-        <DataGrid
-            rows={rows ?? []}
-            columns={columns}
-            initialState={{
-                pagination: { paginationModel: { pageSize: 5 } }
-            }}
-            pageSizeOptions={[5, 10, 25]}
-            disableRowSelectionOnClick
-            sx={{
-                "& .super-app-theme--header": {
-                    fontSize: "1.2em"
-                },
-            }}
-        />
+        <>
+            <DataGrid
+                rows={rows ?? []}
+                columns={columns}
+                initialState={{
+                    pagination: { paginationModel: { pageSize: 5 } }
+                }}
+                pageSizeOptions={[5, 10, 25]}
+                disableRowSelectionOnClick
+                sx={{
+                    "& .super-app-theme--header": {
+                        fontSize: "1.2em"
+                    },
+                }}
+            />
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={2000}
+                message={snackbarMessage}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            />
+        </>
     );
 }
