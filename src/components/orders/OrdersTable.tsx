@@ -6,16 +6,59 @@ import { COST_PER_ORDER } from "../../constants";
 import EditOrder from "./EditOrder";
 import { getChipColor } from "../../utils/getChipColor";
 import Snackbar from "@mui/material/Snackbar";
+import { MutateOptions, useQueryClient } from "@tanstack/react-query";
+import EditIcon from "@mui/icons-material/Edit";
+import { useSnackbar } from "../../hooks/useSnackbar";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import useDeleteOrder from "../../hooks/useDeleteOrder";
 
 interface OrdersTableProps {
     rows: Order[];
 }
 
-export default function OrdersTable({ rows }: OrdersTableProps) {
-    const [openSnackbar, setOpenSnackbar] = React.useState(false);
-    const [snackbarMessage, setSnackbarMessage] = React.useState("");
+const EditOrderButton = (
+    {
+        row,
+        setOpenSnackbar,
+        setSnackbarMessage
+    }: {
+        row: Order,
+        setOpenSnackbar(boolean): void,
+        setSnackbarMessage(string): void,
+    }) => {
+    const [open, setOpen] = React.useState(false);
 
-    const handleCloseSnackbar = () => { setOpenSnackbar(false); };
+    return (
+        <>
+            <IconButton onClick={() => setOpen(true)}><EditIcon /></IconButton>
+            <EditOrder
+                open={open}
+                setOpen={setOpen}
+                order={row}
+                setOpenSnackbar={setOpenSnackbar}
+                setSnackbarMessage={setSnackbarMessage}
+            />
+        </>
+    );
+
+};
+
+export default function OrdersTable({ rows }: OrdersTableProps) {
+    const { setOpenSnackbar, setSnackbarMessage, snackbar } = useSnackbar();
+    const queryClient = useQueryClient();
+    const deleteOrderMutation = useDeleteOrder(queryClient);
+
+    const handleDelete = async (order: Order) => {
+        try {
+            await deleteOrderMutation.mutateAsync(order);
+            setSnackbarMessage("Successfully deleted order");
+        } catch {
+            setSnackbarMessage("Failed to delete order");
+        }
+        setOpenSnackbar(true);
+
+    };
 
     const columns: GridColDef[] = [
         {
@@ -69,18 +112,24 @@ export default function OrdersTable({ rows }: OrdersTableProps) {
             sortable: true,
             width: 130,
             renderCell: ({ value }: { value: boolean }) => {
-                return <Chip variant="outlined" size="medium" label={value ? "Ready" : "Not Ready"} {...getChipColor(value)} />;
+                return <Chip variant="outlined" size="medium" label={value ? "Yes" : "No"} {...getChipColor(value)} />;
             }
         },
         {
             field: "action",
             headerName: "Action",
             sortable: false,
-            renderCell: ({ row }) => <EditOrder
-                order={row}
-                setOpenSnackbar={setOpenSnackbar}
-                setSnackbarMessage={setSnackbarMessage}
-            />,
+            renderCell: ({ row }) =>
+                <>
+                    <EditOrderButton
+                        row={row}
+                        setOpenSnackbar={setOpenSnackbar}
+                        setSnackbarMessage={setSnackbarMessage}
+                    />
+                    <IconButton onClick={() => handleDelete(row)}>
+                        <DeleteIcon />
+                    </IconButton>
+                </>,
             headerAlign: "right",
             align: "right",
         }
@@ -102,13 +151,7 @@ export default function OrdersTable({ rows }: OrdersTableProps) {
                     },
                 }}
             />
-            <Snackbar
-                open={openSnackbar}
-                autoHideDuration={2000}
-                message={snackbarMessage}
-                onClose={handleCloseSnackbar}
-                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            />
+            {snackbar}
         </>
     );
 }

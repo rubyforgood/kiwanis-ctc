@@ -1,1 +1,1 @@
-export const COST_PER_ORDER = 40;
+export const COST_PER_ORDER = 45;

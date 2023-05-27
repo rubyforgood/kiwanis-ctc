@@ -34,6 +34,9 @@ import Select from "@mui/material/Select";
 import { Theme, useTheme } from "@mui/material";
 import useEditOrder from "../../hooks/useEditOrder";
 import { useQueryClient } from "@tanstack/react-query";
+import useCreateOrder from "../../hooks/useCreateOrder";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import ArrowDownIcon from "@mui/icons-material/ArrowDropDown";
 
 function SubsectionTitle({ title, sx, button }: { title: string, sx?: SxProps, button?: React.ReactNode }) {
     return (<Typography variant="h6" sx={{ ...sx, fontWeight: "bold" }}>{title}{button}</Typography>);
@@ -68,23 +71,28 @@ function ToggleButton({ value, handleToggle, label, theme }:
 
 export default function EditOrder(
     {
+        open,
+        setOpen,
         order,
         setOpenSnackbar,
-        setSnackbarMessage
+        setSnackbarMessage,
+        isNewOrder = false
     }: {
+        open: boolean,
+        setOpen(boolean): void,
         order: Order,
         setOpenSnackbar(boolean): void,
-        setSnackbarMessage(string): void
+        setSnackbarMessage(string): void,
+        isNewOrder?: boolean
     }) {
-    // TODO: Add additional donation to object
-    // TODO: Use less use states
 
     const theme = useTheme();
     const queryClient = useQueryClient();
     const editOrderMutation = useEditOrder(queryClient);
+    const createOrderMutation = useCreateOrder(queryClient);
 
-    const [open, setOpen] = React.useState(false);
-    const [isEditing, setIsEditing] = React.useState(false);
+    const [isEditing, setIsEditing] = React.useState(isNewOrder);
+    const [showCustomerComments, setShowNotes] = React.useState(false);
 
     const [newOrder, setNewOrder] = React.useState<Order>({ ...order });
 
@@ -104,10 +112,6 @@ export default function EditOrder(
         }
     }, [newOrder.boxesForCustomer, newOrder.boxesForAFAC, newOrder.amountPaid, setBalance]);
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
     const handleCancel = () => {
         setOpen(false);
         setIsEditing(false);
@@ -116,13 +120,23 @@ export default function EditOrder(
 
     const handleSave = async () => {
         try {
-            await editOrderMutation.mutateAsync(newOrder);
-            setSnackbarMessage("Edit Successful");
+            if (isNewOrder) {
+                if (!newOrder.firstName || !newOrder.lastName) {
+                    setSnackbarMessage("Must enter a first name and last name");
+                    setOpenSnackbar(true);
+                    return;
+                }
+                await createOrderMutation.mutateAsync(newOrder);
+            } else {
+                await editOrderMutation.mutateAsync(newOrder);
+            }
+            setSnackbarMessage(`Successfully ${isNewOrder ? "created new order" : "updated order"}`);
             setOpenSnackbar(true);
             setOpen(false);
             setIsEditing(false);
+            setNewOrder({ ...order });
         } catch {
-            setSnackbarMessage("Something went wrong. Please contact an administrator");
+            setSnackbarMessage(`Could not ${isNewOrder ? "create new order" : "edit order"}`);
             setOpenSnackbar(true);
             setOpen(false);
         }
@@ -166,234 +180,264 @@ export default function EditOrder(
             value: newOrder.howDidYouHearAboutUs,
             handleChange: (e) => setNewOrder(newOrder => ({ ...newOrder, howDidYouHearAboutUs: e.target.value })),
             icon: <CampaignIcon fontSize="small" color="secondary" />,
-            label: "Referred By"
+            label: "How did you hear about us?"
         },
     ];
 
     return (
-        <>
-            <IconButton onClick={handleOpen}><EditIcon /></IconButton>
-            <Dialog open={open} onClose={handleCancel} maxWidth='sm' fullWidth>
-                {isEditing
-                    ?
-                    <Stack my={2} direction="row" justifyContent="space-around">
-                        <TextField
-                            size="small"
-                            type="text"
-                            value={newOrder.firstName}
-                            label="First Name"
-                            onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, firstName: e.target.value }))}
-                        />
-                        <TextField
-                            size="small"
-                            type="text"
-                            value={newOrder.lastName}
-                            onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, lastName: e.target.value }))}
-                            label="Last Name"
-                            sx={{
-                                ml: 1
-                            }}
-                        />
-                    </Stack>
-                    : <DialogTitle> {`${newOrder.firstName} ${newOrder.lastName}`}</DialogTitle>
-                }
-                <Divider sx={{ backgroundColor: theme.palette.primary.main, height: "3px" }} />
-                <DialogContent>
-                    <Box sx={{ mx: 2 }}>
-                        <SubsectionTitle
-                            title={"Customer Details"}
-                            button={
-                                <IconButton onClick={() => setIsEditing(!isEditing)}>
-                                    <EditIcon sx={{ ml: 0.5, fontSize: "20px" }} />
-                                </IconButton>
-                            }
-                        />
-                        {isEditing
-                            ?
-                            <Stack>
-                                {
-                                    customerDetails.map((details) => (
-                                        <IconTextField
-                                            key={details.label}
-                                            icon={details.icon}
-                                            value={details.value}
-                                            onChange={details.handleChange}
-                                            label={details.label}
-                                        />
-                                    ))
-                                }
-                            </Stack>
-                            : <>
-                                {
-                                    customerDetails.map((details) => (
-                                        <IconText
-                                            key={details.label}
-                                            icon={details.icon}
-                                            variant="body2"
-                                        >
-                                            {details.value}
-                                        </IconText>
-                                    ))
-                                }
-                            </>
+        <Dialog open={open} onClose={handleCancel} maxWidth='sm' fullWidth>
+            {isEditing || isNewOrder
+                ?
+                <Stack my={2} direction="row" justifyContent="space-around">
+                    <TextField
+                        size="small"
+                        type="text"
+                        value={newOrder.firstName}
+                        label="First Name"
+                        onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, firstName: e.target.value }))}
+                    />
+                    <TextField
+                        size="small"
+                        type="text"
+                        value={newOrder.lastName}
+                        onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, lastName: e.target.value }))}
+                        label="Last Name"
+                        sx={{
+                            ml: 1
+                        }}
+                    />
+                </Stack>
+                : <DialogTitle> {`${newOrder.firstName} ${newOrder.lastName}`}</DialogTitle>
+            }
+            <Divider sx={{ backgroundColor: theme.palette.primary.main, height: "3px" }} />
+            <DialogContent>
+                <Box sx={{ mx: 2 }}>
+                    <SubsectionTitle
+                        title={"Customer Details"}
+                        button={isNewOrder
+                            ? null
+                            : <IconButton onClick={() => setIsEditing(!isEditing)}>
+                                <EditIcon sx={{ ml: 0.5, fontSize: "20px" }} />
+                            </IconButton>
                         }
-                        <Divider sx={{ my: 1, backgroundColor: theme.palette.primary.main, height: "1px" }} />
-                        <SubsectionTitle title={"Order Details"} />
+                    />
+                    {isEditing || isNewOrder
+                        ?
+                        <Stack>
+                            {
+                                customerDetails.map((details) => (
+                                    <IconTextField
+                                        key={details.label}
+                                        icon={details.icon}
+                                        value={details.value}
+                                        onChange={details.handleChange}
+                                        label={details.label}
+                                    />
+                                ))
+                            }
+                            <TextField
+                                value={newOrder.customerComments}
+                                onChange={(e) => setNewOrder({ ...newOrder, customerComments: e.target.value })}
+                                label="Customer Comments"
+                                size="small"
+                                multiline
+                                sx={{
+                                    mx: 3.8
+                                }}
+                            />
+                        </Stack>
+                        : <>
+                            {
+                                customerDetails.map((details) => (
+                                    <IconText
+                                        key={details.label}
+                                        icon={details.icon}
+                                        variant="body2"
+                                    >
+                                        {details.value}
+                                    </IconText>
+                                ))
+                            }
+                            { newOrder.customerComments ?
+                                (showCustomerComments
+                                    ?
+                                    <>
+                                        <IconButton onClick={() => setShowNotes(false)} disableTouchRipple>
+                                            <Stack direction="row" alignItems="center">
+                                                <Typography variant="body2" sx={{ color: "black" }}>Hide Customer Comments</Typography>
+                                                <ArrowDownIcon fontSize="small" />
+                                            </Stack>
+                                        </IconButton>
+                                        <Typography variant="body1">{newOrder.customerComments}</Typography>
+                                    </>
+                                    :
+                                    <IconButton onClick={() => setShowNotes(true)} disableTouchRipple>
+                                        <Stack direction="row" alignItems="center">
+                                            <Typography variant="body2" sx={{ color: "black" }}>Show Customer Comments</Typography>
+                                            <ArrowRightIcon fontSize="small" />
+                                        </Stack>
+                                    </IconButton>
+                                )
+                                : null
+                            }
+                        </>
+                    }
+                    <Divider sx={{ my: 1, backgroundColor: theme.palette.primary.main, height: "1px" }} />
+                    <SubsectionTitle title={"Order Details"} />
+                    <Table sx={{
+                        [`& .${tableCellClasses.root}`]: {
+                            borderBottom: "none"
+                        },
+                        mb: 2
+                    }} >
+                        <TableHead sx={{ fontWeight: "bold" }}>
+                            <TableRow>
+                                <TableCell><Typography>Category</Typography></TableCell>
+                                <TableCell align="center"><Typography>Boxes</Typography></TableCell>
+                                <TableCell align="right"><Typography>Cost</Typography></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody >
+                            {orderDetailsRows.map((row) => (
+                                <TableRow
+                                    key={row.name}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        <Typography>{row.name}</Typography>
+                                    </TableCell>
+                                    <TableCell align="center" >
+                                        <ButtonGroup >
+                                            <Button onClick={row.increment}>+</Button>
+                                            <Button disableRipple>{row.value}</Button>
+                                            <Button onClick={row.decrement} >-</Button>
+                                        </ButtonGroup>
+                                    </TableCell>
+
+                                    <TableCell align="right">
+                                        <Typography variant="body1">${row.value * COST_PER_ORDER}</Typography>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                            <TableRow sx={{ borderTop: 1, borderColor: "primary" }}>
+                                <TableCell><Typography>Total</Typography></TableCell>
+                                <TableCell align="center">
+                                </TableCell>
+                                <TableCell align="right">
+                                    <Typography variant="body1">${total}</Typography>
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+
+                    <SubsectionTitle title="Payment Details" />
+                    <TableContainer>
                         <Table sx={{
                             [`& .${tableCellClasses.root}`]: {
                                 borderBottom: "none"
                             },
                             mb: 2
                         }} >
-                            <TableHead sx={{ fontWeight: "bold" }}>
+                            <TableBody>
                                 <TableRow>
-                                    <TableCell><Typography>Category</Typography></TableCell>
-                                    <TableCell align="center"><Typography>Boxes</Typography></TableCell>
-                                    <TableCell align="right"><Typography>Cost</Typography></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody >
-                                {orderDetailsRows.map((row) => (
-                                    <TableRow
-                                        key={row.name}
-                                    >
-                                        <TableCell component="th" scope="row">
-                                            <Typography>{row.name}</Typography>
-                                        </TableCell>
-                                        <TableCell align="center" >
-                                            <ButtonGroup >
-                                                <Button onClick={row.increment}>+</Button>
-                                                <Button disableRipple>{row.value}</Button>
-                                                <Button onClick={row.decrement} >-</Button>
-                                            </ButtonGroup>
-                                        </TableCell>
-
-                                        <TableCell align="right">
-                                            <Typography variant="body1">${row.value * COST_PER_ORDER}</Typography>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                                <TableRow sx={{ borderTop: 1, borderColor: "primary" }}>
-                                    <TableCell><Typography>Total</Typography></TableCell>
-                                    <TableCell align="center">
+                                    <TableCell component="th">
+                                        <Typography>Payment Method</Typography>
                                     </TableCell>
-                                    <TableCell align="right">
-                                        <Typography variant="body1">${total}</Typography>
+                                    <TableCell >
+                                        <Box sx={{ minWidth: 120 }}>
+                                            <FormControl fullWidth>
+                                                <Select
+                                                    value={newOrder.method}
+                                                    onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, method: e.target.value }))}
+                                                >
+                                                    <MenuItem value="Cash">Cash</MenuItem>
+                                                    <MenuItem value="Credit Card">Credit Card</MenuItem>
+                                                    <MenuItem value="Check">Check</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Box>
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell component="th">
+                                        <Typography>Paid</Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <ToggleButton
+                                            theme={theme}
+                                            value={newOrder.paid}
+                                            handleToggle={() => setNewOrder(newOrder => ({ ...newOrder, paid: !newOrder.paid }))}
+                                            label={newOrder.paid ? "Yes" : "No"} />
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell component="th" scope="line">
+                                        <Typography>Amount Paid</Typography>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <TextField
+                                            size="small"
+                                            InputProps={{
+                                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                                            }}
+                                            type="number"
+                                            value={newOrder.amountPaid}
+                                            inputProps={{
+                                                step: 1
+                                            }}
+                                            onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, amountPaid: parseFloat(e.target.value) }))}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell component="th" scope="line">
+                                        <Typography>Balance</Typography>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <Typography pl="14px">{`${balance < 0 ? "-" : ""} $ ${Math.abs(balance).toFixed(2)}`}</Typography>
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell component="th" scope="line">
+                                        <Typography>Additional Donation</Typography>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <TextField
+                                            size="small"
+                                            InputProps={{
+                                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                                            }}
+                                            type="number"
+                                            value={newOrder.additionalDonation}
+                                            inputProps={{
+                                                step: 1
+                                            }}
+                                            onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, additionalDonation: parseFloat(e.target.value) }))}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                                <SubsectionTitle title="Order Status" sx={{ mt: 2 }} />
+                                <TableRow>
+                                    <TableCell component="th">
+                                        <Typography>Picked Up</Typography>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <ToggleButton
+                                            theme={theme}
+                                            value={newOrder.pickedUp}
+                                            handleToggle={() => setNewOrder(newOrder => ({ ...newOrder, pickedUp: !newOrder.pickedUp }))}
+                                            label={newOrder.pickedUp ? "Yes" : "No"}
+                                        />
                                     </TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
-
-                        <SubsectionTitle title="Payment Details" />
-                        <TableContainer>
-                            <Table sx={{
-                                [`& .${tableCellClasses.root}`]: {
-                                    borderBottom: "none"
-                                },
-                                mb: 2
-                            }} >
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell component="th">
-                                            <Typography>Payment Method</Typography>
-                                        </TableCell>
-                                        <TableCell >
-                                            <Box sx={{ minWidth: 120 }}>
-                                                <FormControl fullWidth>
-                                                    <Select
-                                                        value={newOrder.method}
-                                                        onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, method: e.target.value }))}
-                                                    >
-                                                        <MenuItem value="Cash">Cash</MenuItem>
-                                                        <MenuItem value="Credit Card">Credit Card</MenuItem>
-                                                        <MenuItem value="Check">Check</MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                            </Box>
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell component="th">
-                                            <Typography>Paid</Typography>
-                                        </TableCell>
-                                        <TableCell>
-                                            <ToggleButton
-                                                theme={theme}
-                                                value={newOrder.paid}
-                                                handleToggle={() => setNewOrder(newOrder => ({ ...newOrder, paid: !newOrder.paid }))}
-                                                label={newOrder.paid ? "Yes" : "No"} />
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell component="th" scope="line">
-                                            <Typography>Amount Paid</Typography>
-                                        </TableCell>
-                                        <TableCell align="left">
-                                            <TextField
-                                                size="small"
-                                                InputProps={{
-                                                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                                                }}
-                                                type="number"
-                                                value={newOrder.amountPaid}
-                                                inputProps={{
-                                                    step: 1
-                                                }}
-                                                onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, amountPaid: parseFloat(e.target.value) }))}
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell component="th" scope="line">
-                                            <Typography>Balance</Typography>
-                                        </TableCell>
-                                        <TableCell align="left">
-                                            <Typography pl="14px">{`${balance < 0 ? "-" : ""} $ ${Math.abs(balance).toFixed(2)}`}</Typography>
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell component="th" scope="line">
-                                            <Typography>Additional Donation</Typography>
-                                        </TableCell>
-                                        <TableCell align="left">
-                                            <TextField
-                                                size="small"
-                                                InputProps={{
-                                                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                                                }}
-                                                type="number"
-                                                value={newOrder.additionalDonation}
-                                                inputProps={{
-                                                    step: 1
-                                                }}
-                                                onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, additionalDonation: parseFloat(e.target.value) }))}
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                    <SubsectionTitle title="Order Status" sx={{ mt: 2 }} />
-                                    <TableRow>
-                                        <TableCell component="th">
-                                            <Typography>Picked Up</Typography>
-                                        </TableCell>
-                                        <TableCell align="left">
-                                            <ToggleButton
-                                                theme={theme}
-                                                value={newOrder.pickedUp}
-                                                handleToggle={() => setNewOrder(newOrder => ({ ...newOrder, pickedUp: !newOrder.pickedUp }))}
-                                                label={newOrder.pickedUp ? "Yes" : "No"}
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </Box>
-                </DialogContent>
-                <DialogActions>
-                    <Button sx={{ backgroundColor: theme.palette.error.main }} onClick={handleCancel}>Cancel</Button>
-                    <Button sx={{ backgroundColor: theme.palette.success.main }} onClick={handleSave}>Save</Button>
-                </DialogActions>
-            </Dialog >
-        </>
+                    </TableContainer>
+                </Box>
+            </DialogContent>
+            <DialogActions>
+                <Button sx={{ backgroundColor: theme.palette.error.main }} onClick={handleCancel}>Cancel</Button>
+                <Button sx={{ backgroundColor: theme.palette.success.main }} onClick={handleSave}>Save</Button>
+            </DialogActions>
+        </Dialog >
     );
 }
