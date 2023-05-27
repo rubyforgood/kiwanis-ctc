@@ -43,18 +43,12 @@ export default function Orders({ orders }: { orders: Order[] }) {
     const { setOpenSnackbar, setSnackbarMessage, snackbar } = useSnackbar();
 
     React.useEffect(() => {
-        if (orders) {
-            setRows(orders);
-        }
-    }, [orders, setRows]);
-
-    React.useEffect(() => {
         if (search) {
             setRows(orders.filter((row) => (row.firstName + " " + row.lastName).toLowerCase().includes(search)));
         } else {
             setRows(orders);
         }
-    }, [search, rows, setRows]);
+    }, [search, orders, rows, setRows]);
 
     const [isFilePicked, setIsFilePicked] = useState(false);
 
