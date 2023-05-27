@@ -6,11 +6,11 @@ import { COST_PER_ORDER } from "../../constants";
 import EditOrder from "../common/EditOrder";
 import { getChipColor } from "../../utils/getChipColor";
 
-interface OrdersTableProps {
+interface PickupTableProps {
     rows: Order[];
 }
 
-export default function OrdersTable({ rows }: OrdersTableProps) {
+export default function PickupTable({ rows }: PickupTableProps) {
     const columns: GridColDef[] = [
         {
             field: "id",
@@ -18,31 +18,70 @@ export default function OrdersTable({ rows }: OrdersTableProps) {
             width: 80
         },
         {
-            field: "fullName",
-            headerName: "Full name",
+            field: "firstName",
+            headerName: "First Name",
             headerAlign: "center",
             sortable: true,
-            width: 240,
+            width: 120,
             align: "center",
-            valueGetter: ({ row }: { row: Order }) => `${row.firstName ?? ""} ${row.lastName ?? ""}`
+            valueGetter: ({ row }: { row: Order }) => row.firstName
         },
         {
-            field: "boxesOrdered",
+            field: "lastName",
+            headerName: "Last Name",
+            headerAlign: "center",
+            sortable: true,
+            width: 120,
             align: "center",
-            headerName: "Boxes Ordered",
+            valueGetter: ({ row }: { row: Order }) => row.lastName
+        },
+        {
+            field: "self",
+            align: "center",
+            headerAlign: "center",
+            headerName: "Self",
+            type: "number",
+            valueGetter: ({ row }: { row: Order }) => row.boxesForCustomer,
+            width: 120
+        },
+        {
+            field: "afac",
+            align: "center",
+            headerAlign: "center",
+            headerName: "AFAC",
+            type: "number",
+            valueGetter: ({ row }: { row: Order }) => row.boxesForAFAC,
+            width: 120
+        },
+        {
+            field: "totalBoxes",
+            align: "center",
+            headerAlign: "center",
+            headerName: "Total",
             type: "number",
             valueGetter: ({ row }: { row: Order }) => row.boxesForAFAC + row.boxesForCustomer,
-            width: 140
+            width: 120
         },
         {
             field: "total",
             align: "center",
             headerAlign: "center",
-            headerName: " Total Cost",
+            headerName: "Total Cost",
             type: "string",
             width: 130,
             valueGetter: ({ row }: { row: Order }) => {
                 return `$${((row.boxesForAFAC || 0) + (row.boxesForCustomer || 0)) * COST_PER_ORDER}`;
+            }
+        },
+        {
+            field: "Method",
+            align: "center",
+            headerAlign: "center",
+            headerName: "Method",
+            type: "string",
+            width: 160,
+            valueGetter: ({ row }: { row: Order }) => {
+                return `${row.method ? row.method: "-"}`;
             }
         },
         {
