@@ -1,12 +1,13 @@
 
 import React from "react";
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../Firebase";
 
-const useEditKiwanisTotalOrders = (queryClient: QueryClient) => {
+const useEditKiwanisTotalOrders = () => {
+    const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (amount: Number) => {
+        mutationFn: async (amount: number) => {
             await setDoc(doc(db, "KiwanisTotalOrders", "kiwanisTotalOrders"), {
                 amount
             });

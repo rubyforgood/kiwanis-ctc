@@ -7,7 +7,7 @@ const useGetKiwanisTotalOrders = () => {
         queryKey: ["kiwanisTotalOrders"],
         queryFn: async () => {
             const snapshot = await getDoc(doc(db, "KiwanisTotalOrders", "kiwanisTotalOrders"));
-            return snapshot.data;
+            return snapshot.data();
         },
     });
 };
