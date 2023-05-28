@@ -18,7 +18,7 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import Dialog from "@mui/material/Dialog";
 import Stack from "@mui/material/Stack";
-import Steps from "../stepper/Steps";
+import Steps from "./stepper/Steps";
 import { stepperContext } from "../../providers/StepperProvider";
 import OrdersTable from "./OrdersTable";
 import { Order } from "../../types/Order";

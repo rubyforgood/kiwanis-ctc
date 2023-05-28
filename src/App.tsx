@@ -19,6 +19,7 @@ import {
     QueryClient,
     QueryClientProvider,
 } from "@tanstack/react-query";
+import PickupPage from "./pages/PickupPage";
 
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ export default function App() {
                         <Route path="/" element={<Login />} />
                         <Route path="/dashboard" element={<AuthRoute><AdminDashboard /></AuthRoute>} />
                         <Route path="/orders" element={<AuthRoute><OrdersPage /></AuthRoute>} />
+                        <Route path="/pickup" element={<AuthRoute><PickupPage /></AuthRoute>} />
                     </Routes>
                 </Router>
             </ThemeProvider>

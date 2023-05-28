@@ -16,7 +16,7 @@ import StepThree from "./StepThree";
 import StepFour from "./StepFour";
 import StepPickup from "./StepPickup";
 import StepPickupConfirmation from "./StepPickupConfirmation";
-import { stepperContext } from "../../providers/StepperProvider";
+import { stepperContext } from "../../../providers/StepperProvider";
 import StepFinal from "./StepFinal";
 
 const steps = [
