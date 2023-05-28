@@ -69,23 +69,20 @@ function ToggleButton({ value, handleToggle, label, theme }:
     );
 }
 
-export default function EditOrder(
-    {
-        open,
-        setOpen,
-        order,
-        setOpenSnackbar,
-        setSnackbarMessage,
-        isNewOrder = false
-    }: {
-        open: boolean,
-        setOpen(boolean): void,
-        order: Order,
-        setOpenSnackbar(boolean): void,
-        setSnackbarMessage(string): void,
-        isNewOrder?: boolean
-    }) {
+function calculateBalance(newOrder: Order) {
+    return ((newOrder.boxesForCustomer + newOrder.boxesForAFAC) * COST_PER_ORDER) - newOrder.amountPaid;
+}
 
+interface EditOrderProps {
+    open: boolean,
+    setOpen(boolean): void,
+    order: Order,
+    setOpenSnackbar(boolean): void,
+    setSnackbarMessage(string): void,
+    isNewOrder?: boolean
+}
+
+export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSnackbarMessage, isNewOrder = false }: EditOrderProps) {
     const theme = useTheme();
     const editOrderMutation = useEditOrder();
     const createOrderMutation = useCreateOrder();
@@ -95,21 +92,9 @@ export default function EditOrder(
 
     const [newOrder, setNewOrder] = React.useState<Order>({ ...order });
 
-    const [total, setTotal] = React.useState(0);
-    const [balance, setBalance] = React.useState(0);
-
-    React.useEffect(() => {
-        setTotal((newOrder.boxesForCustomer + newOrder.boxesForAFAC) * COST_PER_ORDER);
-    }, [newOrder.boxesForCustomer, newOrder.boxesForAFAC, setTotal]);
-
-    React.useEffect(() => {
-        const calculateBalance = ((newOrder.boxesForCustomer + newOrder.boxesForAFAC) * COST_PER_ORDER) - newOrder.amountPaid;
-        if (isNaN(calculateBalance)) {
-            setBalance(0);
-        } else {
-            setBalance(((newOrder.boxesForAFAC + newOrder.boxesForCustomer) * COST_PER_ORDER) - newOrder.amountPaid);
-        }
-    }, [newOrder.boxesForCustomer, newOrder.boxesForAFAC, newOrder.amountPaid, setBalance]);
+    const calculatedBalance = calculateBalance(newOrder);
+    const balance = isNaN(calculatedBalance) ? 0 : calculatedBalance;
+    const total = (newOrder.boxesForCustomer + newOrder.boxesForAFAC) * COST_PER_ORDER;
 
     const handleCancel = () => {
         setOpen(false);
@@ -259,7 +244,7 @@ export default function EditOrder(
                                     </IconText>
                                 ))
                             }
-                            { newOrder.customerComments ?
+                            {newOrder.customerComments ?
                                 (showCustomerComments
                                     ?
                                     <>
