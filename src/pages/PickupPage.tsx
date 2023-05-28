@@ -1,14 +1,14 @@
 import { Dashboard } from "../components/dashboard/Dashboard";
 import React from "react";
 import Pickups from "../components/pickups/Pickups";
-import useOrders from "../hooks/useOrders";
+import useGetOrders from "../hooks/useGetOrders";
 
 function PickupPage() {
-    const { data } = useOrders();
+    const { data: orders } = useGetOrders();
 
     return (
         <Dashboard>
-            <Pickups orders={data}></Pickups>
+            <Pickups orders={orders ?? []}></Pickups>
         </Dashboard>
     );
 }
