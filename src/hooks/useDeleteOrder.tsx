@@ -1,10 +1,11 @@
 import React from "react";
 import { Order } from "../types/Order";
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../Firebase";
 
-const useDeleteOrder = (queryClient: QueryClient) => {
+const useDeleteOrder = () => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (order: Order) => {
             await deleteDoc(doc(db, "clients", order.id));

@@ -46,8 +46,7 @@ const EditOrderButton = (
 
 export default function OrdersTable({ rows }: OrdersTableProps) {
     const { setOpenSnackbar, setSnackbarMessage, snackbar } = useSnackbar();
-    const queryClient = useQueryClient();
-    const deleteOrderMutation = useDeleteOrder(queryClient);
+    const deleteOrderMutation = useDeleteOrder();
 
     const handleDelete = async (order: Order) => {
         try {
@@ -61,11 +60,6 @@ export default function OrdersTable({ rows }: OrdersTableProps) {
     };
 
     const columns: GridColDef[] = [
-        {
-            field: "id",
-            headerName: "ID",
-            width: 80
-        },
         {
             field: "fullName",
             headerName: "Full name",

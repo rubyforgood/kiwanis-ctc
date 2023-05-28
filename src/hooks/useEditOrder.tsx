@@ -1,10 +1,11 @@
 import React from "react";
 import { Order } from "../types/Order";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../Firebase";
 
-const useEditOrder = (queryClient: QueryClient) => {
+const useEditOrder = () => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (order: Order) => {
             await setDoc(doc(db, "clients", order.id), {

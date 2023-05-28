@@ -87,9 +87,8 @@ export default function EditOrder(
     }) {
 
     const theme = useTheme();
-    const queryClient = useQueryClient();
-    const editOrderMutation = useEditOrder(queryClient);
-    const createOrderMutation = useCreateOrder(queryClient);
+    const editOrderMutation = useEditOrder();
+    const createOrderMutation = useCreateOrder();
 
     const [isEditing, setIsEditing] = React.useState(isNewOrder);
     const [showCustomerComments, setShowNotes] = React.useState(false);
@@ -108,7 +107,7 @@ export default function EditOrder(
         if (isNaN(calculateBalance)) {
             setBalance(0);
         } else {
-            setBalance(((newOrder.boxesForCustomer + newOrder.boxesForCustomer) * COST_PER_ORDER) - newOrder.amountPaid);
+            setBalance(((newOrder.boxesForAFAC + newOrder.boxesForCustomer) * COST_PER_ORDER) - newOrder.amountPaid);
         }
     }, [newOrder.boxesForCustomer, newOrder.boxesForAFAC, newOrder.amountPaid, setBalance]);
 
@@ -241,8 +240,10 @@ export default function EditOrder(
                                 label="Customer Comments"
                                 size="small"
                                 multiline
+                                rows={2}
                                 sx={{
-                                    mx: 3.8
+                                    mx: 3.8,
+                                    mt: 1
                                 }}
                             />
                         </Stack>
