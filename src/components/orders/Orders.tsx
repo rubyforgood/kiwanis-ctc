@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent, useContext } from "react";
+import React, { useState, ChangeEvent } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -6,41 +6,22 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Paper from "@mui/material/Paper";
-import { DialogTitle, Typography } from "@mui/material";
 import * as XLSX from "xlsx";
-import {
-    GridColDef, gridPageCountSelector,
-    gridPageSelector,
-    useGridApiContext,
-    useGridSelector,
-} from "@mui/x-data-grid";
-import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
-import Dialog from "@mui/material/Dialog";
 import Stack from "@mui/material/Stack";
-import Steps from "./stepper/Steps";
-import { stepperContext } from "../../providers/StepperProvider";
 import OrdersTable from "./OrdersTable";
 import { Order } from "../../types/Order";
-import EditOrder from "./EditOrder";
-import { MutateOptions } from "@tanstack/react-query";
+import EditOrder from "../common/EditOrder";
 import { useSnackbar } from "../../hooks/useSnackbar";
 import { createEmptyOrder } from "../../utils/createEmptyOrder";
-
-
-type Rows = {
-    id: string,
-    fullName: string,
-    totalBoxes: number,
-    totalAmount: number,
-    isPaid: string,
-    status: string
-}
+import { docToOrder } from "../../utils/docToOrder";
+import useCreateOrder from "../../hooks/useCreateOrder";
+import Typography from "@mui/material/Typography";
 
 export default function Orders({ orders }: { orders: Order[] }) {
     const [search, setSearch] = useState("");
     const [rows, setRows] = useState(orders);
     const { setOpenSnackbar, setSnackbarMessage, snackbar } = useSnackbar();
+    const createOrderMutation = useCreateOrder();
 
     React.useEffect(() => {
         if (search) {
@@ -50,45 +31,22 @@ export default function Orders({ orders }: { orders: Order[] }) {
         }
     }, [search, orders, rows, setRows]);
 
-    const [isFilePicked, setIsFilePicked] = useState(false);
-
-    //* steps of add new order stepper
-    const { activeStep, setActiveStep } = useContext(stepperContext);
-
     const [open, setOpen] = useState(false);
 
-    // //* Search area
-    // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    //     setSearchField((e.target.value).toLowerCase());
-    // };
+    const fileInputHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files) { return; }
 
-    //* upload file
-    // const changeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-    //     setIsFilePicked(true);
+        const file = e.target.files[0];
+        const buffer = await file.arrayBuffer();
+        const workbook = XLSX.read(buffer);
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const jsonData = XLSX.utils.sheet_to_json(sheet);
+        const fileOrders = jsonData.map((jsonObj: any) => docToOrder(jsonObj["id"], jsonObj));
+        console.log(fileOrders);
 
-    //     if (!e.target.files) {
-    //         console.error("Select a file");
-    //         return;
-    //     }
-
-    //     const file = e.target.files[0];
-    //     const data = await file.arrayBuffer();
-    //     const wb = XLSX.read(data);
-    //     const ws = wb.Sheets[wb.SheetNames[0]];
-    //     const rows = XLSX.utils.sheet_to_json(ws);
-
-    //     if (rows && Array.isArray(rows)) {
-    //         setRows(rows as Rows[]);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     if (isFilePicked && rows.length > 0) {
-    //         const sheetDataCp = [...rows];
-    //         const result = sheetDataCp.filter(t => t["fullName"].toLowerCase().startsWith(searchField));
-    //         setSearchResults(result);
-    //     }
-    // }, [searchField]);
+        const orderIds = new Set(orders.map((order) => order.id));
+        fileOrders.filter((order) => !orderIds.has(order.id)).forEach(async (order) => { await createOrderMutation.mutateAsync(order); });
+    };
 
     return (
         <React.Fragment>
@@ -104,7 +62,7 @@ export default function Orders({ orders }: { orders: Order[] }) {
                     <Stack direction={{ xs: "column", sm: "column", md: "row" }} alignItems="baseline" pb={1}>
                         <TextField
                             onChange={(e) => setSearch(e.target.value.toLocaleLowerCase())}
-                            sx={{ mr: 6,  width: { xs: 150, sm: 300, md: 450, lg: 500 }, }}
+                            sx={{ mr: 6, width: { xs: 150, sm: 300, md: 450, lg: 500 }, }}
                             size="small"
                             InputProps={{
                                 placeholder: "Search name",
@@ -124,11 +82,12 @@ export default function Orders({ orders }: { orders: Order[] }) {
                                 <label htmlFor="upload">
                                     <input
                                         id="upload"
-                                        accept='*.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,xls,xlsx'
+                                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
                                         style={{ display: "none" }}
-                                        type='file'
-                                        onChange={() => { return; }}
-                                    /><Typography variant='button' aria-hidden='true' fontWeight={600}> Import CSV</Typography>
+                                        type="file"
+                                        onChange={(e) => fileInputHandler(e)}
+                                    />
+                                    <Typography variant="button">Import CSV</Typography>
                                 </label>
                             </Button>
                         </FormControl>
@@ -139,7 +98,7 @@ export default function Orders({ orders }: { orders: Order[] }) {
                                 color='secondary'
                                 onClick={() => setOpen(true)}
                             >
-                                <Typography variant='button' fontWeight={600}>Add New Order</Typography>
+                                Add New Order
                             </Button>
                         </FormControl>
                     </Stack>
