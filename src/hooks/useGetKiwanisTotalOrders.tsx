@@ -2,7 +2,7 @@ import { db } from "../Firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useQuery } from "@tanstack/react-query";
 
-const useGetKiwanisTotalOrders = () => {
+const useGetKiwanisTotalBoxes = () => {
     return useQuery({
         queryKey: ["kiwanisTotalOrders"],
         queryFn: async () => {
@@ -12,4 +12,4 @@ const useGetKiwanisTotalOrders = () => {
     });
 };
 
-export default useGetKiwanisTotalOrders;
+export default useGetKiwanisTotalBoxes;

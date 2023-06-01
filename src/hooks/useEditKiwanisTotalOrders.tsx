@@ -1,10 +1,10 @@
 
 import React from "react";
-import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../Firebase";
 
-const useEditKiwanisTotalOrders = () => {
+const useEditKiwanisTotalBoxes = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (amount: number) => {
@@ -17,4 +17,4 @@ const useEditKiwanisTotalOrders = () => {
     });
 };
 
-export default useEditKiwanisTotalOrders;
+export default useEditKiwanisTotalBoxes;
