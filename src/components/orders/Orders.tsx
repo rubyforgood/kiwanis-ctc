@@ -6,7 +6,6 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Paper from "@mui/material/Paper";
-import * as XLSX from "xlsx";
 import Stack from "@mui/material/Stack";
 import OrdersTable from "./OrdersTable";
 import { Order } from "../../types/Order";
@@ -16,12 +15,15 @@ import { createEmptyOrder } from "../../utils/createEmptyOrder";
 import { docToOrder } from "../../utils/docToOrder";
 import useCreateOrder from "../../hooks/useCreateOrder";
 import Typography from "@mui/material/Typography";
+import { getAuth } from "firebase/auth";
+import { ADMIN_EMAILS } from "../../constants";
 
-export default function Orders({ orders }: { orders: Order[] }) {
+export default function Orders({ orders, isLoading }: { orders: Order[], isLoading: boolean }) {
     const [search, setSearch] = useState("");
     const [rows, setRows] = useState(orders);
+    const [open, setOpen] = useState(false);
     const { setOpenSnackbar, setSnackbarMessage, snackbar } = useSnackbar();
-    const createOrderMutation = useCreateOrder();
+    const auth = getAuth();
 
     React.useEffect(() => {
         if (search) {
@@ -31,21 +33,44 @@ export default function Orders({ orders }: { orders: Order[] }) {
         }
     }, [search, orders, rows, setRows]);
 
-    const [open, setOpen] = useState(false);
 
     const fileInputHandler = async (e: ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) { return; }
 
         const file = e.target.files[0];
-        const buffer = await file.arrayBuffer();
-        const workbook = XLSX.read(buffer);
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const jsonData = XLSX.utils.sheet_to_json(sheet);
-        const fileOrders = jsonData.map((jsonObj: any) => docToOrder(jsonObj["id"], jsonObj));
-        console.log(fileOrders);
+        const fr = new FileReader();
+        const newOrders: any[] = [];
+        fr.onload = () => {
+            console.log(fr.result);
+            const lines = (fr.result as string).split("\n").slice(1);
+            lines.forEach((line) => {
+                const fields = line.split(",");
 
-        const orderIds = new Set(orders.map((order) => order.id));
-        fileOrders.filter((order) => !orderIds.has(order.id)).forEach(async (order) => { await createOrderMutation.mutateAsync(order); });
+                newOrders.push({
+                    firstName: fields[0],
+                    lastName: fields[1],
+                    cellPhone: fields[2],
+                    homePhone: fields[3],
+                    email: fields[4],
+                    customerComments: fields[5],
+                    boxesForAFAC: Number(fields[6]),
+                    boxesForCustomer: Number(fields[7])
+                });
+            });
+        };
+        fr.readAsText(file);
+        console.log(newOrders);
+
+        // const buffer = await file.arrayBuffer();
+        // const workbook = XLSX.read(buffer);
+        // const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        // const jsonData = XLSX.utils.sheet_to_json(sheet);
+        // const fileOrders = jsonData.map((jsonObj: any) => docToOrder(jsonObj["id"], jsonObj));
+        // console.log(fileOrders);
+
+        // const orderIds = new Set(orders.map((order) => order.id));
+        // fileOrders.filter((order) => !orderIds.has(order.id)).forEach(async (order) => { await createOrderMutation.mutateAsync(order); });
+        // fileOrders.filter((order) => !orderIds.has(order.id)).forEach(async (order) => { console.log(order); });
     };
 
     return (
@@ -73,24 +98,28 @@ export default function Orders({ orders }: { orders: Order[] }) {
                                 ),
                             }}
                         />
-                        <FormControl>
-                            <Button
-                                sx={{ width: { xs: 100, sm: 140, md: 150, lg: 170 }, borderRadius: 2, mx: 2, mb: 1 }}
-                                variant='contained'
-                                color='secondary'
-                            >
-                                <label htmlFor="upload">
-                                    <input
-                                        id="upload"
-                                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
-                                        style={{ display: "none" }}
-                                        type="file"
-                                        onChange={(e) => fileInputHandler(e)}
-                                    />
-                                    <Typography variant="button">Import CSV</Typography>
-                                </label>
-                            </Button>
-                        </FormControl>
+                        {
+                            ADMIN_EMAILS.indexOf(auth.currentUser?.email ?? "") !== -1 && (
+                                <FormControl>
+                                    <Button
+                                        sx={{ width: { xs: 100, sm: 140, md: 150, lg: 170 }, borderRadius: 2, mx: 2, mb: 1 }}
+                                        variant='contained'
+                                        color='secondary'
+                                    >
+                                        <label htmlFor="upload">
+                                            <input
+                                                id="upload"
+                                                accept=".csv"
+                                                style={{ display: "none" }}
+                                                type="file"
+                                                onChange={(e) => fileInputHandler(e)}
+                                            />
+                                            <Typography variant="button">Import CSV</Typography>
+                                        </label>
+                                    </Button>
+                                </FormControl>
+                            )
+                        }
                         <FormControl>
                             <Button
                                 sx={{ width: { xs: 100, sm: 140, md: 150, lg: 170 }, borderRadius: 2, mb: 1, mx: 2 }}
@@ -111,7 +140,7 @@ export default function Orders({ orders }: { orders: Order[] }) {
                         isNewOrder
                     />
                     <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }} elevation={2}>
-                        <OrdersTable rows={rows} />
+                        <OrdersTable rows={rows} isLoading={isLoading} />
                     </Paper>
                 </Box>
             </Box>

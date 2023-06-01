@@ -5,12 +5,12 @@ import useGetOrders from "../hooks/useGetOrders";
 import StepperProvider from "../providers/StepperProvider";
 
 export default function OrdersPage() {
-    const { data } = useGetOrders();
+    const { data, isLoading } = useGetOrders();
 
     return (
         <Dashboard>
             <StepperProvider>
-                <Orders orders={data ?? []} />
+                <Orders orders={data ?? []} isLoading={isLoading} />
             </StepperProvider>
         </Dashboard>
     );

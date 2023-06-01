@@ -3,48 +3,19 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Chip from "@mui/material/Chip";
 import { Order } from "../../types/Order";
 import { COST_PER_ORDER } from "../../constants";
-import EditOrder from "../common/EditOrder";
 import { getChipColor } from "../../utils/getChipColor";
-import Snackbar from "@mui/material/Snackbar";
-import { MutateOptions, useQueryClient } from "@tanstack/react-query";
-import EditIcon from "@mui/icons-material/Edit";
 import { useSnackbar } from "../../hooks/useSnackbar";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useDeleteOrder from "../../hooks/useDeleteOrder";
+import { EditOrderButton } from "../common/EditOrderButton";
 
 interface OrdersTableProps {
     rows: Order[];
+    isLoading: boolean;
 }
 
-const EditOrderButton = (
-    {
-        row,
-        setOpenSnackbar,
-        setSnackbarMessage
-    }: {
-        row: Order,
-        setOpenSnackbar(boolean): void,
-        setSnackbarMessage(string): void,
-    }) => {
-    const [open, setOpen] = React.useState(false);
-
-    return (
-        <>
-            <IconButton onClick={() => setOpen(true)}><EditIcon /></IconButton>
-            <EditOrder
-                open={open}
-                setOpen={setOpen}
-                order={row}
-                setOpenSnackbar={setOpenSnackbar}
-                setSnackbarMessage={setSnackbarMessage}
-            />
-        </>
-    );
-
-};
-
-export default function OrdersTable({ rows }: OrdersTableProps) {
+export default function OrdersTable({ rows, isLoading }: OrdersTableProps) {
     const { setOpenSnackbar, setSnackbarMessage, snackbar } = useSnackbar();
     const deleteOrderMutation = useDeleteOrder();
 
@@ -61,13 +32,27 @@ export default function OrdersTable({ rows }: OrdersTableProps) {
 
     const columns: GridColDef[] = [
         {
-            field: "fullName",
-            headerName: "Full name",
+            field: "id",
+            headerName: "ID",
+            width: 80
+        },
+        {
+            field: "firstName",
+            headerName: "First Name",
             headerAlign: "center",
             sortable: true,
-            width: 240,
+            width: 180,
             align: "center",
-            valueGetter: ({ row }: { row: Order }) => `${row.firstName ?? ""} ${row.lastName ?? ""}`
+            valueGetter: ({ row }: { row: Order }) => row.firstName
+        },
+        {
+            field: "lastName",
+            headerName: "Last Name",
+            headerAlign: "center",
+            sortable: true,
+            width: 180,
+            align: "center",
+            valueGetter: ({ row }: { row: Order }) => row.lastName
         },
         {
             field: "boxesOrdered",
@@ -101,7 +86,7 @@ export default function OrdersTable({ rows }: OrdersTableProps) {
         {
             field: "pickedUp",
             align: "center",
-            headerName: "Status",
+            headerName: "Picked Up",
             headerAlign: "center",
             sortable: true,
             width: 130,
@@ -144,6 +129,7 @@ export default function OrdersTable({ rows }: OrdersTableProps) {
                         fontSize: "1.2em"
                     },
                 }}
+                loading={isLoading}
             />
             {snackbar}
         </>
