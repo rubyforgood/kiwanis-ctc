@@ -96,33 +96,35 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
     const balance = isNaN(calculatedBalance) ? 0 : calculatedBalance;
     const total = (newOrder.boxesForCustomer + newOrder.boxesForAFAC) * COST_PER_ORDER;
 
-    const handleCancel = () => {
+    const handleCloseDialog = () => {
         setOpen(false);
         setIsEditing(false);
+    };
+
+    const handleCancel = () => {
+        handleCloseDialog();
         setNewOrder({ ...order });
     };
 
     const handleSave = async () => {
         try {
             if (isNewOrder) {
-                if (!newOrder.firstName || !newOrder.lastName) {
-                    setSnackbarMessage("Must enter a first name and last name");
+                if (!(newOrder.email || newOrder.cellPhone || newOrder.homePhone)) {
+                    setSnackbarMessage("Must enter an email or cellphone number");
                     setOpenSnackbar(true);
                     return;
                 }
                 await createOrderMutation.mutateAsync(newOrder);
+                setSnackbarMessage("Successfully created new order");
+                handleCancel();
             } else {
                 await editOrderMutation.mutateAsync(newOrder);
+                setSnackbarMessage("Successfully updated order");
+                handleCloseDialog();
             }
-            setSnackbarMessage(`Successfully ${isNewOrder ? "created new order" : "updated order"}`);
-            setOpenSnackbar(true);
-            setOpen(false);
-            setIsEditing(false);
-            setNewOrder({ ...order });
         } catch {
             setSnackbarMessage(`Could not ${isNewOrder ? "create new order" : "edit order"}`);
-            setOpenSnackbar(true);
-            setOpen(false);
+            handleCloseDialog();
         }
     };
 
@@ -254,7 +256,7 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
                                                 <ArrowDownIcon fontSize="small" />
                                             </Stack>
                                         </IconButton>
-                                        <Typography variant="body1">{newOrder.customerComments}</Typography>
+                                        <Typography variant="body1" sx={{ wordWrap: "break-word", mx: 1 }}>{newOrder.customerComments}</Typography>
                                     </>
                                     :
                                     <IconButton onClick={() => setShowNotes(true)} disableTouchRipple>
