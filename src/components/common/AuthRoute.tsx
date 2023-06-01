@@ -9,16 +9,14 @@ const AuthRoute: React.FC<IAuthRouteProps> = ({ children }) => {
     const auth = getAuth();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const AuthCheck = onAuthStateChanged(auth, (user) => {
-        if (user) {
-            setLoading(false);
-        } else {
-            navigate("/");
-        }
-    });
     useEffect(() => {
-        AuthCheck();
-        return () => AuthCheck();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setLoading(false);
+            } else {
+                navigate("/");
+            }
+        });
     }, [auth]);
 
     { loading ? <p>...</p> : <div></div>; }
