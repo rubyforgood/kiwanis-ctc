@@ -99,15 +99,7 @@ export function Dashboard({ children }: { children: React.ReactNode }) {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography
-                        component="h1"
-                        variant="h6"
-                        color="inherit"
-                        noWrap
-                        sx={{ flexGrow: 1 }}
-                    >
-                        Dashboard
-                    </Typography>
+                    <Box sx={{ flexGrow: 1 }} ></Box>
                     <Button
                         variant="contained"
                         color="secondary"
