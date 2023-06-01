@@ -12,7 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import { TextField } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import useEditKiwanisTotalOrders from "../../hooks/useEditKiwanisTotalOrders";
+import useEditKiwanisTotalBoxes from "../../hooks/useEditKiwanisTotalOrders";
 import { useSnackbar } from "../../hooks/useSnackbar";
 
 const Metric = ({ value, title, isCurrency = false }: { value: number, title: string, isCurrency?: boolean }) => (
@@ -56,7 +56,7 @@ const calculateMetrics = (orders, kiwanisTotalBoxes) => {
 export default function Admin({ orders, kiwanisTotalBoxes }: { orders: Order[], kiwanisTotalBoxes: number }) {
     const [editKiwanisTotalBoxes, setEditKiwanisTotalBoxes] = React.useState(false);
     const [newKiwanisTotalBoxes, setNewKiwanisTotalBoxes] = React.useState(kiwanisTotalBoxes);
-    const editKiwanisTotalOrdersMutation = useEditKiwanisTotalOrders();
+    const editKiwanisTotalOrdersMutation = useEditKiwanisTotalBoxes();
     const { setOpenSnackbar, setSnackbarMessage, snackbar } = useSnackbar();
 
     const saveHandler = async () => {
@@ -91,12 +91,12 @@ export default function Admin({ orders, kiwanisTotalBoxes }: { orders: Order[], 
     const metrics = [
         {
             value: totalBoxesRemaining,
-            title: "Remaining Boxes to Sell",
+            title: "Remaining Boxes for Sale",
             isCurrency: false
         },
         {
-            value: totalBoxesOrdered,
-            title: "Boxes Ordered",
+            value: totalOrders,
+            title: "Total Orders",
             isCurrency: false
         },
         {
@@ -105,8 +105,8 @@ export default function Admin({ orders, kiwanisTotalBoxes }: { orders: Order[], 
             isCurrency: true
         },
         {
-            value: totalOrders,
-            title: "Total Orders",
+            value: totalBoxesOrdered,
+            title: "Boxes Ordered",
             isCurrency: false
         },
         {
