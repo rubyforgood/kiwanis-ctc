@@ -5,12 +5,12 @@ import * as React from "react";
 import Admin from "../components/dashboard/Admin";
 import { Dashboard } from "../components/dashboard/Dashboard";
 import OrdersTable from "../components/orders/OrdersTable";
-import useGetKiwanisTotalOrders from "../hooks/useGetKiwanisTotalOrders";
+import useGetKiwanisTotalBoxes from "../hooks/useGetKiwanisTotalOrders";
 import useGetOrders from "../hooks/useGetOrders";
 
-export default function App() {
-    const { data: orders } = useGetOrders();
-    const { data: kiwanisTotalBoxes } = useGetKiwanisTotalOrders();
+export default function AdminDashboard() {
+    const { data: orders, isLoading } = useGetOrders();
+    const { data: kiwanisTotalBoxes } = useGetKiwanisTotalBoxes();
     return (
         <Dashboard>
             <Grid container>
@@ -22,7 +22,7 @@ export default function App() {
                         <Typography sx={{ fontSize: "1.5em", fontWeight: "bold", marginBottom: 1 }} >
                             Orders
                         </Typography>
-                        <OrdersTable rows={orders ?? []} />
+                        <OrdersTable rows={orders ?? []} isLoading={isLoading} />
                     </Paper>
                 </Grid>
             </Grid>
