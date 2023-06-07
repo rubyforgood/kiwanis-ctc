@@ -123,7 +123,7 @@ export default function Admin({ orders, kiwanisTotalBoxes }: { orders: Order[], 
 
     return (
         <React.Fragment>
-            <Typography sx={{ fontSize: "1.5em", fontWeight: "bold", marginBottom: "1em" }} >
+            <Typography sx={{ fontSize: "1.5em", fontWeight: "bold" }} >
                 { new Date().getFullYear() } Blueberry Fundraiser
             </Typography>
             <Stack direction="row" alignItems="center" mb={1} >
