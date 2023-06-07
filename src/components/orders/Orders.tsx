@@ -210,10 +210,6 @@ export default function Orders({ orders }: { orders: Order[] }) {
                     }}
                 >
                     <Box sx={{ mx: 2 }}>
-                        <Typography fontSize={15} variant="subtitle1" sx={{ mb: 1 }}>
-                            Dashboard / Orders
-                        </Typography>
-
                         <Typography fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 6, width: "100%" }}>Orders</Typography>
 
                         <Stack direction={{ xs: "column", sm: "column", md: "row" }}

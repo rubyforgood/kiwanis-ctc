@@ -3,7 +3,9 @@ import { Doughnut } from "react-chartjs-2";
 import { ChartData } from "chart.js";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Theme, useTheme } from "@mui/material/styles";
-import { Box, Link, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import { Link } from "react-router-dom";
+import Typography from "@mui/material/Typography";
 
 /**
  * DashboardChart is used to render a pie chart that shows the pickup status of the orders
@@ -81,14 +83,7 @@ export default function DashboardChart({ pickedUp, readyForPickup }: { pickedUp:
                     pb: 2,
                 }}
             >
-                <Link
-                    sx={{
-                        fontWeight: "bold",
-                        textAlign: "left",
-                        variant: "body1",
-                        href: "/orders"
-                    }}
-                >
+                <Link to="/pickups">
                     Go to Pick Ups
                 </Link>
             </Box>

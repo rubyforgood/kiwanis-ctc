@@ -29,9 +29,6 @@ export default function Pickups({ orders }: { orders: Order[] }) {
                 }}
             >
                 <Box sx={{ mx: 2 }}>
-                    <Typography fontSize={15} variant="subtitle1" sx={{ mb: 1 }}>
-                    Dashboard / Pickups
-                    </Typography>
                     <Typography fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 6, width: "100%" }}>Order Pickups</Typography>
                     <Box sx={{color: theme.palette.secondary.dark,}}>
                         <Typography>Available for Sale:<strong> 100</strong></Typography>

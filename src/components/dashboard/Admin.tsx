@@ -45,7 +45,7 @@ export default function Admin({ orders }: { orders: Order[] }) {
     return (
         <React.Fragment>
             <Typography sx={{ fontSize: "1.5em", fontWeight: "bold", marginBottom: "1em" }} >
-                2023 Blueberry Fundraiser - Dashboard
+                { new Date().getFullYear() } Blueberry Fundraiser
             </Typography>
             <Box sx={{ flexGrow: 1, height: "100%", marginBottom: "3%" }} >
                 <Grid container spacing={2}>
