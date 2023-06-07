@@ -12,19 +12,23 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Login />
+        element: <Login />,
     },
     {
         path: "dashboard",
-        element: <AuthRoute><AdminDashboard /></AuthRoute>
+        element: <AuthRoute><AdminDashboard /></AuthRoute>,
     },
     {
         path: "orders",
-        element: <AuthRoute><OrdersPage /></AuthRoute>
+        element: <AuthRoute><OrdersPage /></AuthRoute>,
     },
     {
         path: "pickups",
-        element: <AuthRoute><PickupPage /></AuthRoute>
+        element: <AuthRoute><PickupPage /></AuthRoute>,
+    },
+    {
+        path: "*",
+        element: <Login />,
     },
 ]);
 
