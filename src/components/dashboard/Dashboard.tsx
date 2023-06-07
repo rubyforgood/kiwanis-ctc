@@ -12,7 +12,6 @@ import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { listItems } from "./listItems";
-import { Copyright } from "../common/Copyright";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
@@ -100,15 +99,7 @@ export function Dashboard({ children }: { children: React.ReactNode }) {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography
-                        component="h1"
-                        variant="h6"
-                        color="inherit"
-                        noWrap
-                        sx={{ flexGrow: 1 }}
-                    >
-                        Dashboard
-                    </Typography>
+                    <Box sx={{ flexGrow: 1 }} ></Box>
                     <Button
                         variant="contained"
                         color="secondary"
@@ -151,7 +142,6 @@ export function Dashboard({ children }: { children: React.ReactNode }) {
                 <Toolbar />
                 <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
                     { children }
-                    <Copyright/>
                 </Container>
             </Box>
         </Box>

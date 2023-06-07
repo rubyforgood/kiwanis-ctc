@@ -3,14 +3,33 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Chip from "@mui/material/Chip";
 import { Order } from "../../types/Order";
 import { COST_PER_ORDER } from "../../constants";
-import EditOrder from "../common/EditOrder";
 import { getChipColor } from "../../utils/getChipColor";
+import { useSnackbar } from "../../hooks/useSnackbar";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import useDeleteOrder from "../../hooks/useDeleteOrder";
+import { EditOrderButton } from "../common/EditOrderButton";
 
 interface OrdersTableProps {
     rows: Order[];
+    isLoading: boolean;
 }
 
-export default function OrdersTable({ rows }: OrdersTableProps) {
+export default function OrdersTable({ rows, isLoading }: OrdersTableProps) {
+    const { setOpenSnackbar, setSnackbarMessage, snackbar } = useSnackbar();
+    const deleteOrderMutation = useDeleteOrder();
+
+    const handleDelete = async (order: Order) => {
+        try {
+            await deleteOrderMutation.mutateAsync(order);
+            setSnackbarMessage("Successfully deleted order");
+        } catch {
+            setSnackbarMessage("Failed to delete order");
+        }
+        setOpenSnackbar(true);
+
+    };
+
     const columns: GridColDef[] = [
         {
             field: "id",
@@ -18,13 +37,22 @@ export default function OrdersTable({ rows }: OrdersTableProps) {
             width: 80
         },
         {
-            field: "fullName",
-            headerName: "Full name",
+            field: "firstName",
+            headerName: "First Name",
             headerAlign: "center",
             sortable: true,
-            width: 240,
+            width: 180,
             align: "center",
-            valueGetter: ({ row }: { row: Order }) => `${row.firstName ?? ""} ${row.lastName ?? ""}`
+            valueGetter: ({ row }: { row: Order }) => row.firstName
+        },
+        {
+            field: "lastName",
+            headerName: "Last Name",
+            headerAlign: "center",
+            sortable: true,
+            width: 180,
+            align: "center",
+            valueGetter: ({ row }: { row: Order }) => row.lastName
         },
         {
             field: "boxesOrdered",
@@ -58,38 +86,52 @@ export default function OrdersTable({ rows }: OrdersTableProps) {
         {
             field: "pickedUp",
             align: "center",
-            headerName: "Status",
+            headerName: "Picked Up",
             headerAlign: "center",
             sortable: true,
             width: 130,
             renderCell: ({ value }: { value: boolean }) => {
-                return <Chip variant="outlined" size="medium" label={value ? "Ready" : "Not Ready"} {...getChipColor(value)} />;
+                return <Chip variant="outlined" size="medium" label={value ? "Yes" : "No"} {...getChipColor(value)} />;
             }
         },
         {
             field: "action",
             headerName: "Action",
             sortable: false,
-            renderCell: ({ row }) => <EditOrder order={row} />,
+            renderCell: ({ row }) =>
+                <>
+                    <EditOrderButton
+                        row={row}
+                        setOpenSnackbar={setOpenSnackbar}
+                        setSnackbarMessage={setSnackbarMessage}
+                    />
+                    <IconButton onClick={() => handleDelete(row)}>
+                        <DeleteIcon />
+                    </IconButton>
+                </>,
             headerAlign: "right",
             align: "right",
         }
     ].map((col) => ({ headerClassName: "super-app-theme--header", ...col }) as GridColDef);
 
     return (
-        <DataGrid
-            rows={rows ?? []}
-            columns={columns}
-            initialState={{
-                pagination: { paginationModel: { pageSize: 5 } }
-            }}
-            pageSizeOptions={[5, 10, 25]}
-            disableRowSelectionOnClick
-            sx={{
-                "& .super-app-theme--header": {
-                    fontSize: "1.2em"
-                },
-            }}
-        />
+        <>
+            <DataGrid
+                rows={rows ?? []}
+                columns={columns}
+                initialState={{
+                    pagination: { paginationModel: { pageSize: 5 } }
+                }}
+                pageSizeOptions={[5, 10, 25]}
+                disableRowSelectionOnClick
+                sx={{
+                    "& .super-app-theme--header": {
+                        fontSize: "1.2em"
+                    },
+                }}
+                loading={isLoading}
+            />
+            {snackbar}
+        </>
     );
 }
