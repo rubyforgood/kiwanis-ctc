@@ -1,16 +1,16 @@
 import React from "react";
 import { Dashboard } from "../components/dashboard/Dashboard";
 import Orders from "../components/orders/Orders";
-import useOrders from "../hooks/useOrders";
+import useGetOrders from "../hooks/useGetOrders";
 import StepperProvider from "../providers/StepperProvider";
 
 export default function OrdersPage() {
-    const { data } = useOrders();
+    const { data, isLoading } = useGetOrders();
 
     return (
         <Dashboard>
             <StepperProvider>
-                <Orders orders={data ?? []} />
+                <Orders orders={data ?? []} isLoading={isLoading} />
             </StepperProvider>
         </Dashboard>
     );

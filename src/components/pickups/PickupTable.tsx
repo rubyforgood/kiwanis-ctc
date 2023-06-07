@@ -3,14 +3,19 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Chip from "@mui/material/Chip";
 import { Order } from "../../types/Order";
 import { COST_PER_ORDER } from "../../constants";
-import EditOrder from "../common/EditOrder";
 import { getChipColor } from "../../utils/getChipColor";
+import { EditOrderButton } from "../common/EditOrderButton";
+import { useSnackbar } from "../../hooks/useSnackbar";
+import { DeleteOrderButton } from "../common/DeleteOrderButton";
 
 interface PickupTableProps {
     rows: Order[];
+    isLoading: boolean;
 }
 
-export default function PickupTable({ rows }: PickupTableProps) {
+export default function PickupTable({ rows, isLoading }: PickupTableProps) {
+    const { setOpenSnackbar, setSnackbarMessage, snackbar } = useSnackbar();
+
     const columns: GridColDef[] = [
         {
             field: "id",
@@ -81,7 +86,7 @@ export default function PickupTable({ rows }: PickupTableProps) {
             type: "string",
             width: 160,
             valueGetter: ({ row }: { row: Order }) => {
-                return `${row.method ? row.method: "-"}`;
+                return `${row.method ? row.method : "-"}`;
             }
         },
         {
@@ -97,38 +102,54 @@ export default function PickupTable({ rows }: PickupTableProps) {
         {
             field: "pickedUp",
             align: "center",
-            headerName: "Status",
+            headerName: "Picked Up",
             headerAlign: "center",
             sortable: true,
             width: 130,
             renderCell: ({ value }: { value: boolean }) => {
-                return <Chip variant="outlined" size="medium" label={value ? "Ready" : "Not Ready"} {...getChipColor(value)} />;
+                return <Chip variant="outlined" size="medium" label={value ? "Yes" : "No"} {...getChipColor(value)} />;
             }
         },
         {
             field: "action",
             headerName: "Action",
             sortable: false,
-            renderCell: ({ row }) => <EditOrder order={row} />,
+            renderCell: ({ row }) =>
+                <>
+                    <EditOrderButton
+                        row={row}
+                        setOpenSnackbar={setOpenSnackbar}
+                        setSnackbarMessage={setSnackbarMessage}
+                    />
+                    <DeleteOrderButton
+                        row={row}
+                        setOpenSnackbar={setOpenSnackbar}
+                        setSnackbarMessage={setSnackbarMessage}
+                    />
+                </>,
             headerAlign: "right",
             align: "right",
         }
     ].map((col) => ({ headerClassName: "super-app-theme--header", ...col }) as GridColDef);
 
     return (
-        <DataGrid
-            rows={rows ?? []}
-            columns={columns}
-            initialState={{
-                pagination: { paginationModel: { pageSize: 5 } }
-            }}
-            pageSizeOptions={[5, 10, 25]}
-            disableRowSelectionOnClick
-            sx={{
-                "& .super-app-theme--header": {
-                    fontSize: "1.2em"
-                },
-            }}
-        />
+        <>
+            <DataGrid
+                rows={rows ?? []}
+                columns={columns}
+                initialState={{
+                    pagination: { paginationModel: { pageSize: 5 } }
+                }}
+                pageSizeOptions={[5, 10, 25]}
+                disableRowSelectionOnClick
+                sx={{
+                    "& .super-app-theme--header": {
+                        fontSize: "1.2em"
+                    },
+                }}
+                loading={isLoading}
+            />
+            {snackbar}
+        </>
     );
 }

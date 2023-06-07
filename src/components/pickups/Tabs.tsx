@@ -3,9 +3,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import PickedUp from "./PickedUp";
-import Pickup from "./Pickup";
-import { Order } from "../../../types/Order";
+import { Order } from "../../types/Order";
+import PickupTable from "./PickupTable";
+import useGetKiwanisTotalBoxes from "../../hooks/useGetKiwanisTotalOrders";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -13,7 +13,7 @@ interface TabPanelProps {
     value: number;
 }
 
-function TabPanel({children, value, index}: TabPanelProps) {
+function TabPanel({ children, value, index }: TabPanelProps) {
     return (
         <div hidden={value !== index}>
             {value === index && (
@@ -25,8 +25,11 @@ function TabPanel({children, value, index}: TabPanelProps) {
     );
 }
 
-export default function BasicTabs({ orders }: { orders: Order[] }) {
+export default function BasicTabs({ orders, isLoading }: { orders: Order[], isLoading: boolean }) {
     const [value, setValue] = React.useState(0);
+    const ordersReadyForPickup = orders.filter(order => !order.pickedUp);
+    const pickedUpOrders = orders.filter(order => order.pickedUp);
+
 
     const handleChange = (_: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
@@ -34,21 +37,21 @@ export default function BasicTabs({ orders }: { orders: Order[] }) {
 
     return (
         <Box sx={{ width: "100%" }}>
-            <Box sx={{ borderBottom: 1,}}>
+            <Box sx={{ borderBottom: 1, }}>
                 <Tabs
                     value={value}
                     onChange={handleChange}
                 >
-                    <Tab label="Ready for Pick Up"/>
-                    <Tab label="Picked Up"/>
+                    <Tab label="Ready for Pick Up" />
+                    <Tab label="Picked Up" />
                 </Tabs>
             </Box>
             <Box sx={{ textAlign: "center", }}>
                 <TabPanel value={value} index={0}>
-                    <Pickup orders={orders}/>
+                    <PickupTable rows={ordersReadyForPickup} isLoading={isLoading}/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <PickedUp orders={orders}/>
+                    <PickupTable rows={pickedUpOrders} isLoading={isLoading} />
                 </TabPanel>
             </Box>
         </Box>
