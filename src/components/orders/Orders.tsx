@@ -41,10 +41,15 @@ export default function Orders({ orders, isLoading }: { orders: Order[], isLoadi
         const fr = new FileReader();
         const newOrders: any[] = [];
         fr.onload = () => {
-            console.log(fr.result);
             const lines = (fr.result as string).split("\n").slice(1);
             lines.forEach((line) => {
                 const fields = line.split(",");
+
+                // const f: string[] = [];
+                // for (let i = 0; i < fields.length; i++) {
+                //     f.push(fields[i]);
+                // }
+                // console.log(f);
 
                 newOrders.push({
                     firstName: fields[0],
@@ -54,7 +59,8 @@ export default function Orders({ orders, isLoading }: { orders: Order[], isLoadi
                     email: fields[4],
                     customerComments: fields[5],
                     boxesForAFAC: Number(fields[6]),
-                    boxesForCustomer: Number(fields[7])
+                    boxesForCustomer: Number(fields[7]),
+                    paid: !fields[8].startsWith("$0.00")
                 });
             });
         };
