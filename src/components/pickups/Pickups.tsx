@@ -30,9 +30,6 @@ export default function Pickups({ orders, isLoading }: { orders: Order[], isLoad
                 }}
             >
                 <Box sx={{ mx: 2 }}>
-                    <Typography fontSize={15} variant="subtitle1" sx={{ mb: 1 }}>
-                    Dashboard / Pickups
-                    </Typography>
                     <Typography
                         fontSize={30}
                         sx={{
