@@ -158,7 +158,7 @@ export default function Admin({ orders, kiwanisTotalBoxes }: { orders: Order[], 
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={12} md={8}>
                         <Box sx={{ height: "100%" }}>
-                            <Grid container spacing={3} >
+                            <Grid container spacing={4.3} >
                                 {
                                     metrics.map(({value, title, isCurrency}) => (
                                         <Grid key={title} item xs={12} sm={6} md={4}>
