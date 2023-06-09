@@ -1,5 +1,5 @@
 import React from "react";
-import { db } from "../Firebase";
+import { db } from "../config";
 import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { useQuery } from "@tanstack/react-query";
 import { docToOrder } from "../utils/docToOrder";

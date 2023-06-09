@@ -2,7 +2,7 @@ import React from "react";
 import { Order } from "../types/Order";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from "../Firebase";
+import { db } from "../config";
 
 const useEditOrder = () => {
     const queryClient = useQueryClient();
