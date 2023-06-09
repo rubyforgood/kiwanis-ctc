@@ -1,4 +1,3 @@
-import React from "react";
 import { Order } from "../types/Order";
 
 export const createEmptyOrder = (): Order => {

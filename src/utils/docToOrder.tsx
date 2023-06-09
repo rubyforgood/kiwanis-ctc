@@ -2,7 +2,7 @@ import { Order } from "../types/Order";
 import { DocumentData } from "firebase/firestore";
 import { getPaid, getPickedUp } from "../hooks/useGetOrders";
 
-export const docToOrder = (id: string, data: any): Order => {
+export const docToOrder = (id: string, data: DocumentData): Order => {
     return {
         id,
         boxesForAFAC: Number(data["Boxes for AFAC"] || 0),

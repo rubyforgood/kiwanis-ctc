@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Order } from "../../types/Order";
 import PickupTable from "./PickupTable";
-import useGetKiwanisTotalBoxes from "../../hooks/useGetKiwanisTotalOrders";
 
 interface TabPanelProps {
     children?: React.ReactNode;
