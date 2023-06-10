@@ -4,7 +4,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
-import ForumIcon from "@mui/icons-material/Forum";
 import AirlineStopsIcon from "@mui/icons-material/AirlineStops";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { NavigateFunction } from "react-router-dom";

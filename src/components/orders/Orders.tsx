@@ -16,6 +16,19 @@ import Typography from "@mui/material/Typography";
 import { getAuth } from "firebase/auth";
 import { ADMIN_EMAILS } from "../../constants";
 
+//TODO: Convert to Omit
+// interface CSVOrder {
+//     firstName: string;
+//     lastName: string;
+//     cellPhone: string;
+//     homePhone: string;
+//     email: string;
+//     customerComments: string;
+//     boxesForAFAC: number;
+//     boxesForCustomer: number;
+//     paid: boolean;
+// }
+
 export default function Orders({ orders, isLoading }: { orders: Order[], isLoading: boolean }) {
     const [search, setSearch] = useState("");
     const [rows, setRows] = useState(orders);
@@ -35,35 +48,35 @@ export default function Orders({ orders, isLoading }: { orders: Order[], isLoadi
     const fileInputHandler = async (e: ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) { return; }
 
-        const file = e.target.files[0];
-        const fr = new FileReader();
-        const newOrders: any[] = [];
-        fr.onload = () => {
-            const lines = (fr.result as string).split("\n").slice(1);
-            lines.forEach((line) => {
-                const fields = line.split(",");
+        // const file = e.target.files[0];
+        // const fr = new FileReader();
+        // const newOrders: CSVOrder[] = [];
+        // fr.onload = () => {
+        //     const lines = (fr.result as string).split("\n").slice(1);
+        //     lines.forEach((line) => {
+        //         const fields = line.split(",");
 
-                // const f: string[] = [];
-                // for (let i = 0; i < fields.length; i++) {
-                //     f.push(fields[i]);
-                // }
-                // console.log(f);
+        // const f: string[] = [];
+        // for (let i = 0; i < fields.length; i++) {
+        //     f.push(fields[i]);
+        // }
+        // console.log(f);
 
-                newOrders.push({
-                    firstName: fields[0],
-                    lastName: fields[1],
-                    cellPhone: fields[2],
-                    homePhone: fields[3],
-                    email: fields[4],
-                    customerComments: fields[5],
-                    boxesForAFAC: Number(fields[6]),
-                    boxesForCustomer: Number(fields[7]),
-                    paid: !fields[8].startsWith("$0.00")
-                });
-            });
-        };
-        fr.readAsText(file);
-        console.log(newOrders);
+        //         newOrders.push({
+        //             firstName: fields[0],
+        //             lastName: fields[1],
+        //             cellPhone: fields[2],
+        //             homePhone: fields[3],
+        //             email: fields[4],
+        //             customerComments: fields[5],
+        //             boxesForAFAC: Number(fields[6]),
+        //             boxesForCustomer: Number(fields[7]),
+        //             paid: !fields[8].startsWith("$0.00")
+        //         });
+        //     });
+        // };
+        // fr.readAsText(file);
+        // console.log(newOrders);
 
         // const buffer = await file.arrayBuffer();
         // const workbook = XLSX.read(buffer);

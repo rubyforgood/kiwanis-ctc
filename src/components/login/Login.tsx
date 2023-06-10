@@ -8,44 +8,34 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { grey } from "@mui/material/colors";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import Snackbar from "@mui/material/Snackbar";
+import { useSnackbar } from "../../hooks/useSnackbar";
 
 export default function Login() {
-    const [open, setOpen] = React.useState(false);
+    const { setOpenSnackbar, setSnackbarMessage, snackbar} = useSnackbar();
     const auth = getAuth();
     const navigate = useNavigate();
     const theme = useTheme();
 
     const signInSchema = z.object({
         username: z.string().email(),
-        password: z.string().min(8)
+        password: z.string()
     });
-
-    const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
-        if (reason === "clickaway") {
-            return;
-        }
-        setOpen(false);
-    };
 
     const { register, handleSubmit, formState: { errors } } =
         useForm({ resolver: zodResolver(signInSchema) });
 
-    const onSubmit = async (data: any) => {
+    const onSubmit = async (data: FieldValues) => {
         try {
             await signInWithEmailAndPassword(auth, data.username, data.password);
             navigate("/dashboard");
         } catch {
-            setOpen(true);
+            setOpenSnackbar(true);
+            setSnackbarMessage("Incorrect username or password");
         }
-    };
-
-    const onError = (data: any) => {
-        console.log(errors);
     };
 
     return (
@@ -115,20 +105,14 @@ export default function Login() {
                                 mt: 2
                             }}
                             disableElevation
-                            onClick={handleSubmit(onSubmit, onError)}
+                            onClick={handleSubmit(onSubmit)}
                         >
                             Sign In
                         </Button>
                     </Box>
                 </Stack>
             </Box>
-            <Snackbar
-                open={open}
-                autoHideDuration={2000}
-                message="Incorrect email or password"
-                onClose={handleClose}
-                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            />
+            { snackbar }
         </>
     );
 }
