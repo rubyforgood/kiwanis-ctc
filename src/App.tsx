@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         path: "*",
         element: <Login />,
     },
-], { basename: "/kiwanis-ctc" });
+]);
 
 const queryClient = new QueryClient();
 
