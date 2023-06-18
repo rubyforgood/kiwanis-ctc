@@ -16,31 +16,16 @@ export default function Pickups({ orders, isLoading }: { orders: Order[], isLoad
 
     return (
         <Box
-            component='main'
             sx={{
                 flexGrow: 1,
-                height: "100vh",
-                overflow: "auto",
-                p: 2,
+                height: "100%",
+                marginBottom: "3%",
+                mx: 2
             }}
         >
-            <Paper
-                sx={{
-                    p: 2,
-                }}
-            >
+            <Typography fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 2, width: "100%" }}>Order Pickups</Typography>
+            <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }} elevation={2}>
                 <Box sx={{ mx: 2 }}>
-                    <Typography
-                        fontSize={30}
-                        sx={{
-                            borderBottom: "solid",
-                            borderWidth: 2,
-                            borderColor: "primary.main",
-                            mb: 2,
-                            width: "100%"
-                        }}>
-                        Order Pickups
-                    </Typography>
                     <Box sx={{color: theme.palette.secondary.dark, mb: 2 }}>
                         <Typography>Available for Sale: <strong>{ totalBoxesRemaining }</strong></Typography>
                     </Box>
