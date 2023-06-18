@@ -8,6 +8,7 @@ import OrdersPage from "./pages/OrdersPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PickupPage from "./pages/PickupPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import DonorsPage from "./pages/DonorsPage";
 
 const router = createBrowserRouter([
     {
@@ -27,10 +28,14 @@ const router = createBrowserRouter([
         element: <AuthRoute><PickupPage /></AuthRoute>,
     },
     {
+        path: "donors",
+        element: <AuthRoute><DonorsPage /></AuthRoute>,
+    },
+    {
         path: "*",
         element: <Login />,
     },
-], { basename: "/kiwanis-ctc" });
+]);
 
 const queryClient = new QueryClient();
 

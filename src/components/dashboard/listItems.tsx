@@ -29,7 +29,7 @@ export const listItems = ({ navigate }: { navigate: NavigateFunction }) => {
                 </ListItemIcon>
                 <ListItemText primary="Pickups" />
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => { navigate("/donors"); }}>
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>
