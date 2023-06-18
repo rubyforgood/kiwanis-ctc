@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
+// According to the Firebase Documentation, it is safe to commit the firebase config and API key
+// Database access is being managed by the Firebase Security Rules
 const firebaseConfig = {
     apiKey: "AIzaSyCQxy02G1PIvqKgyuamuxhe6Cy8Eby22wI",
     authDomain: "kiwanis-international.firebaseapp.com",
