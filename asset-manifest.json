@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/kiwanis-ctc/static/js/main.3c20f73b.js",
-    "static/media/logo.svg": "/kiwanis-ctc/static/media/logo.85f28454aaf21f8a87758e38cb382276.svg",
-    "index.html": "/kiwanis-ctc/index.html",
-    "main.3c20f73b.js.map": "/kiwanis-ctc/static/js/main.3c20f73b.js.map"
+    "main.js": "/static/js/main.fe834af5.js",
+    "static/media/logo.svg": "/static/media/logo.85f28454aaf21f8a87758e38cb382276.svg",
+    "index.html": "/index.html",
+    "main.fe834af5.js.map": "/static/js/main.fe834af5.js.map"
   },
   "entrypoints": [
-    "static/js/main.3c20f73b.js"
+    "static/js/main.fe834af5.js"
   ]
 }
