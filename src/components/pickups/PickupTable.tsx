@@ -18,11 +18,6 @@ export default function PickupTable({ rows, isLoading }: PickupTableProps) {
 
     const columns: GridColDef[] = [
         {
-            field: "id",
-            headerName: "ID",
-            width: 80
-        },
-        {
             field: "firstName",
             headerName: "First Name",
             headerAlign: "center",
@@ -47,7 +42,7 @@ export default function PickupTable({ rows, isLoading }: PickupTableProps) {
             headerName: "Self",
             type: "number",
             valueGetter: ({ row }: { row: Order }) => row.boxesForCustomer,
-            width: 120
+            width: 80
         },
         {
             field: "afac",
@@ -56,7 +51,7 @@ export default function PickupTable({ rows, isLoading }: PickupTableProps) {
             headerName: "AFAC",
             type: "number",
             valueGetter: ({ row }: { row: Order }) => row.boxesForAFAC,
-            width: 120
+            width: 80
         },
         {
             field: "totalBoxes",
@@ -65,7 +60,7 @@ export default function PickupTable({ rows, isLoading }: PickupTableProps) {
             headerName: "Total",
             type: "number",
             valueGetter: ({ row }: { row: Order }) => row.boxesForAFAC + row.boxesForCustomer,
-            width: 120
+            width: 80
         },
         {
             field: "total",
@@ -73,7 +68,7 @@ export default function PickupTable({ rows, isLoading }: PickupTableProps) {
             headerAlign: "center",
             headerName: "Total Cost",
             type: "string",
-            width: 130,
+            width: 120,
             valueGetter: ({ row }: { row: Order }) => {
                 return `$${((row.boxesForAFAC || 0) + (row.boxesForCustomer || 0)) * COST_PER_ORDER}`;
             }

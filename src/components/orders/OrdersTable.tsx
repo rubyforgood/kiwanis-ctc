@@ -32,11 +32,6 @@ export default function OrdersTable({ rows, isLoading }: OrdersTableProps) {
 
     const columns: GridColDef[] = [
         {
-            field: "id",
-            headerName: "ID",
-            width: 80
-        },
-        {
             field: "firstName",
             headerName: "First Name",
             headerAlign: "center",
