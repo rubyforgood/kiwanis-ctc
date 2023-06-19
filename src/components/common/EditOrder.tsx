@@ -31,15 +31,20 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import { Theme, useTheme } from "@mui/material";
+import { styled, Theme, useTheme } from "@mui/material";
 import useEditOrder from "../../hooks/useEditOrder";
 import useCreateOrder from "../../hooks/useCreateOrder";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowDownIcon from "@mui/icons-material/ArrowDropDown";
+import CommentIcon from "@mui/icons-material/Comment";
 
 function SubsectionTitle({ title, sx, button }: { title: string, sx?: SxProps, button?: React.ReactNode }) {
-    return (<Typography variant="h6" sx={{ ...sx, fontWeight: "bold" }}>{title}{button}</Typography>);
+    return (<Typography variant="h6" sx={{ ...sx, fontWeight: "bold", fontSize: "18px" }}>{title}{button}</Typography>);
 }
+
+const DenseTypography = styled(Typography)(() => ({
+    fontSize: "16px"
+}));
 
 function ToggleButton({ value, handleToggle, label, theme }:
     {
@@ -51,6 +56,7 @@ function ToggleButton({ value, handleToggle, label, theme }:
 ) {
     return (
         <Button
+            size="small"
             variant="outlined"
             sx={{
                 backgroundColor: value ? theme.palette.success.light : theme.palette.error.light,
@@ -85,9 +91,11 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
     const theme = useTheme();
     const editOrderMutation = useEditOrder();
     const createOrderMutation = useCreateOrder();
+    open = true;
 
     const [isEditing, setIsEditing] = React.useState(isNewOrder);
-    const [showCustomerComments, setShowNotes] = React.useState(false);
+    const [showCustomerDetails, setShowCustomerDetails] = React.useState(false);
+
 
     const [newOrder, setNewOrder] = React.useState<Order>({ ...order });
 
@@ -192,96 +200,95 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
                         }}
                     />
                 </Stack>
-                : <DialogTitle> {`${newOrder.firstName} ${newOrder.lastName}`}</DialogTitle>
+                : <DialogTitle sx={{ my: -1.5, ml: 2, fontSize: "20px" }}> {`${newOrder.firstName} ${newOrder.lastName}`}</DialogTitle>
             }
             <Divider sx={{ backgroundColor: theme.palette.primary.main, height: "3px" }} />
             <DialogContent>
-                <Box sx={{ mx: 2 }}>
-                    <SubsectionTitle
-                        title={"Customer Details"}
-                        button={isNewOrder
-                            ? null
-                            : <IconButton onClick={() => setIsEditing(!isEditing)}>
-                                <EditIcon sx={{ ml: 0.5, fontSize: "20px" }} />
+                <Box sx={{ mx: 2, mt: -2 }}>
+                    {!showCustomerDetails ?
+                        <IconButton onClick={() => setShowCustomerDetails(true)} disableTouchRipple sx={{ mb: -1.5}}>
+                            <Stack direction="row" alignItems="center">
+                                <Typography variant="body2" sx={{ color: "black" }}>Show Customer Details</Typography>
+                                <ArrowRightIcon fontSize="small" />
+                            </Stack>
+                        </IconButton>
+                        :
+                        <>
+                            <IconButton onClick={() => setShowCustomerDetails(false)} disableTouchRipple>
+                                <Stack direction="row" alignItems="center">
+                                    <Typography variant="body2" sx={{ color: "black" }}>Hide Customer Details</Typography>
+                                    <ArrowDownIcon fontSize="small" />
+                                </Stack>
                             </IconButton>
-                        }
-                    />
-                    {isEditing || isNewOrder
-                        ?
-                        <Stack>
-                            {
-                                customerDetails.map((details) => (
-                                    <IconTextField
-                                        key={details.label}
-                                        icon={details.icon}
-                                        value={details.value}
-                                        onChange={details.handleChange}
-                                        label={details.label}
-                                    />
-                                ))
-                            }
-                            <TextField
-                                value={newOrder.customerComments}
-                                onChange={(e) => setNewOrder({ ...newOrder, customerComments: e.target.value })}
-                                label="Customer Comments"
-                                size="small"
-                                multiline
-                                rows={2}
-                                sx={{
-                                    mx: 3.8,
-                                    mt: 1
-                                }}
-                            />
-                        </Stack>
-                        : <>
-                            {
-                                customerDetails.map((details) => (
-                                    <IconText
-                                        key={details.label}
-                                        icon={details.icon}
-                                        variant="body2"
-                                    >
-                                        {details.value}
-                                    </IconText>
-                                ))
-                            }
-                            {newOrder.customerComments ?
-                                (showCustomerComments
-                                    ?
-                                    <>
-                                        <IconButton onClick={() => setShowNotes(false)} disableTouchRipple>
-                                            <Stack direction="row" alignItems="center">
-                                                <Typography variant="body2" sx={{ color: "black" }}>Hide Customer Comments</Typography>
-                                                <ArrowDownIcon fontSize="small" />
-                                            </Stack>
-                                        </IconButton>
-                                        <Typography variant="body1" sx={{ wordWrap: "break-word", mx: 1 }}>{newOrder.customerComments}</Typography>
-                                    </>
-                                    :
-                                    <IconButton onClick={() => setShowNotes(true)} disableTouchRipple>
-                                        <Stack direction="row" alignItems="center">
-                                            <Typography variant="body2" sx={{ color: "black" }}>Show Customer Comments</Typography>
-                                            <ArrowRightIcon fontSize="small" />
-                                        </Stack>
+                            <SubsectionTitle
+                                title={"Customer Details"}
+                                button={isNewOrder
+                                    ? null
+                                    : <IconButton onClick={() => setIsEditing(!isEditing)}>
+                                        <EditIcon sx={{ ml: 0.5, fontSize: "20px" }} />
                                     </IconButton>
-                                )
-                                : null
+                                }
+                            />
+                            {isEditing || isNewOrder
+                                ?
+                                <Stack>
+                                    {
+                                        customerDetails.map((details) => (
+                                            <IconTextField
+                                                key={details.label}
+                                                icon={details.icon}
+                                                value={details.value}
+                                                onChange={details.handleChange}
+                                                label={details.label}
+                                            />
+                                        ))
+                                    }
+                                    <TextField
+                                        value={newOrder.customerComments}
+                                        onChange={(e) => setNewOrder({ ...newOrder, customerComments: e.target.value })}
+                                        label="Customer Comments"
+                                        size="small"
+                                        multiline
+                                        rows={2}
+                                        sx={{
+                                            mx: 3.8,
+                                            mt: 1
+                                        }}
+                                    />
+                                </Stack>
+                                : <>
+                                    {
+                                        customerDetails.map((details) => (
+                                            <IconText
+                                                key={details.label}
+                                                icon={details.icon}
+                                                variant="body2"
+                                            >
+                                                {details.value}
+                                            </IconText>
+                                        ))
+                                    }
+                                    <IconText icon={<CommentIcon fontSize="small" color="secondary" />} variant="body2"> Customer Comments </IconText>
+                                    <Typography variant="body1" sx={{ wordWrap: "break-word", mx: 1, mt: 0.5 }}>{newOrder.customerComments}</Typography>
+                                </>
                             }
                         </>
                     }
                     <Divider sx={{ my: 1, backgroundColor: theme.palette.primary.main, height: "1px" }} />
                     <SubsectionTitle title={"Order Details"} />
-                    <Table sx={{
-                        [`& .${tableCellClasses.root}`]: {
-                            borderBottom: "none"
-                        },
-                        mb: 2
-                    }} >
-                        <TableHead sx={{ fontWeight: "bold" }}>
+                    <Table
+                        sx={{
+                            [`& .${tableCellClasses.root}`]: {
+                                borderBottom: "none"
+                            }
+                        }}
+                        size="small"
+                    >
+                        <TableHead>
                             <TableRow>
-                                <TableCell><Typography>Category</Typography></TableCell>
-                                <TableCell align="center"><Typography>Boxes</Typography></TableCell>
-                                <TableCell align="right"><Typography>Cost</Typography></TableCell>
+                                <TableCell><DenseTypography>Category</DenseTypography></TableCell>
+                                <TableCell align="center"><DenseTypography>Boxes</DenseTypography></TableCell>
+                                <TableCell align="right"><DenseTypography>Cost</DenseTypography></TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody >
@@ -290,27 +297,26 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
                                     key={row.name}
                                 >
                                     <TableCell component="th" scope="row">
-                                        <Typography>{row.name}</Typography>
+                                        <DenseTypography>{row.name}</DenseTypography>
                                     </TableCell>
                                     <TableCell align="center" >
                                         <ButtonGroup >
-                                            <Button onClick={row.increment}>+</Button>
-                                            <Button disableRipple>{row.value}</Button>
-                                            <Button onClick={row.decrement} >-</Button>
+                                            <Button size="small" onClick={row.increment}>+</Button>
+                                            <Button size="small" disableRipple>{row.value}</Button>
+                                            <Button size="small" onClick={row.decrement} >-</Button>
                                         </ButtonGroup>
                                     </TableCell>
-
                                     <TableCell align="right">
-                                        <Typography variant="body1">${row.value * COST_PER_ORDER}</Typography>
+                                        <DenseTypography variant="body1">${row.value * COST_PER_ORDER}</DenseTypography>
                                     </TableCell>
                                 </TableRow>
                             ))}
                             <TableRow sx={{ borderTop: 1, borderColor: "primary" }}>
-                                <TableCell><Typography>Total</Typography></TableCell>
+                                <TableCell><DenseTypography>Total</DenseTypography></TableCell>
                                 <TableCell align="center">
                                 </TableCell>
                                 <TableCell align="right">
-                                    <Typography variant="body1">${total}</Typography>
+                                    <DenseTypography variant="body1">${total}</DenseTypography>
                                 </TableCell>
                             </TableRow>
                         </TableBody>
@@ -318,21 +324,24 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
 
                     <SubsectionTitle title="Payment Details" />
                     <TableContainer>
-                        <Table sx={{
-                            [`& .${tableCellClasses.root}`]: {
-                                borderBottom: "none"
-                            },
-                            mb: 2
-                        }} >
+                        <Table
+                            sx={{
+                                [`& .${tableCellClasses.root}`]: {
+                                    borderBottom: "none"
+                                },
+                            }}
+                            size="small"
+                        >
                             <TableBody>
                                 <TableRow>
                                     <TableCell component="th">
-                                        <Typography>Payment Method</Typography>
+                                        <DenseTypography>Payment Method</DenseTypography>
                                     </TableCell>
                                     <TableCell >
-                                        <Box sx={{ minWidth: 120 }}>
-                                            <FormControl fullWidth>
+                                        <Box >
+                                            <FormControl fullWidth >
                                                 <Select
+                                                    size="small"
                                                     value={newOrder.method}
                                                     onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, method: e.target.value }))}
                                                 >
@@ -346,7 +355,7 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
                                 </TableRow>
                                 <TableRow>
                                     <TableCell component="th">
-                                        <Typography>Paid</Typography>
+                                        <DenseTypography>Paid</DenseTypography>
                                     </TableCell>
                                     <TableCell>
                                         <ToggleButton
@@ -358,7 +367,7 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
                                 </TableRow>
                                 <TableRow>
                                     <TableCell component="th" scope="line">
-                                        <Typography>Amount Paid</Typography>
+                                        <DenseTypography>Amount Paid</DenseTypography>
                                     </TableCell>
                                     <TableCell align="left">
                                         <TextField
@@ -372,20 +381,21 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
                                                 step: 1
                                             }}
                                             onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, amountPaid: parseFloat(e.target.value) }))}
+                                            fullWidth
                                         />
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell component="th" scope="line">
-                                        <Typography>Balance</Typography>
+                                        <DenseTypography>Balance</DenseTypography>
                                     </TableCell>
                                     <TableCell align="left">
-                                        <Typography pl="14px">{`${balance < 0 ? "-" : ""} $ ${Math.abs(balance).toFixed(2)}`}</Typography>
+                                        <DenseTypography pl="14px">{`${balance < 0 ? "-" : ""} $ ${Math.abs(balance).toFixed(2)}`}</DenseTypography>
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell component="th" scope="line">
-                                        <Typography>Additional Donation</Typography>
+                                        <DenseTypography>Additional Donation</DenseTypography>
                                     </TableCell>
                                     <TableCell align="left">
                                         <TextField
@@ -399,13 +409,15 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
                                                 step: 1
                                             }}
                                             onChange={(e) => setNewOrder(newOrder => ({ ...newOrder, additionalDonation: parseFloat(e.target.value) }))}
+                                            fullWidth
                                         />
                                     </TableCell>
                                 </TableRow>
-                                <SubsectionTitle title="Order Status" sx={{ mt: 2 }} />
+
+                                <SubsectionTitle title="Order Status" />
                                 <TableRow>
                                     <TableCell component="th">
-                                        <Typography>Picked Up</Typography>
+                                        <DenseTypography>Picked Up</DenseTypography>
                                     </TableCell>
                                     <TableCell align="left">
                                         <ToggleButton
@@ -422,8 +434,8 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
                 </Box>
             </DialogContent>
             <DialogActions>
-                <Button sx={{ backgroundColor: theme.palette.error.main }} onClick={handleCancel}>Cancel</Button>
-                <Button sx={{ backgroundColor: theme.palette.success.main }} onClick={handleSave}>Save</Button>
+                <Button size="small" sx={{ backgroundColor: theme.palette.error.main }} onClick={handleCancel}>Cancel</Button>
+                <Button size="small" sx={{ backgroundColor: theme.palette.success.main }} onClick={handleSave}>Save</Button>
             </DialogActions>
         </Dialog >
     );
