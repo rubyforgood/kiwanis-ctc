@@ -91,7 +91,6 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
     const theme = useTheme();
     const editOrderMutation = useEditOrder();
     const createOrderMutation = useCreateOrder();
-    open = true;
 
     const [isEditing, setIsEditing] = React.useState(isNewOrder);
     const [showCustomerDetails, setShowCustomerDetails] = React.useState(false);
@@ -206,7 +205,7 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
             <DialogContent>
                 <Box sx={{ mx: 2, mt: -2 }}>
                     {!showCustomerDetails ?
-                        <IconButton onClick={() => setShowCustomerDetails(true)} disableTouchRipple sx={{ mb: -1.5}}>
+                        <IconButton onClick={() => setShowCustomerDetails(true)} disableTouchRipple sx={{ mb: -1.5 }}>
                             <Stack direction="row" alignItems="center">
                                 <Typography variant="body2" sx={{ color: "black" }}>Show Customer Details</Typography>
                                 <ArrowRightIcon fontSize="small" />
@@ -413,29 +412,25 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
                                         />
                                     </TableCell>
                                 </TableRow>
-
-                                <SubsectionTitle title="Order Status" />
-                                <TableRow>
-                                    <TableCell component="th">
-                                        <DenseTypography>Picked Up</DenseTypography>
-                                    </TableCell>
-                                    <TableCell align="left">
-                                        <ToggleButton
-                                            theme={theme}
-                                            value={newOrder.pickedUp}
-                                            handleToggle={() => setNewOrder(newOrder => ({ ...newOrder, pickedUp: !newOrder.pickedUp }))}
-                                            label={newOrder.pickedUp ? "Yes" : "No"}
-                                        />
-                                    </TableCell>
-                                </TableRow>
                             </TableBody>
                         </Table>
                     </TableContainer>
                 </Box>
             </DialogContent>
-            <DialogActions>
-                <Button size="small" sx={{ backgroundColor: theme.palette.error.main }} onClick={handleCancel}>Cancel</Button>
-                <Button size="small" sx={{ backgroundColor: theme.palette.success.main }} onClick={handleSave}>Save</Button>
+            <DialogActions sx={{ justifyContent: "space-between", mx: 2 }}>
+                <Stack direction="row" alignItems="center" gap={2}> 
+                    <DenseTypography>Picked Up?</DenseTypography>
+                    <ToggleButton
+                        theme={theme}
+                        value={newOrder.pickedUp}
+                        handleToggle={() => setNewOrder(newOrder => ({ ...newOrder, pickedUp: !newOrder.pickedUp }))}
+                        label={newOrder.pickedUp ? "Yes" : "No"}
+                    />
+                </Stack>
+                <Stack direction="row" gap={2}>
+                    <Button size="small" sx={{ backgroundColor: theme.palette.error.main }} onClick={handleCancel}>Cancel</Button>
+                    <Button size="small" sx={{ backgroundColor: theme.palette.success.main }} onClick={handleSave}>Save</Button>
+                </Stack>
             </DialogActions>
         </Dialog >
     );
