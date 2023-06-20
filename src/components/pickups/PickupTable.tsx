@@ -7,6 +7,7 @@ import { getChipColor } from "../../utils/getChipColor";
 import { EditOrderButton } from "../common/EditOrderButton";
 import { useSnackbar } from "../../hooks/useSnackbar";
 import { DeleteOrderButton } from "../common/DeleteOrderButton";
+import { useTheme } from "@mui/material";
 
 interface PickupTableProps {
     rows: Order[];
@@ -15,6 +16,7 @@ interface PickupTableProps {
 
 export default function PickupTable({ rows, isLoading }: PickupTableProps) {
     const { setOpenSnackbar, setSnackbarMessage, snackbar } = useSnackbar();
+    const theme = useTheme();
 
     const columns: GridColDef[] = [
         {
@@ -91,7 +93,7 @@ export default function PickupTable({ rows, isLoading }: PickupTableProps) {
             align: "center",
             width: 80,
             renderCell: ({ value }: { value: boolean }) => {
-                return <Chip variant="outlined" size="medium" label={value ? "Yes" : "No"} {...getChipColor(value)} />;
+                return <Chip variant="outlined" size="medium" label={value ? "Yes" : "No"} {...getChipColor(value, theme)} />;
             }
         },
         {
@@ -102,7 +104,7 @@ export default function PickupTable({ rows, isLoading }: PickupTableProps) {
             sortable: true,
             width: 130,
             renderCell: ({ value }: { value: boolean }) => {
-                return <Chip variant="outlined" size="medium" label={value ? "Yes" : "No"} {...getChipColor(value)} />;
+                return <Chip variant="outlined" size="medium" label={value ? "Yes" : "No"} {...getChipColor(value, theme)} />;
             }
         },
         {

@@ -9,6 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useDeleteOrder from "../../hooks/useDeleteOrder";
 import { EditOrderButton } from "../common/EditOrderButton";
+import { useTheme } from "@mui/material";
 
 interface OrdersTableProps {
     rows: Order[];
@@ -18,6 +19,7 @@ interface OrdersTableProps {
 export default function OrdersTable({ rows, isLoading }: OrdersTableProps) {
     const { setOpenSnackbar, setSnackbarMessage, snackbar } = useSnackbar();
     const deleteOrderMutation = useDeleteOrder();
+    const theme = useTheme();
 
     const handleDelete = async (order: Order) => {
         try {
@@ -75,7 +77,7 @@ export default function OrdersTable({ rows, isLoading }: OrdersTableProps) {
             align: "center",
             width: 80,
             renderCell: ({ value }: { value: boolean }) => {
-                return <Chip variant="outlined" size="medium" label={value ? "Yes" : "No"} {...getChipColor(value)} />;
+                return <Chip variant="outlined" size="medium" label={value ? "Yes" : "No"} {...getChipColor(value, theme)} />;
             }
         },
         {
@@ -86,7 +88,7 @@ export default function OrdersTable({ rows, isLoading }: OrdersTableProps) {
             sortable: true,
             width: 130,
             renderCell: ({ value }: { value: boolean }) => {
-                return <Chip variant="outlined" size="medium" label={value ? "Yes" : "No"} {...getChipColor(value)} />;
+                return <Chip variant="outlined" size="medium" label={value ? "Yes" : "No"} {...getChipColor(value, theme)} />;
             }
         },
         {
