@@ -1,32 +1,21 @@
 import { db } from "../config";
-import { collection, getDocs, limit, query } from "firebase/firestore";
+import { collection, getDocs, query } from "firebase/firestore";
 import { useQuery } from "@tanstack/react-query";
-import { docToOrder } from "../utils/docToOrder";
-
-export const getPaid = (data: unknown): boolean => {
-    if (typeof data === "string" || data instanceof String) {
-        return data.toLowerCase() === "yes";
-    }
-
-    return Boolean(data);
-};
-
-export const getPickedUp = (data: unknown): boolean => {
-    if (typeof data === "string" || data instanceof String) {
-        return !(data.toLowerCase() === "not ready");
-    }
-
-    return Boolean(data);
-};
+import { ORDERS_COLLECTION } from "../constants";
 
 const useGetOrders = () => {
     return useQuery({
-        queryKey: ["orders"],
+        queryKey: [ORDERS_COLLECTION],
         queryFn: async () => {
-            const clientsRef = collection(db, "clients");
-            const snapshot = await getDocs(query(clientsRef, limit(10)));
-            const orderObjects = snapshot.docs.map((doc) => docToOrder(doc.id, doc.data()));
-            console.log(orderObjects);
+            const clientsRef = collection(db, ORDERS_COLLECTION);
+            const snapshot = await getDocs(query(clientsRef));
+            const orderObjects = snapshot.docs.map((doc) => {
+                const data = doc.data();
+                return {
+                    id: doc.id,
+                    ...data
+                };
+            });
             return orderObjects;
         },
     });
