@@ -14,9 +14,9 @@ import { useSnackbar } from "../../hooks/useSnackbar";
 import { createEmptyOrder } from "../../utils/createEmptyOrder";
 import Typography from "@mui/material/Typography";
 import { getAuth } from "firebase/auth";
-import { ADMIN_EMAILS } from "../../constants";
 import { getCSVDataAndUpload } from "../../utils/csvUtils";
 import useBatchCreateOrder from "../../hooks/useBatchCreateOrder";
+import useGetAdmins from "../../hooks/useGetAdmins";
 
 export default function Orders({ orders, isLoading }: { orders: Order[], isLoading: boolean }) {
     const [search, setSearch] = useState("");
@@ -25,6 +25,7 @@ export default function Orders({ orders, isLoading }: { orders: Order[], isLoadi
     const { setOpenSnackbar, setSnackbarMessage, snackbar } = useSnackbar();
     const batchCreateOrderMutation = useBatchCreateOrder();
     const auth = getAuth();
+    const { data: admins, isLoading: loadingAdmins } = useGetAdmins();
 
     React.useEffect(() => {
         if (search) {
@@ -32,7 +33,7 @@ export default function Orders({ orders, isLoading }: { orders: Order[], isLoadi
         } else {
             setRows(orders);
         }
-    }, [search, orders, rows, setRows]);
+    }, [search, orders]);
 
 
     const fileInputHandler = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +41,6 @@ export default function Orders({ orders, isLoading }: { orders: Order[], isLoadi
 
         const file = e.target.files[0];
         const fr = new FileReader();
-        const newOrders: Order[] = [];
         fr.onload = async () => {
             const message = await getCSVDataAndUpload((fr.result as string), orders, batchCreateOrderMutation);
             setOpenSnackbar(true);
@@ -49,7 +49,6 @@ export default function Orders({ orders, isLoading }: { orders: Order[], isLoadi
         fr.readAsText(file);
         e.target.value = "";
     };
-
 
     return (
         <React.Fragment>
@@ -77,7 +76,7 @@ export default function Orders({ orders, isLoading }: { orders: Order[], isLoadi
                         }}
                     />
                     {
-                        ADMIN_EMAILS.indexOf(auth.currentUser?.email ?? "") !== -1 && (
+                        !loadingAdmins && admins?.map((admin) => admin.email).indexOf(auth.currentUser?.email ?? "") !== -1 && (
                             <FormControl>
                                 <Button
                                     sx={{ width: { xs: 100, sm: 140, md: 150, lg: 170 }, borderRadius: 2, mx: 2, mb: 1 }}
