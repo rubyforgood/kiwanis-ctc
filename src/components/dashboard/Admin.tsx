@@ -37,7 +37,7 @@ const Metric = ({ value, title, isCurrency = false }: { value: number, title: st
     </Paper>
 );
 
-const calculateMetrics = (orders, kiwanisTotalBoxes) => {
+const calculateMetrics = (orders: Order[], kiwanisTotalBoxes: number) => {
     const totalBoxesForAFAC = orders.reduce((acc, curr) => (acc + curr.boxesForAFAC), 0);
     const totalBoxesForCustomers = orders.reduce((acc, curr) => (acc + curr.boxesForCustomer), 0);
     const totalBoxesOrdered = totalBoxesForAFAC + totalBoxesForCustomers;
