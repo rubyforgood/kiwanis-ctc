@@ -95,7 +95,6 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
     const [isEditing, setIsEditing] = React.useState(isNewOrder);
     const [showCustomerDetails, setShowCustomerDetails] = React.useState(false);
 
-
     const [newOrder, setNewOrder] = React.useState<Order>({ ...order });
 
     const calculatedBalance = calculateBalance(newOrder);
@@ -122,14 +121,17 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
                 }
                 await createOrderMutation.mutateAsync(newOrder);
                 setSnackbarMessage("Successfully created new order");
+                setOpenSnackbar(true);
                 handleCancel();
             } else {
                 await editOrderMutation.mutateAsync(newOrder);
                 setSnackbarMessage("Successfully updated order");
+                setOpenSnackbar(true);
                 handleCloseDialog();
             }
         } catch {
             setSnackbarMessage(`Could not ${isNewOrder ? "create new order" : "edit order"}`);
+            setOpenSnackbar(true);
             handleCloseDialog();
         }
     };
