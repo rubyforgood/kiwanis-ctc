@@ -15,25 +15,15 @@ import { createEmptyOrder } from "../../utils/createEmptyOrder";
 import Typography from "@mui/material/Typography";
 import { getAuth } from "firebase/auth";
 import { ADMIN_EMAILS } from "../../constants";
-
-//TODO: Convert to Omit
-// interface CSVOrder {
-//     firstName: string;
-//     lastName: string;
-//     cellPhone: string;
-//     homePhone: string;
-//     email: string;
-//     customerComments: string;
-//     boxesForAFAC: number;
-//     boxesForCustomer: number;
-//     paid: boolean;
-// }
+import { getCSVDataAndUpload } from "../../utils/csvUtils";
+import useBatchCreateOrder from "../../hooks/useBatchCreateOrder";
 
 export default function Orders({ orders, isLoading }: { orders: Order[], isLoading: boolean }) {
     const [search, setSearch] = useState("");
     const [rows, setRows] = useState(orders);
     const [open, setOpen] = useState(false);
     const { setOpenSnackbar, setSnackbarMessage, snackbar } = useSnackbar();
+    const batchCreateOrderMutation = useBatchCreateOrder();
     const auth = getAuth();
 
     React.useEffect(() => {
@@ -48,47 +38,18 @@ export default function Orders({ orders, isLoading }: { orders: Order[], isLoadi
     const fileInputHandler = async (e: ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) { return; }
 
-        // const file = e.target.files[0];
-        // const fr = new FileReader();
-        // const newOrders: CSVOrder[] = [];
-        // fr.onload = () => {
-        //     const lines = (fr.result as string).split("\n").slice(1);
-        //     lines.forEach((line) => {
-        //         const fields = line.split(",");
-
-        // const f: string[] = [];
-        // for (let i = 0; i < fields.length; i++) {
-        //     f.push(fields[i]);
-        // }
-        // console.log(f);
-
-        //         newOrders.push({
-        //             firstName: fields[0],
-        //             lastName: fields[1],
-        //             cellPhone: fields[2],
-        //             homePhone: fields[3],
-        //             email: fields[4],
-        //             customerComments: fields[5],
-        //             boxesForAFAC: Number(fields[6]),
-        //             boxesForCustomer: Number(fields[7]),
-        //             paid: !fields[8].startsWith("$0.00")
-        //         });
-        //     });
-        // };
-        // fr.readAsText(file);
-        // console.log(newOrders);
-
-        // const buffer = await file.arrayBuffer();
-        // const workbook = XLSX.read(buffer);
-        // const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        // const jsonData = XLSX.utils.sheet_to_json(sheet);
-        // const fileOrders = jsonData.map((jsonObj: any) => docToOrder(jsonObj["id"], jsonObj));
-        // console.log(fileOrders);
-
-        // const orderIds = new Set(orders.map((order) => order.id));
-        // fileOrders.filter((order) => !orderIds.has(order.id)).forEach(async (order) => { await createOrderMutation.mutateAsync(order); });
-        // fileOrders.filter((order) => !orderIds.has(order.id)).forEach(async (order) => { console.log(order); });
+        const file = e.target.files[0];
+        const fr = new FileReader();
+        const newOrders: Order[] = [];
+        fr.onload = async () => {
+            const message = await getCSVDataAndUpload((fr.result as string), orders, batchCreateOrderMutation);
+            setOpenSnackbar(true);
+            setSnackbarMessage(message);
+        };
+        fr.readAsText(file);
+        e.target.value = "";
     };
+
 
     return (
         <React.Fragment>
@@ -96,70 +57,69 @@ export default function Orders({ orders, isLoading }: { orders: Order[], isLoadi
                 sx={{
                     flexGrow: 1,
                     height: "100%",
-                    marginBottom: "3%"
+                    marginBottom: "3%",
+                    mx: 2
                 }}
             >
-                <Box sx={{ mx: 2 }}>
-                    <Typography fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 2, width: "100%" }}>Orders</Typography>
-                    <Stack direction={{ xs: "column", sm: "column", md: "row" }} alignItems="baseline" pb={1}>
-                        <TextField
-                            onChange={(e) => setSearch(e.target.value.toLocaleLowerCase())}
-                            sx={{ mr: 6, width: { xs: 150, sm: 300, md: 450, lg: 500 }, }}
-                            size="small"
-                            InputProps={{
-                                placeholder: "Search name",
-                                startAdornment: (
-                                    <InputAdornment position='start'>
-                                        <SearchOutlinedIcon />
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        {
-                            ADMIN_EMAILS.indexOf(auth.currentUser?.email ?? "") !== -1 && (
-                                <FormControl>
-                                    <Button
-                                        sx={{ width: { xs: 100, sm: 140, md: 150, lg: 170 }, borderRadius: 2, mx: 2, mb: 1 }}
-                                        variant='contained'
-                                        color='secondary'
-                                    >
-                                        <label htmlFor="upload">
-                                            <input
-                                                id="upload"
-                                                accept=".csv"
-                                                style={{ display: "none" }}
-                                                type="file"
-                                                onChange={(e) => fileInputHandler(e)}
-                                            />
-                                            <Typography variant="button">Import CSV</Typography>
-                                        </label>
-                                    </Button>
-                                </FormControl>
-                            )
-                        }
-                        <FormControl>
-                            <Button
-                                sx={{ width: { xs: 100, sm: 140, md: 150, lg: 170 }, borderRadius: 2, mb: 1, mx: 2 }}
-                                variant='contained'
-                                color='secondary'
-                                onClick={() => setOpen(true)}
-                            >
-                                Add New Order
-                            </Button>
-                        </FormControl>
-                    </Stack>
-                    <EditOrder
-                        open={open}
-                        setOpen={setOpen}
-                        order={createEmptyOrder()}
-                        setOpenSnackbar={setOpenSnackbar}
-                        setSnackbarMessage={setSnackbarMessage}
-                        isNewOrder
+                <Typography fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 2, width: "100%" }}>Orders</Typography>
+                <Stack direction={{ xs: "column", sm: "column", md: "row" }} alignItems="baseline" pb={1}>
+                    <TextField
+                        onChange={(e) => setSearch(e.target.value.toLocaleLowerCase())}
+                        sx={{ mr: 6, width: { xs: 150, sm: 300, md: 450, lg: 500 }, }}
+                        size="small"
+                        InputProps={{
+                            placeholder: "Search name",
+                            startAdornment: (
+                                <InputAdornment position='start'>
+                                    <SearchOutlinedIcon />
+                                </InputAdornment>
+                            ),
+                        }}
                     />
-                    <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }} elevation={2}>
-                        <OrdersTable rows={rows} isLoading={isLoading} />
-                    </Paper>
-                </Box>
+                    {
+                        ADMIN_EMAILS.indexOf(auth.currentUser?.email ?? "") !== -1 && (
+                            <FormControl>
+                                <Button
+                                    sx={{ width: { xs: 100, sm: 140, md: 150, lg: 170 }, borderRadius: 2, mx: 2, mb: 1 }}
+                                    variant='contained'
+                                    color='secondary'
+                                >
+                                    <label htmlFor="upload">
+                                        <input
+                                            id="upload"
+                                            accept=".csv"
+                                            style={{ display: "none" }}
+                                            type="file"
+                                            onChange={(e) => fileInputHandler(e)}
+                                        />
+                                        <Typography variant="button">Import CSV</Typography>
+                                    </label>
+                                </Button>
+                            </FormControl>
+                        )
+                    }
+                    <FormControl>
+                        <Button
+                            sx={{ width: { xs: 100, sm: 140, md: 150, lg: 170 }, borderRadius: 2, mb: 1, mx: 2 }}
+                            variant='contained'
+                            color='secondary'
+                            onClick={() => setOpen(true)}
+                        >
+                            Add New Order
+                        </Button>
+                    </FormControl>
+                </Stack>
+                <EditOrder
+                    open={open}
+                    setOpen={setOpen}
+                    order={createEmptyOrder()}
+                    setOpenSnackbar={setOpenSnackbar}
+                    setSnackbarMessage={setSnackbarMessage}
+                    isNewOrder
+                />
+                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }} elevation={2}>
+                    <OrdersTable rows={rows} isLoading={isLoading} />
+                </Paper>
             </Box>
             {snackbar}
         </React.Fragment>
