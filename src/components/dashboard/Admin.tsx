@@ -74,19 +74,11 @@ export default function Admin({ orders, kiwanisTotalBoxes }: { orders: Order[], 
         setEditKiwanisTotalBoxes(false);
     };
 
-    let {
+    const {
         totalOrders, totalBoxesForAFAC, totalBoxesForCustomers,
         totalBoxesOrdered, totalOrderValue, totalBoxesRemaining,
         pickedUp, readyForPickup
     } = calculateMetrics(orders, kiwanisTotalBoxes);
-
-    React.useEffect(() => {
-        ({
-            totalOrders, totalBoxesForAFAC, totalBoxesForCustomers,
-            totalBoxesOrdered, totalOrderValue, totalBoxesRemaining,
-            pickedUp, readyForPickup
-        } = calculateMetrics(orders, kiwanisTotalBoxes));
-    }, [orders, kiwanisTotalBoxes]);
 
     const metrics = [
         {
