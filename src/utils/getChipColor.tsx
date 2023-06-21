@@ -1,13 +1,12 @@
 import { ChipProps } from "@mui/material/Chip";
-import { useTheme } from "@mui/material/styles";
+import { Theme } from "@mui/material/styles";
 
 /**
  * getChipColor is used to get the correct chip color
  * @param params Takes in the params of the GridRenderCellParams
  * @returns returns the chip color
  */
-export function getChipColor(predicate: boolean): ChipProps {
-    const theme = useTheme();
+export function getChipColor(predicate: boolean, theme: Theme): ChipProps {
     if (predicate) {
         return {
             style: {
