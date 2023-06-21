@@ -2,6 +2,7 @@ import { db } from "../config";
 import { collection, getDocs, query } from "firebase/firestore";
 import { useQuery } from "@tanstack/react-query";
 import { ORDERS_COLLECTION } from "../constants";
+import { Order } from "../types/Order";
 
 const useGetOrders = () => {
     return useQuery({
@@ -16,7 +17,7 @@ const useGetOrders = () => {
                     ...data
                 };
             });
-            return orderObjects;
+            return orderObjects as Order[];
         },
     });
 };

@@ -8,23 +8,9 @@ const useCreateOrder = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (order: Order) => {
+            const { id, ...orderData } = order;
             await addDoc(collection(db, ORDERS_COLLECTION), {
-                "Boxes for AFAC": order.boxesForAFAC,
-                "Boxes for Customer": order.boxesForCustomer,
-                "Cell Phone": order.cellPhone,
-                "Customer Comments": order.customerComments,
-                "E-mail": order.email,
-                "First Name": order.firstName,
-                "Home Phone": order.homePhone,
-                "How did you hear about us?": order.howDidYouHearAboutUs,
-                "Kiwanis Member": order.kiwanisMember,
-                "Last Name": order.lastName,
-                "Method": order.method,
-                "Paid": order.paid,
-                "Pick Up": order.pickedUp,
-                "Submission Date": order.submissionDate,
-                "Additional Donation": order.additionalDonation,
-                "Amount Paid": order.amountPaid
+                ...orderData
             });
         },
         retry: 3,
