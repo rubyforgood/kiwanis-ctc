@@ -11,17 +11,13 @@ import Typography from "@mui/material/Typography";
 import DonorsTable from "./DonorsTable";
 
 export default function Donors({ orders, isLoading }: { orders: Order[], isLoading: boolean }) {
-    const [search, setSearch] = useState("");
     const [rows, setRows] = useState(orders);
 
-    // TODO: Refactor into hook
     React.useEffect(() => {
-        if (search) {
-            setRows(orders.filter((row) => (row.firstName + " " + row.lastName).toLowerCase().includes(search)));
-        } else {
+        if (orders) {
             setRows(orders);
         }
-    }, [search, orders, rows, setRows]);
+    }, [orders]);
 
     return (
         <>
@@ -36,7 +32,14 @@ export default function Donors({ orders, isLoading }: { orders: Order[], isLoadi
                     <Typography fontSize={30} sx={{ borderBottom: "solid", borderWidth: 2, borderColor: "primary.main", mb: 2, width: "100%" }}>Donors</Typography>
                     <Stack direction={{ xs: "column", sm: "column", md: "row" }} alignItems="baseline" pb={1}>
                         <TextField
-                            onChange={(e) => setSearch(e.target.value.toLocaleLowerCase())}
+                            onChange={(e) => {
+                                const search = e.target.value.toLocaleLowerCase();
+                                if (search) {
+                                    setRows(orders.filter((row) => (row.firstName + " " + row.lastName).toLowerCase().includes(search)));
+                                } else {
+                                    setRows(orders);
+                                }
+                            }}
                             sx={{ mr: 6, width: { xs: 150, sm: 300, md: 450, lg: 500 }, }}
                             size="small"
                             InputProps={{
@@ -48,14 +51,6 @@ export default function Donors({ orders, isLoading }: { orders: Order[], isLoadi
                                 ),
                             }}
                         />
-                        <Button
-                            sx={{ width: { xs: 100, sm: 140, md: 150, lg: 170 }, borderRadius: 2, mx: 2, mb: 1 }}
-                            variant='contained'
-                            color='secondary'
-                            disabled
-                        >
-                            Export to CSV
-                        </Button>
                     </Stack>
                     <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }} elevation={2}>
                         <DonorsTable rows={rows} isLoading={isLoading} />
