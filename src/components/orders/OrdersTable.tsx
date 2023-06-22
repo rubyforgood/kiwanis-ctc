@@ -5,11 +5,10 @@ import { Order } from "../../types/Order";
 import { COST_PER_ORDER } from "../../constants";
 import { getChipColor } from "../../utils/getChipColor";
 import { useSnackbar } from "../../hooks/useSnackbar";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
 import useDeleteOrder from "../../hooks/useDeleteOrder";
 import { EditOrderButton } from "../common/EditOrderButton";
 import { useTheme } from "@mui/material";
+import { DeleteOrderButton } from "../common/DeleteOrderButton";
 
 interface OrdersTableProps {
     rows: Order[];
@@ -18,19 +17,8 @@ interface OrdersTableProps {
 
 export default function OrdersTable({ rows, isLoading }: OrdersTableProps) {
     const { setOpenSnackbar, setSnackbarMessage, snackbar } = useSnackbar();
-    const deleteOrderMutation = useDeleteOrder();
     const theme = useTheme();
 
-    const handleDelete = async (order: Order) => {
-        try {
-            await deleteOrderMutation.mutateAsync(order);
-            setSnackbarMessage("Successfully deleted order");
-        } catch {
-            setSnackbarMessage("Failed to delete order");
-        }
-        setOpenSnackbar(true);
-
-    };
 
     const columns: GridColDef[] = [
         {
@@ -102,9 +90,11 @@ export default function OrdersTable({ rows, isLoading }: OrdersTableProps) {
                         setOpenSnackbar={setOpenSnackbar}
                         setSnackbarMessage={setSnackbarMessage}
                     />
-                    <IconButton onClick={() => handleDelete(row)}>
-                        <DeleteIcon />
-                    </IconButton>
+                    <DeleteOrderButton 
+                        row={row}
+                        setOpenSnackbar={setOpenSnackbar}
+                        setSnackbarMessage={setSnackbarMessage}
+                    />
                 </>,
             headerAlign: "right",
             align: "right",
