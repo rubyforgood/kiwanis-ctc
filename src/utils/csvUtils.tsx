@@ -18,13 +18,6 @@ export const getCSVDataAndUpload = async (csv: string, orders: Order[], mutation
         return "Please submit non-empty file.";
     }
 
-    // if (!assertCsvHeaders(headers)) {
-    //     setOpenSnackbar(true);
-    //     // TODO: How can we tell them what the format is? 
-    //     setSnackbarMessage("Columns do not match expected columns");
-    //     return;
-    // }
-
     const records = parse(csv,
         {
             skip_empty_lines: true,
@@ -35,13 +28,6 @@ export const getCSVDataAndUpload = async (csv: string, orders: Order[], mutation
     );
 
     const newOrders = records.map(csvToOrder);
-    console.log(newOrders);
-
-    newOrders.forEach(order => {
-        if (isNaN(order.boxesForAFAC)) {
-            console.log("NAN FOUND", order);
-        }
-    });
 
     const orderIds = new Set(orders.map((order) => order.id));
     const filteredOrders = newOrders.filter((order) => !orderIds.has(order.id));
@@ -91,8 +77,6 @@ const assertCsvHeaders = (line: string): boolean => {
     ];
 
     const headers = line.split(",");
-
-    console.log(expectedHeaders, headers);
 
     if (!headers) { return false; }
     if (headers.length != expectedHeaders.length) { return false; }
