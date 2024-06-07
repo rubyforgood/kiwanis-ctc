@@ -18,25 +18,28 @@ export const getCSVDataAndUpload = async (csv: string, orders: Order[], mutation
         return "Please submit non-empty file.";
     }
 
-    const records = parse(csv,
-        {
-            skip_empty_lines: true,
-            columns: true,
-            bom: true,
-            skip_records_with_empty_values: true
-        }
-    );
-
-    const newOrders = records.map(csvToOrder);
-
-    const orderIds = new Set(orders.map((order) => order.id));
-    const filteredOrders = newOrders.filter((order) => !orderIds.has(order.id));
-
     try {
+        const headers = csv.split("\n")[0];
+        assertCsvHeaders(headers);
+
+        const records = parse(csv,
+            {
+                skip_empty_lines: true,
+                columns: true,
+                bom: true,
+                skip_records_with_empty_values: true
+            }
+        );
+
+        const newOrders = records.map(csvToOrder);
+
+        const orderIds = new Set(orders.map((order) => order.id));
+        const filteredOrders = newOrders.filter((order) => !orderIds.has(order.id));
+
         await mutationHook.mutateAsync(filteredOrders);
         return "Successfully uploaded CSV rows";
-    } catch {
-        return "Could not upload CSV rows";
+    } catch (error) {
+        return error.message;
     }
 
 };
@@ -65,11 +68,7 @@ const csvToOrder = (data: any): Order => {
     };
 };
 
-const stripReturn = (word: string) => {
-    return word.replace("\r", "");
-};
-
-const assertCsvHeaders = (line: string): boolean => {
+const assertCsvHeaders = (line: string): void => {
     const expectedHeaders = [
         "First Name", "Last Name", "Cell Phone",
         "Home Phone", "E-mail", "Customer Comments",
@@ -77,13 +76,12 @@ const assertCsvHeaders = (line: string): boolean => {
     ];
 
     const headers = line.split(",");
+    console.log(headers);
 
-    if (!headers) { return false; }
-    if (headers.length != expectedHeaders.length) { return false; }
+    if (!headers) { throw new Error("Could not find CSV headers"); }
+    if (headers.length != expectedHeaders.length) { throw new Error(`Incorrect number of headers. Found ${headers.length}. Expected ${expectedHeaders.length}`); }
 
     for (let i = 0; i < expectedHeaders.length; i++) {
-        if (!headers[i].startsWith(expectedHeaders[i])) { return false; }
+        if (!headers[i].trim().startsWith(expectedHeaders[i])) { throw new Error(`Invalid header: "${headers[i]}"`); }
     }
-
-    return true;
 };

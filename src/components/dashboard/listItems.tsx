@@ -4,6 +4,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
+import MessageIcon from "@mui/icons-material/Message";
 import AirlineStopsIcon from "@mui/icons-material/AirlineStops";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { NavigateFunction } from "react-router-dom";
@@ -34,6 +35,12 @@ export const listItems = ({ navigate }: { navigate: NavigateFunction }) => {
                     <PeopleIcon />
                 </ListItemIcon>
                 <ListItemText primary="Donors" />
+            </ListItemButton>
+            <ListItemButton onClick={() => { navigate("/messaging"); }}>
+                <ListItemIcon>
+                    <MessageIcon />
+                </ListItemIcon>
+                <ListItemText primary="Messaging" />
             </ListItemButton>
         </React.Fragment>
     );
