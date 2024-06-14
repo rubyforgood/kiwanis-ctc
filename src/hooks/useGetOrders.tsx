@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ORDERS_COLLECTION } from "../constants";
 import { Order } from "../types/Order";
 
-const ORDER_LIMIT = 3000;
+const ORDER_LIMIT = 1000;
 
 const useGetOrders = () => {
     return useQuery({
