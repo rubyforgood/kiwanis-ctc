@@ -55,6 +55,7 @@ export default function DonorsTable({ rows, isLoading }: DonorsTableProps) {
 
     return (
         <DataGrid
+            autoHeight
             rows={rows ?? []}
             columns={columns}
             initialState={{

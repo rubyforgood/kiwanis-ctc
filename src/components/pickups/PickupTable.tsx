@@ -132,6 +132,7 @@ export default function PickupTable({ rows, isLoading }: PickupTableProps) {
     return (
         <>
             <DataGrid
+                autoHeight
                 rows={rows ?? []}
                 columns={columns}
                 initialState={{

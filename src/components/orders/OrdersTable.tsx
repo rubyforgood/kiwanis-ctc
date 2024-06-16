@@ -5,7 +5,6 @@ import { Order } from "../../types/Order";
 import { COST_PER_ORDER } from "../../constants";
 import { getChipColor } from "../../utils/getChipColor";
 import { useSnackbar } from "../../hooks/useSnackbar";
-import useDeleteOrder from "../../hooks/useDeleteOrder";
 import { EditOrderButton } from "../common/EditOrderButton";
 import { useTheme } from "@mui/material";
 import { DeleteOrderButton } from "../common/DeleteOrderButton";
@@ -104,6 +103,7 @@ export default function OrdersTable({ rows, isLoading }: OrdersTableProps) {
     return (
         <>
             <DataGrid
+                autoHeight
                 rows={rows ?? []}
                 columns={columns}
                 initialState={{
