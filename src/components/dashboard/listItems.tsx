@@ -36,12 +36,6 @@ export const listItems = ({ navigate }: { navigate: NavigateFunction }) => {
                 </ListItemIcon>
                 <ListItemText primary="Donors" />
             </ListItemButton>
-            <ListItemButton onClick={() => { navigate("/messaging"); }}>
-                <ListItemIcon>
-                    <MessageIcon />
-                </ListItemIcon>
-                <ListItemText primary="Messaging" />
-            </ListItemButton>
         </React.Fragment>
     );
 };
