@@ -31,12 +31,13 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import { styled, Theme, useTheme } from "@mui/material";
+import { styled, Theme, Tooltip, useTheme } from "@mui/material";
 import useEditOrder from "../../hooks/useEditOrder";
 import useCreateOrder from "../../hooks/useCreateOrder";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowDownIcon from "@mui/icons-material/ArrowDropDown";
 import CommentIcon from "@mui/icons-material/Comment";
+import BalanceIcon from "@mui/icons-material/Balance";
 
 function SubsectionTitle({ title, sx, button }: { title: string, sx?: SxProps, button?: React.ReactNode }) {
     return (<Typography variant="h6" sx={{ ...sx, fontWeight: "bold", fontSize: "18px" }}>{title}{button}</Typography>);
@@ -93,7 +94,7 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
     const createOrderMutation = useCreateOrder();
 
     const [isEditing, setIsEditing] = React.useState(isNewOrder);
-    const [showCustomerDetails, setShowCustomerDetails] = React.useState(false);
+    const [showCustomerDetails, setShowCustomerDetails] = React.useState(true);
 
     const [newOrder, setNewOrder] = React.useState<Order>({ ...order });
 
@@ -368,7 +369,19 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
                                 </TableRow>
                                 <TableRow>
                                     <TableCell component="th" scope="line">
-                                        <DenseTypography>Amount Paid</DenseTypography>
+                                        <Stack direction="row" alignItems="center">
+                                            <DenseTypography>Amount Paid</DenseTypography>
+                                            <Tooltip title="Set to remaining balance">
+                                                <IconButton
+                                                    sx={{
+                                                        ml: 1
+                                                    }}
+                                                    onClick={() => setNewOrder(newOrder => ({ ...newOrder, amountPaid: newOrder.amountPaid + balance }))}
+                                                >
+                                                    <BalanceIcon fontSize="small" />
+                                                </IconButton>
+                                            </Tooltip>
+                                        </Stack>
                                     </TableCell>
                                     <TableCell align="left">
                                         <TextField
@@ -420,7 +433,7 @@ export default function EditOrder({ open, setOpen, order, setOpenSnackbar, setSn
                 </Box>
             </DialogContent>
             <DialogActions sx={{ justifyContent: "space-between", mx: 2 }}>
-                <Stack direction="row" alignItems="center" gap={2}> 
+                <Stack direction="row" alignItems="center" gap={2}>
                     <DenseTypography>Picked Up?</DenseTypography>
                     <ToggleButton
                         theme={theme}
