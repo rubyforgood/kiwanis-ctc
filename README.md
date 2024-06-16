@@ -33,7 +33,7 @@
 
 ## About The Project
 
-An upcoming project for the Kiwanis Blueberry Fundraiser. Aimed to be completed by the Summer of 2023.
+This application enables the Arlington chapter of Kiwanis International to easily track orders for their annual blueberry fundraising drive.
 
 ### Built With
 
