@@ -70,7 +70,7 @@ const csvToOrder = (data: any): Order => {
 
 const assertCsvHeaders = (line: string): void => {
     const expectedHeaders = [
-        "First Name", "Last Name", "Cell Phone",
+        "ID", "First Name", "Last Name", "Cell Phone",
         "Home Phone", "E-mail", "Customer Comments",
         "Boxes for AFAC", "Boxes for Customer", "Total"
     ];
