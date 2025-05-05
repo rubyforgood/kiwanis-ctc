@@ -29,7 +29,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "npx eslint . --fix && npx eslint ."
+    "lint": "npx eslint . --fix && npx eslint .",
+    "deploy": "firebase deploy --only hosting"
   },
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
